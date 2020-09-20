@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 public class Scraper
@@ -15,20 +16,27 @@ public class Scraper
         this.results = results;
     }
 
-    private static string pages = null;
+    private string pages = null;
 
 
     private async void t(string url)
     {
-        await GetHtmlAsync(url + "1");
-        int s = 1;
-        if (!(pages is null))
+        try
         {
-            s = int.Parse(pages);
+            await GetHtmlAsync(url + "1");
+            int s = 1;
+            if (!(pages is null))
+            {
+                s = int.Parse(pages);
+            }
+            for (int i = 2; i <= s; i++)
+            {
+                await GetHtmlAsync(url + i.ToString());
+            }
         }
-        for (int i = 2; i <= s; i++)
+        catch (HttpRequestException e)
         {
-            await GetHtmlAsync(url + i.ToString());
+            MessageBox.Show("Bloga uzklausa");
         }
     }
 
@@ -39,15 +47,23 @@ public class Scraper
         var html = await httpClient.GetStringAsync(url);
 
         var htmlDocument = new HtmlAgilityPack.HtmlDocument();
+
         htmlDocument.LoadHtml(html);
 
 
         if (pages is null)
         {
-            pages = htmlDocument.DocumentNode.Descendants("div")
+            var des = htmlDocument.DocumentNode.Descendants("div")
             .Where(node => node.GetAttributeValue("class", "")
-            .Equals("pages")).LastOrDefault().Descendants("a").LastOrDefault().InnerText;
-            Console.WriteLine(pages);
+            .Equals("pages")).LastOrDefault().Descendants("a").LastOrDefault();
+            if (des != null)
+            {
+                pages = des.InnerText;
+            }
+            else
+            {
+                pages = "1";
+            }
         }
 
         var ProductList = htmlDocument.DocumentNode.Descendants("div")
@@ -57,12 +73,12 @@ public class Scraper
         Regex rgx = new Regex("[^(\\d+\\.\\d+)]");
         foreach (var Product in ProductList)
         {
-            results.AppendText(Product.Descendants("div")
+            results.AppendText(HtmlEntity.DeEntitize(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product_name")).FirstOrDefault().InnerText + " " +
+                .Equals("product_name")).FirstOrDefault().InnerText) + " " +
                 rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Contains("product_price")).FirstOrDefault().InnerText, "") + "\n");
+                .Contains("product_price")).FirstOrDefault().InnerText, "") + " €\n");
         }
 
 

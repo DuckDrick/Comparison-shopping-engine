@@ -1,0 +1,13 @@
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\Comparison shopping engine.exe.config
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\Comparison shopping engine.exe
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\Comparison shopping engine.pdb
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\HtmlAgilityPack.dll
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\HtmlAgilityPack.xml
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.csprojAssemblyReference.cache
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison_shopping_engine.Properties.Resources.resources
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.csproj.GenerateResource.cache
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.csproj.CoreCompileInputs.cache
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.csproj.CopyComplete
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.exe
+C:\Users\Andrius\source\repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.pdb
