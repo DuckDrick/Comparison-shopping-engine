@@ -78,7 +78,7 @@ public class Scraper
                 .Equals("product_name")).FirstOrDefault().InnerText) + " " +
                 rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Contains("product_price")).FirstOrDefault().InnerText, "") + " €\n");
+                .Contains("product_price")).FirstOrDefault().InnerText, "") + " € - rde.lt\n");
         }
 
 
