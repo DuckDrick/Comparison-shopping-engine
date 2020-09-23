@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -50,7 +51,19 @@ namespace Comparison_shopping_engine
 
             }
 
-
+            var nextPage = htmlDocument.DocumentNode.Descendants("li")
+                .Where(node => node.GetAttributeValue("id", "")
+                .Equals("pagination_next_bottom")).LastOrDefault();
+            if (nextPage != null && nextPage.Attributes["class"].Value != "disabled pagination_next")
+            {
+                string href = HtmlEntity.DeEntitize(nextPage.Descendants("a").First().Attributes["href"].Value);
+                if (href != null)
+                {
+                    startScraping("https://bigbox.lt" + href, results);
+                }
+            }
+            
+            
         }
 
 

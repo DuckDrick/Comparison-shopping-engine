@@ -36,7 +36,7 @@ public class Scraper
         }
         catch (HttpRequestException e)
         {
-            MessageBox.Show("Bloga uzklausa");
+            MessageBox.Show("Rde.lt nieko nerado");
         }
     }
 
