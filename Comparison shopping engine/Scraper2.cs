@@ -14,20 +14,18 @@ namespace Comparison_shopping_engine
 {
     class Scraper2
     {
-        private string url;
-        private RichTextBox results;
+        private ListView results;
 
         public Scraper2()
         {
         }
 
-        public Scraper2(string url, RichTextBox results)
+        public Scraper2(ListView results)
         {
-            this.url = url;
             this.results = results;
         }
 
-        public async void startScraping( string url, RichTextBox results)
+        public async void startScraping( string url)
         {
             var httpClient = new HttpClient();
             var html = await httpClient.GetStringAsync(url);
@@ -43,11 +41,16 @@ namespace Comparison_shopping_engine
             foreach( var Product in productHtml)
             {
                 //to add database for products maybe
-                results.AppendText(HtmlEntity.DeEntitize(Product.Descendants("a")
+               var name = HtmlEntity.DeEntitize(Product.Descendants("a")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product-name")).FirstOrDefault().InnerText + Product.Descendants("span")
+                .Equals("product-name")).FirstOrDefault().InnerText);
+                var price = Product.Descendants("span")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("price product-price")).FirstOrDefault().InnerText) +  " - Bigbox.lt\n");
+                .Equals("price product-price")).FirstOrDefault().InnerText;
+
+                string[] row = { "bigbox.lt", name, price };
+                var item = new ListViewItem(row);
+                results.Items.Add(item);
 
             }
 
@@ -59,7 +62,7 @@ namespace Comparison_shopping_engine
                 string href = HtmlEntity.DeEntitize(nextPage.Descendants("a").First().Attributes["href"].Value);
                 if (href != null)
                 {
-                    startScraping("https://bigbox.lt" + href, results);
+                    startScraping("https://bigbox.lt" + href);
                 }
             }
             

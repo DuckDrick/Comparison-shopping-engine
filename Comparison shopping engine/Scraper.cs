@@ -9,17 +9,16 @@ using System.Windows.Forms;
 
 public class Scraper
 {
-    private RichTextBox results;
-    public Scraper(string url, RichTextBox results)
+    private ListView results;
+    public Scraper(ListView results)
     {
-        t(url);
         this.results = results;
     }
 
     private string pages = null;
 
-
-    private async void t(string url)
+ 
+    public async void scrape(string url)
     {
         try
         {
@@ -73,12 +72,15 @@ public class Scraper
         Regex rgx = new Regex("[^(\\d+\\.\\d+)]");
         foreach (var Product in ProductList)
         {
-            results.AppendText(HtmlEntity.DeEntitize(Product.Descendants("div")
+            var name = HtmlEntity.DeEntitize(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product_name")).FirstOrDefault().InnerText) + " " +
-                rgx.Replace(Product.Descendants("div")
+                .Equals("product_name")).FirstOrDefault().InnerText);
+            var price = rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Contains("product_price")).FirstOrDefault().InnerText, "") + " € - rde.lt\n");
+                .Contains("product_price")).FirstOrDefault().InnerText, "");
+            string[] row = { "rde.lt", name, price };
+            var item = new ListViewItem(row);
+            results.Items.Add(item);
         }
 
 

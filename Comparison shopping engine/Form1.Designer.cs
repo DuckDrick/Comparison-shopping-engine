@@ -30,7 +30,10 @@
         {
             this.search = new System.Windows.Forms.TextBox();
             this.scrape = new System.Windows.Forms.Button();
-            this.results = new System.Windows.Forms.RichTextBox();
+            this.productList = new System.Windows.Forms.ListView();
+            this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.productName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // search
@@ -50,20 +53,41 @@
             this.scrape.UseVisualStyleBackColor = true;
             this.scrape.Click += new System.EventHandler(this.Scrape);
             // 
-            // results
+            // productList
             // 
-            this.results.Location = new System.Drawing.Point(106, 81);
-            this.results.Name = "results";
-            this.results.Size = new System.Drawing.Size(594, 395);
-            this.results.TabIndex = 2;
-            this.results.Text = "";
+            this.productList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.productSource,
+            this.productName,
+            this.productPrice});
+            this.productList.HideSelection = false;
+            this.productList.Location = new System.Drawing.Point(106, 91);
+            this.productList.Name = "productList";
+            this.productList.Size = new System.Drawing.Size(594, 385);
+            this.productList.TabIndex = 2;
+            this.productList.UseCompatibleStateImageBehavior = false;
+            this.productList.View = System.Windows.Forms.View.Details;
+            // 
+            // productSource
+            // 
+            this.productSource.Text = "Source";
+            this.productSource.Width = 66;
+            // 
+            // productName
+            // 
+            this.productName.Text = "Name";
+            this.productName.Width = 461;
+            // 
+            // productPrice
+            // 
+            this.productPrice.Text = "Price";
+            this.productPrice.Width = 55;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(848, 488);
-            this.Controls.Add(this.results);
+            this.Controls.Add(this.productList);
             this.Controls.Add(this.scrape);
             this.Controls.Add(this.search);
             this.Name = "Form1";
@@ -78,7 +102,10 @@
 
         private System.Windows.Forms.TextBox search;
         private System.Windows.Forms.Button scrape;
-        private System.Windows.Forms.RichTextBox results;
+        private System.Windows.Forms.ListView productList;
+        private System.Windows.Forms.ColumnHeader productSource;
+        private System.Windows.Forms.ColumnHeader productName;
+        private System.Windows.Forms.ColumnHeader productPrice;
     }
 }
 
