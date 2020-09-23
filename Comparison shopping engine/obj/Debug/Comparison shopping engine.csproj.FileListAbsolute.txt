@@ -24,3 +24,4 @@ C:\Users\juoza\source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shop
 C:\Users\juoza\source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.csproj.CopyComplete
 C:\Users\juoza\source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.exe
 C:\Users\juoza\source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison shopping engine.pdb
+C:\Users\Andrius\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison_shopping_engine.Form1.resources
