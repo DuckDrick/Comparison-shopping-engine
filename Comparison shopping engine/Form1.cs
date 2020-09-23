@@ -17,8 +17,13 @@ namespace Comparison_shopping_engine
 
         private void Scrape(object sender, EventArgs e)
         {
-            var url = "https://www.rde.lt/search_result/lt/word/" + search.Text.Replace(" ", "+") + "/page/";
-            new Scraper(url, results);
+            results.Clear();
+            var urlrde = "https://www.rde.lt/search_result/lt/word/" + search.Text.Replace(" ", "+") + "/page/";
+            new Scraper(urlrde, results);
+            //var oneaUrl = "https://www.1a.lt/paieska/?q=" + search.Text.Replace(" ", "+");
+            var bigboxUrl = "https://bigbox.lt/paieska?controller=search&orderby=position&orderway=desc&ssa_submit=&search_query=" + search.Text.Replace(" ", "+");
+            Scraper2 oneaScraper= new Scraper2();
+            oneaScraper.startScraping(bigboxUrl, results);
         }
     }
 
