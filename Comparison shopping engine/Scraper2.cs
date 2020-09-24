@@ -14,7 +14,7 @@ namespace Comparison_shopping_engine
 {
     class Scraper2
     {
-        private ListView results;
+        private readonly ListView results;
 
         public Scraper2()
         {
@@ -25,7 +25,7 @@ namespace Comparison_shopping_engine
             this.results = results;
         }
 
-        public async void startScraping( string url)
+        public async void StartScraping( string url)
         {
             var httpClient = new HttpClient();
             var html = await httpClient.GetStringAsync(url);
@@ -62,7 +62,7 @@ namespace Comparison_shopping_engine
                 string href = HtmlEntity.DeEntitize(nextPage.Descendants("a").First().Attributes["href"].Value);
                 if (href != null)
                 {
-                    startScraping("https://bigbox.lt" + href);
+                    StartScraping("https://bigbox.lt" + href);
                 }
             }
             
