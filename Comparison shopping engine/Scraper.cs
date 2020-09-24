@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 public class Scraper
 {
-    private ListView results;
+    private readonly ListView results;
     public Scraper(ListView results)
     {
         this.results = results;
@@ -18,8 +18,9 @@ public class Scraper
     private string pages = null;
 
  
-    public async void scrape(string url)
+    public async void Scrape(string url)
     {
+        pages = null;
         try
         {
             await GetHtmlAsync(url + "1");
@@ -33,7 +34,7 @@ public class Scraper
                 await GetHtmlAsync(url + i.ToString());
             }
         }
-        catch (HttpRequestException e)
+        catch
         {
             MessageBox.Show("Rde.lt nieko nerado");
         }
