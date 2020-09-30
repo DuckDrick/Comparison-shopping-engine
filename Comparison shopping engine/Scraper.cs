@@ -76,17 +76,26 @@ public class Scraper
         {
             var name = HtmlEntity.DeEntitize(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product_name")).FirstOrDefault().InnerText);
+                .Equals("product_name")).FirstOrDefault().InnerText).Trim();
             var price = rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Contains("product_price")).FirstOrDefault().InnerText, "") + " €‎";
+                .Contains("product_price")).FirstOrDefault().InnerText, "").Trim() + " €‎";
             var productUrl = "https://www.rde.lt/"+HtmlEntity.DeEntitize(Product.Descendants("a")
-                .FirstOrDefault().Attributes["href"].Value);
-
+                .FirstOrDefault().Attributes["href"].Value).Trim();
             var productImageUrl = "https://www.rde.lt/" + Product.Descendants("img")
                 .Where(node => node.GetAttributeValue("class", "")
                     .Equals("product_photo_grid")).FirstOrDefault().Attributes["src"].Value;
-            productsList.Add(new Product(name, price, productUrl, productImageUrl));
+
+            var httpClientp = new HttpClient();
+            var htmlp = await httpClientp.GetStringAsync(productUrl);
+            var htmlDocumentp = new HtmlAgilityPack.HtmlDocument();
+            htmlDocumentp.LoadHtml(htmlp);
+
+            var group = HtmlEntity.DeEntitize(htmlDocumentp.DocumentNode.Descendants("li")
+                .Where(node => node.GetAttributeValue("class", "")
+                .Equals("selected_menu")).FirstOrDefault().InnerText).Trim();
+
+            productsList.Add(new Product(name, price, productUrl, productImageUrl, group));
             string[] row = { name, price‎, "rde.lt" };
             var item = new ListViewItem(row);
             results.Items.Add(item);

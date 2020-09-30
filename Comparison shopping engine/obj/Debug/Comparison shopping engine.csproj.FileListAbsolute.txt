@@ -28,3 +28,5 @@ C:\Users\Andrius\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison sh
 C:\Users\juoza\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\obj\Debug\Comparison_shopping_engine.Form1.resources
 C:\Users\juoza\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\WebDriver.dll
 C:\Users\juoza\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\WebDriver.xml
+C:\Users\Andrius\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\WebDriver.dll
+C:\Users\Andrius\Source\Repos\DuckDrick\Comparison-shopping-engine\Comparison shopping engine\bin\Debug\WebDriver.xml

@@ -15,7 +15,6 @@ namespace Comparison_shopping_engine
         private Scraper2 bigboxscraper;
         private Scraper rdescraper;
         List<Product> ProductList = new List<Product>();
-        private LinkLabel productLink = new LinkLabel();
         //private Scraper_Novastar scraperNovastar;
 
         private void Form1_Load(object sender, EventArgs e)
@@ -23,10 +22,6 @@ namespace Comparison_shopping_engine
             bigboxscraper = new Scraper2(productList);
             rdescraper = new Scraper(productList);
             //scraperNovastar = new Scraper_Novastar(productList);
-            productLink.Location = new Point(760, 310);
-            this.Controls.Add(productLink);
-            productLink.Size = new System.Drawing.Size(900, 26);
-            productLink.Font = new Font("Arial", 8, FontStyle.Regular);
         }
 
         private void Scrape(object sender, EventArgs e)
@@ -48,9 +43,16 @@ namespace Comparison_shopping_engine
                 {
                     productN.Text = product.name;
                     productPicture.Load(product.imageurl);
+                    productGroup.Text = product.group;
+                
                     productLink.Text = product.link;
                 }
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(productLink.Text);
         }
     }
 
