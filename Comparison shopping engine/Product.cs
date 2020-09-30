@@ -9,16 +9,19 @@ using System.Windows.Forms;
 
 namespace Comparison_shopping_engine
 {
-    class Product
+    public class Product
     {
         public string name { get; set; }
         public string link { get; set; }
-        public double price { get; set; }
-        public Product (string name, double price, string link)
+        public string price { get; set; }
+        
+        public string imageurl { get; set; }
+        public Product (string name, string price, string link, string imageurl)
         {
-        this.name=name;
-        this.price=price;
-        this.link=link;
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.imageurl = imageurl;
         }
     }
 }

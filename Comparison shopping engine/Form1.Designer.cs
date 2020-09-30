@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.search = new System.Windows.Forms.TextBox();
             this.scrape = new System.Windows.Forms.Button();
             this.productList = new System.Windows.Forms.ListView();
@@ -35,7 +36,7 @@
             this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productPicture = new System.Windows.Forms.PictureBox();
-            this.productLabel = new System.Windows.Forms.LinkLabel();
+            this.productN = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,30 +91,32 @@
             // 
             // productPicture
             // 
-            this.productPicture.Location = new System.Drawing.Point(757, 90);
+            this.productPicture.Location = new System.Drawing.Point(837, 90);
             this.productPicture.Name = "productPicture";
             this.productPicture.Size = new System.Drawing.Size(184, 184);
             this.productPicture.TabIndex = 3;
             this.productPicture.TabStop = false;
             // 
-            // productLabel
+            // productN
             // 
-            this.productLabel.AutoSize = true;
-            this.productLabel.Location = new System.Drawing.Point(757, 293);
-            this.productLabel.Name = "productLabel";
-            this.productLabel.Size = new System.Drawing.Size(0, 13);
-            this.productLabel.TabIndex = 4;
+            this.productN.AutoSize = true;
+            this.productN.Location = new System.Drawing.Point(791, 278);
+            this.productN.Name = "productN";
+            this.productN.Size = new System.Drawing.Size(241, 13);
+            this.productN.TabIndex = 4;
+            this.productN.Text = "Paspauskite ant prekės norėdami sužnoti daugiau";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 542);
-            this.Controls.Add(this.productLabel);
+            this.ClientSize = new System.Drawing.Size(1310, 542);
+            this.Controls.Add(this.productN);
             this.Controls.Add(this.productPicture);
             this.Controls.Add(this.productList);
             this.Controls.Add(this.scrape);
             this.Controls.Add(this.search);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -132,7 +135,7 @@
         private System.Windows.Forms.ColumnHeader productName;
         private System.Windows.Forms.ColumnHeader productPrice;
         private System.Windows.Forms.PictureBox productPicture;
-        private System.Windows.Forms.LinkLabel productLabel;
+        private System.Windows.Forms.Label productN;
     }
 }
 

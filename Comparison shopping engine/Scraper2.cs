@@ -38,7 +38,6 @@ namespace Comparison_shopping_engine
                 .Contains("category-item ajax_block_product " +
                 "col-xs-12 col-sm-6 col-md-4 col-lg-3")).ToList();
 
-            List<Product> products = new List<Product>();
             foreach( var Product in productHtml)
             {
                 //to add database for products maybe
@@ -55,14 +54,14 @@ namespace Comparison_shopping_engine
                 .Where(node => node.GetAttributeValue("class", "")
                  .Equals("category-item-image")).FirstOrDefault().Attributes["href"].Value);
 
+                var productImageUrl = HtmlEntity.DeEntitize(Product.Descendants("img")
+                    .Where(node => node.GetAttributeValue("class", "")
+                        .Equals("replace-2x img-responsive")).FirstOrDefault().Attributes["src"].Value);
+
                 string[] row = {name, price, "bigbox.lt"};
                 var item = new ListViewItem(row);
                 results.Items.Add(item);
-                
-                productsList.Add(new Product(name, Convert.ToDouble(price), producturl));
-                string []row2 = { productsList[0].link, Convert.ToString(productsList[0].price), price };
-                var item2 = new ListViewItem(row2);
-                results.Items.Add(item2);
+                productsList.Add(new Product(name, price, producturl, productImageUrl));
             }
 
             var nextPage = htmlDocument.DocumentNode.Descendants("li")

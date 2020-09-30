@@ -1,12 +1,13 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
-
+using Comparison_shopping_engine;
 public class Scraper
 {
     private readonly ListView results;
@@ -18,13 +19,13 @@ public class Scraper
     private string pages = null;
 
  
-    public async void Scrape(string url)
+    public async Task Scrape(string url, List<Product> productsList)
     {
         var urlrde = "https://www.rde.lt/search_result/lt/word/" + url + "/page/";
         pages = null;
         try
         {
-            await GetHtmlAsync(urlrde + "1");
+            await GetHtmlAsync(urlrde + "1", productsList);
             int s = 1;
             if (!(pages is null))
             {
@@ -32,7 +33,7 @@ public class Scraper
             }
             for (int i = 2; i <= s; i++)
             {
-                await GetHtmlAsync(urlrde + i.ToString());
+                await GetHtmlAsync(urlrde + i.ToString(), productsList);
             }
         }
         catch
@@ -41,7 +42,7 @@ public class Scraper
         }
     }
 
-    private async Task GetHtmlAsync(string url)
+    public async Task GetHtmlAsync(string url, List<Product> productsList)
     {
         var httpClient = new HttpClient();
         var html = await httpClient.GetStringAsync(url);
@@ -79,6 +80,13 @@ public class Scraper
             var price = rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
                 .Contains("product_price")).FirstOrDefault().InnerText, "") + " €‎";
+            var productUrl = "https://www.rde.lt/"+HtmlEntity.DeEntitize(Product.Descendants("a")
+                .FirstOrDefault().Attributes["href"].Value);
+
+            var productImageUrl = "https://www.rde.lt/" + Product.Descendants("img")
+                .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("product_photo_grid")).FirstOrDefault().Attributes["src"].Value;
+            productsList.Add(new Product(name, price, productUrl, productImageUrl));
             string[] row = { name, price‎, "rde.lt" };
             var item = new ListViewItem(row);
             results.Items.Add(item);
