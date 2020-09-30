@@ -37,6 +37,8 @@
             this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productPicture = new System.Windows.Forms.PictureBox();
             this.productN = new System.Windows.Forms.Label();
+            this.productGroup = new System.Windows.Forms.Label();
+            this.productLink = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,8 +69,7 @@
             this.productList.Location = new System.Drawing.Point(60, 90);
             this.productList.MultiSelect = false;
             this.productList.Name = "productList";
-            this.productList.Size = new System.Drawing.Size(640, 386);
-            this.productList.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.productList.Size = new System.Drawing.Size(667, 386);
             this.productList.TabIndex = 2;
             this.productList.UseCompatibleStateImageBehavior = false;
             this.productList.View = System.Windows.Forms.View.Details;
@@ -91,7 +92,7 @@
             // 
             // productPicture
             // 
-            this.productPicture.Location = new System.Drawing.Point(837, 90);
+            this.productPicture.Location = new System.Drawing.Point(792, 90);
             this.productPicture.Name = "productPicture";
             this.productPicture.Size = new System.Drawing.Size(184, 184);
             this.productPicture.TabIndex = 3;
@@ -100,17 +101,36 @@
             // productN
             // 
             this.productN.AutoSize = true;
-            this.productN.Location = new System.Drawing.Point(791, 278);
+            this.productN.Location = new System.Drawing.Point(789, 297);
             this.productN.Name = "productN";
             this.productN.Size = new System.Drawing.Size(241, 13);
             this.productN.TabIndex = 4;
             this.productN.Text = "Paspauskite ant prekės norėdami sužnoti daugiau";
+            // 
+            // productGroup
+            // 
+            this.productGroup.AutoSize = true;
+            this.productGroup.Location = new System.Drawing.Point(789, 284);
+            this.productGroup.Name = "productGroup";
+            this.productGroup.Size = new System.Drawing.Size(0, 13);
+            this.productGroup.TabIndex = 5;
+            // 
+            // productLink
+            // 
+            this.productLink.AutoSize = true;
+            this.productLink.Location = new System.Drawing.Point(789, 310);
+            this.productLink.Name = "productLink";
+            this.productLink.Size = new System.Drawing.Size(0, 13);
+            this.productLink.TabIndex = 6;
+            this.productLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1310, 542);
+            this.Controls.Add(this.productLink);
+            this.Controls.Add(this.productGroup);
             this.Controls.Add(this.productN);
             this.Controls.Add(this.productPicture);
             this.Controls.Add(this.productList);
@@ -136,6 +156,8 @@
         private System.Windows.Forms.ColumnHeader productPrice;
         private System.Windows.Forms.PictureBox productPicture;
         private System.Windows.Forms.Label productN;
+        private System.Windows.Forms.Label productGroup;
+        private System.Windows.Forms.LinkLabel productLink;
     }
 }
 

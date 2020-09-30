@@ -43,25 +43,35 @@ namespace Comparison_shopping_engine
                 //to add database for products maybe
                var name = HtmlEntity.DeEntitize(Product.Descendants("a")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product-name")).FirstOrDefault().InnerText);
+                .Equals("product-name")).FirstOrDefault().InnerText).Trim();
 
                 var price = Product.Descendants("span")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Equals("price product-price")).FirstOrDefault().InnerText;
+                .Equals("price product-price")).FirstOrDefault().InnerText.Trim();
                 price.Replace(",", ".");
 
                 var producturl =HtmlEntity.DeEntitize(Product.Descendants("a")
                 .Where(node => node.GetAttributeValue("class", "")
-                 .Equals("category-item-image")).FirstOrDefault().Attributes["href"].Value);
+                 .Equals("category-item-image")).FirstOrDefault().Attributes["href"].Value).Trim();
 
                 var productImageUrl = HtmlEntity.DeEntitize(Product.Descendants("img")
                     .Where(node => node.GetAttributeValue("class", "")
                         .Equals("replace-2x img-responsive")).FirstOrDefault().Attributes["src"].Value);
 
+
+                var httpClientp = new HttpClient();
+                var htmlp = await httpClientp.GetStringAsync(producturl);
+                var htmlDocumentp = new HtmlAgilityPack.HtmlDocument();
+                htmlDocumentp.LoadHtml(htmlp);
+
+                var group = HtmlEntity.DeEntitize(htmlDocumentp.DocumentNode.Descendants("span")
+                .Where(node => node.GetAttributeValue("class", "")
+                .Equals("navigation_page")).FirstOrDefault().Descendants("a").ToList()[1].InnerText).Trim();
+
                 string[] row = {name, price, "bigbox.lt"};
                 var item = new ListViewItem(row);
                 results.Items.Add(item);
-                productsList.Add(new Product(name, price, producturl, productImageUrl));
+                productsList.Add(new Product(name, price, producturl, productImageUrl, group));
             }
 
             var nextPage = htmlDocument.DocumentNode.Descendants("li")
