@@ -25,10 +25,11 @@ namespace Comparison_shopping_engine
             this.results = results;
         }
 
-        public async void StartScraping( string url)
+        public async Task StartScraping( string url, List<Product> productsList)
         {
+            var bigboxUrl = "https://bigbox.lt/paieska?controller=search&orderby=position&orderway=desc&ssa_submit=&search_query=" + url;
             var httpClient = new HttpClient();
-            var html = await httpClient.GetStringAsync(url);
+            var html = await httpClient.GetStringAsync(bigboxUrl);
             var htmlDocument = new HtmlAgilityPack.HtmlDocument();
             htmlDocument.LoadHtml(html);
 
@@ -44,14 +45,24 @@ namespace Comparison_shopping_engine
                var name = HtmlEntity.DeEntitize(Product.Descendants("a")
                 .Where(node => node.GetAttributeValue("class", "")
                 .Equals("product-name")).FirstOrDefault().InnerText);
+
                 var price = Product.Descendants("span")
                 .Where(node => node.GetAttributeValue("class", "")
                 .Equals("price product-price")).FirstOrDefault().InnerText;
+                price.Replace(",", ".");
 
-                string[] row = { "bigbox.lt", name, price };
+                var producturl =HtmlEntity.DeEntitize(Product.Descendants("a")
+                .Where(node => node.GetAttributeValue("class", "")
+                 .Equals("category-item-image")).FirstOrDefault().Attributes["href"].Value);
+
+                string[] row = {name, price, "bigbox.lt"};
                 var item = new ListViewItem(row);
                 results.Items.Add(item);
-
+                
+                productsList.Add(new Product(name, Convert.ToDouble(price), producturl));
+                string []row2 = { productsList[0].link, Convert.ToString(productsList[0].price), price };
+                var item2 = new ListViewItem(row2);
+                results.Items.Add(item2);
             }
 
             var nextPage = htmlDocument.DocumentNode.Descendants("li")
@@ -62,7 +73,7 @@ namespace Comparison_shopping_engine
                 string href = HtmlEntity.DeEntitize(nextPage.Descendants("a").First().Attributes["href"].Value);
                 if (href != null)
                 {
-                    StartScraping("https://bigbox.lt" + href);
+                    await StartScraping("https://bigbox.lt" + href, productsList);
                 }
             }
             

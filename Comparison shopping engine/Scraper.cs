@@ -20,10 +20,11 @@ public class Scraper
  
     public async void Scrape(string url)
     {
+        var urlrde = "https://www.rde.lt/search_result/lt/word/" + url + "/page/";
         pages = null;
         try
         {
-            await GetHtmlAsync(url + "1");
+            await GetHtmlAsync(urlrde + "1");
             int s = 1;
             if (!(pages is null))
             {
@@ -31,7 +32,7 @@ public class Scraper
             }
             for (int i = 2; i <= s; i++)
             {
-                await GetHtmlAsync(url + i.ToString());
+                await GetHtmlAsync(urlrde + i.ToString());
             }
         }
         catch
@@ -42,7 +43,6 @@ public class Scraper
 
     private async Task GetHtmlAsync(string url)
     {
-
         var httpClient = new HttpClient();
         var html = await httpClient.GetStringAsync(url);
 
@@ -78,8 +78,8 @@ public class Scraper
                 .Equals("product_name")).FirstOrDefault().InnerText);
             var price = rgx.Replace(Product.Descendants("div")
                 .Where(node => node.GetAttributeValue("class", "")
-                .Contains("product_price")).FirstOrDefault().InnerText, "");
-            string[] row = { "rde.lt", name, price };
+                .Contains("product_price")).FirstOrDefault().InnerText, "") + " €‎";
+            string[] row = { name, price‎, "rde.lt" };
             var item = new ListViewItem(row);
             results.Items.Add(item);
         }
