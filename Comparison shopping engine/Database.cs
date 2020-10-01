@@ -13,7 +13,7 @@ namespace Comparison_shopping_engine
         private string conString;
         public Database()
         {
-            this.conString = "";
+            this.conString = VerySecretFile.connectionString;
 
         }
 
@@ -70,7 +70,7 @@ namespace Comparison_shopping_engine
         {
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection(""))
+                using (NpgsqlConnection conn = new NpgsqlConnection(VerySecretFile.connectionString))
                 {
                     conn.Open();
 
@@ -100,7 +100,7 @@ namespace Comparison_shopping_engine
             List<Product> pl = new List<Product>();
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection(""))
+                using (NpgsqlConnection conn = new NpgsqlConnection(VerySecretFile.connectionString))
                 {
                     conn.Open();
 
