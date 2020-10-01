@@ -62,7 +62,7 @@ namespace Comparison_shopping_engine
 
 
                 //if (!db.checkIfExists("bigbox", name).Result)
-                if (!Database.search(name.Replace("'", "''"), "bigbox"))
+                if (!Database.Search(name.Replace("'", "''"), "bigbox"))
                 {
                     var httpClientp = new HttpClient();
                     var htmlp = await httpClientp.GetStringAsync(producturl);

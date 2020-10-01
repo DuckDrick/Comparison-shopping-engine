@@ -89,7 +89,7 @@ public class Scraper
                     .Equals("product_photo_grid")).FirstOrDefault().Attributes["src"].Value;
 
             //if (!db.checkIfExists("rde", name).Result)
-            if (!Database.search(name.Replace("'", "''"), "rde"))
+            if (!Database.Search(name.Replace("'", "''"), "rde"))
             {
                 var httpClientp = new HttpClient();
                 var htmlp = await httpClientp.GetStringAsync(productUrl);

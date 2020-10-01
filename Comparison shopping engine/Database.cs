@@ -13,7 +13,7 @@ namespace Comparison_shopping_engine
         private string conString;
         public Database()
         {
-            this.conString = "Server=buiorpmug6fncaiq7qqs-postgresql.services.clever-cloud.com; Port=5432; User Id=uocfiwcmqzp7dsy8ojja; Password=ScseSZA76wQt17bvbcEK; Database=buiorpmug6fncaiq7qqs";
+            this.conString = "";
 
         }
 
@@ -66,11 +66,11 @@ namespace Comparison_shopping_engine
             return res;
         }
 
-        public static bool search(string s, string table)
+        public static bool Search(string s, string table)
         {
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection("Server=buiorpmug6fncaiq7qqs-postgresql.services.clever-cloud.com; Port=5432; User Id=uocfiwcmqzp7dsy8ojja; Password=ScseSZA76wQt17bvbcEK; Database=buiorpmug6fncaiq7qqs"))
+                using (NpgsqlConnection conn = new NpgsqlConnection(""))
                 {
                     conn.Open();
 
@@ -95,12 +95,12 @@ namespace Comparison_shopping_engine
             }
         }
 
-        public static async Task<List<Product>> get(string s, string table)
+        public static async Task<List<Product>> Get(string s, string table)
         {
             List<Product> pl = new List<Product>();
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection("Server=buiorpmug6fncaiq7qqs-postgresql.services.clever-cloud.com; Port=5432; User Id=uocfiwcmqzp7dsy8ojja; Password=ScseSZA76wQt17bvbcEK; Database=buiorpmug6fncaiq7qqs"))
+                using (NpgsqlConnection conn = new NpgsqlConnection(""))
                 {
                     conn.Open();
 
