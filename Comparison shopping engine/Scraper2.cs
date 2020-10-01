@@ -15,14 +15,16 @@ namespace Comparison_shopping_engine
     class Scraper2
     {
         private readonly ListView results;
+        private Database db;
 
         public Scraper2()
         {
         }
 
-        public Scraper2(ListView results)
+        public Scraper2(ListView results, Database db)
         {
             this.results = results;
+            this.db = db;
         }
 
         public async Task StartScraping( string url, List<Product> productsList)
@@ -38,19 +40,19 @@ namespace Comparison_shopping_engine
                 .Contains("category-item ajax_block_product " +
                 "col-xs-12 col-sm-6 col-md-4 col-lg-3")).ToList();
 
-            foreach( var Product in productHtml)
+            foreach (var Product in productHtml)
             {
                 //to add database for products maybe
-               var name = HtmlEntity.DeEntitize(Product.Descendants("a")
-                .Where(node => node.GetAttributeValue("class", "")
-                .Equals("product-name")).FirstOrDefault().InnerText).Trim();
+                var name = HtmlEntity.DeEntitize(Product.Descendants("a")
+                 .Where(node => node.GetAttributeValue("class", "")
+                 .Equals("product-name")).FirstOrDefault().InnerText).Trim();
 
                 var price = Product.Descendants("span")
                 .Where(node => node.GetAttributeValue("class", "")
                 .Equals("price product-price")).FirstOrDefault().InnerText.Trim();
                 price.Replace(",", ".");
 
-                var producturl =HtmlEntity.DeEntitize(Product.Descendants("a")
+                var producturl = HtmlEntity.DeEntitize(Product.Descendants("a")
                 .Where(node => node.GetAttributeValue("class", "")
                  .Equals("category-item-image")).FirstOrDefault().Attributes["href"].Value).Trim();
 
@@ -59,19 +61,42 @@ namespace Comparison_shopping_engine
                         .Equals("replace-2x img-responsive")).FirstOrDefault().Attributes["src"].Value);
 
 
-                var httpClientp = new HttpClient();
-                var htmlp = await httpClientp.GetStringAsync(producturl);
-                var htmlDocumentp = new HtmlAgilityPack.HtmlDocument();
-                htmlDocumentp.LoadHtml(htmlp);
+                //if (!db.checkIfExists("bigbox", name).Result)
+                if (!Database.search(name.Replace("'", "''"), "bigbox"))
+                {
+                    var httpClientp = new HttpClient();
+                    var htmlp = await httpClientp.GetStringAsync(producturl);
+                    var htmlDocumentp = new HtmlAgilityPack.HtmlDocument();
+                    htmlDocumentp.LoadHtml(htmlp);
 
-                var group = HtmlEntity.DeEntitize(htmlDocumentp.DocumentNode.Descendants("span")
-                .Where(node => node.GetAttributeValue("class", "")
-                .Equals("navigation_page")).FirstOrDefault().Descendants("a").ToList()[1].InnerText).Trim();
+                    var groups = htmlDocumentp.DocumentNode.Descendants("span")
+                    .Where(node => node.GetAttributeValue("class", "")
+                    .Equals("navigation_page")).FirstOrDefault();
+                    string group = "None";
+                    if(groups != null)
+                    {
+                        group = HtmlEntity.DeEntitize(groups.Descendants("a").ToList()[1].InnerText);
+                    }
 
-                string[] row = {name, price, "bigbox.lt"};
-                var item = new ListViewItem(row);
-                results.Items.Add(item);
-                productsList.Add(new Product(name, price, producturl, productImageUrl, group));
+                    string[] row = { name, price, "bigbox.lt" };
+                    var item = new ListViewItem(row);
+                    results.Items.Add(item);
+                    productsList.Add(new Product(name, price, producturl, productImageUrl, group));
+                    try
+                    {
+                        db.addOrUpdate("bigbox", name.Replace("'", "''"), group, producturl, productImageUrl.Trim(), price.Replace("€", "").Replace(" ", "").Trim());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("------BIGBOX-------");
+                        Console.WriteLine(name);
+                        Console.WriteLine(price);
+                        Console.WriteLine(producturl);
+                        Console.WriteLine(productImageUrl);
+                        Console.WriteLine(group);
+                        Console.WriteLine(e.Message);
+                    }
+                }
             }
 
             var nextPage = htmlDocument.DocumentNode.Descendants("li")

@@ -15,18 +15,22 @@ namespace Comparison_shopping_engine
         private Scraper2 bigboxscraper;
         private Scraper rdescraper;
         List<Product> ProductList = new List<Product>();
+        Database db;
         //private Scraper_Novastar scraperNovastar;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            bigboxscraper = new Scraper2(productList);
-            rdescraper = new Scraper(productList);
+            db = new Database();
+            bigboxscraper = new Scraper2(productList, db);
+            rdescraper = new Scraper(productList, db);
+            PopulateProductList();
             //scraperNovastar = new Scraper_Novastar(productList);
         }
 
         private void Scrape(object sender, EventArgs e)
         {
             productList.Items.Clear();
+            PopulateProductListView();
             rdescraper.Scrape(search.Text.Replace(" ", "+"), ProductList);
             bigboxscraper.StartScraping(search.Text.Replace(" ", "+"), ProductList);
             //scraperNovastar.StartScraping(search.Text.Replace(" ", "%20"));
@@ -53,6 +57,30 @@ namespace Comparison_shopping_engine
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(productLink.Text);
+        }
+
+        private async void PopulateProductList()
+        {
+            ProductList = await Database.get("", "rde");
+            ProductList.AddRange(await Database.get("", "bigbox"));
+        }
+
+        private async void PopulateProductListView()
+        {
+            var list = await Database.get(search.Text.Replace(" ", "%"), "rde");
+            foreach (var product in list)
+            {
+                string[] row = { product.name, product.price‎, "rde.lt" };
+                var item = new ListViewItem(row);
+                productList.Items.Add(item);
+            }
+            list = await Database.get(search.Text.Replace(" ", "%"), "bigbox");
+            foreach (var product in list)
+            {
+                string[] row = { product.name, product.price‎, "bigbox.lt" };
+                var item = new ListViewItem(row);
+                productList.Items.Add(item);
+            }
         }
     }
 
