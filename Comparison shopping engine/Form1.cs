@@ -61,20 +61,20 @@ namespace Comparison_shopping_engine
 
         private async void PopulateProductList()
         {
-            ProductList = await Database.get("", "rde");
-            ProductList.AddRange(await Database.get("", "bigbox"));
+            ProductList = await Database.Get("", "rde");
+            ProductList.AddRange(await Database.Get("", "bigbox"));
         }
 
         private async void PopulateProductListView()
         {
-            var list = await Database.get(search.Text.Replace(" ", "%"), "rde");
+            var list = await Database.Get(search.Text.Replace(" ", "%"), "rde");
             foreach (var product in list)
             {
                 string[] row = { product.name, product.price‎, "rde.lt" };
                 var item = new ListViewItem(row);
                 productList.Items.Add(item);
             }
-            list = await Database.get(search.Text.Replace(" ", "%"), "bigbox");
+            list = await Database.Get(search.Text.Replace(" ", "%"), "bigbox");
             foreach (var product in list)
             {
                 string[] row = { product.name, product.price‎, "bigbox.lt" };
