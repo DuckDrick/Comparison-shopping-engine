@@ -1,14 +1,9 @@
-﻿using System;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
-namespace Comparison_shopping_engine
+namespace Comparison_shopping_engine.Selenium
 {
     abstract class AbstractSeleniumScraper
     {
@@ -18,7 +13,7 @@ namespace Comparison_shopping_engine
             var products = new List<Product>();
 
             var options = new ChromeOptions();
-            options.AddArgument("headless");
+            //options.AddArgument("headless");
             using (var driver = new ChromeDriver(options))
             {
                 string next_page = search;
@@ -29,7 +24,7 @@ namespace Comparison_shopping_engine
                     var product_list = GetProductList(driver);
                     foreach (var product in product_list)
                     {
-                        if (ShouldScrape(product))
+                        if (ShouldScrapeIf(product))
                         {
                             var (price, name, productUrl, photoUrl) = GetInfo(product);
                             products.Add(new Product(name, price, productUrl, photoUrl, "None"));
@@ -38,7 +33,7 @@ namespace Comparison_shopping_engine
 
                     next_page = NextPage(driver);
                     driver.Navigate().GoToUrl(next_page);
-                } while (ShouldStopScraping());
+                } while (ShouldStopScraping(next_page));
 
                 foreach (var product in products)
                 {
@@ -47,17 +42,18 @@ namespace Comparison_shopping_engine
                 }
 
                 driver.Close();
+                driver.Quit();
             }
 
             return products;
 
         }
 
-        public abstract string GetProductGroup(ChromeDriver driver);
-        public abstract bool ShouldStopScraping();
-        public abstract string NextPage(ChromeDriver driver);
-        public abstract ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver);
-        public abstract bool ShouldScrape(IWebElement product);
-        public abstract (string, string, string, string) GetInfo(IWebElement product);
+        protected abstract string GetProductGroup(ChromeDriver driver);
+        protected abstract bool ShouldStopScraping(string next_page);
+        protected abstract string NextPage(ChromeDriver driver);
+        protected abstract ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver);
+        protected abstract bool ShouldScrapeIf(IWebElement product);
+        protected abstract (string, string, string, string) GetInfo(IWebElement product); //price, name, product url, photo url
     }
 }
