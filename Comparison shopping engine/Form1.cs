@@ -29,9 +29,7 @@ namespace Comparison_shopping_engine
                backgroundWorker1.CancelAsync();
             productListView.Items.Clear();
             PopulateProductListView();
-            backgroundWorker1.RunWorkerAsync();
-            
-
+            backgroundWorker1.RunWorkerAsync(argument: search.Text);
         }
 
 
@@ -80,7 +78,8 @@ namespace Comparison_shopping_engine
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var sarasas = new PiguScraper().ScrapeWithSelenium("https://pigu.lt/lt/search?q=kompiuteris+msi+intel+7");
+            var paieska = (string) e.Argument;
+            var sarasas = new PiguScraper().ScrapeWithSelenium("https://pigu.lt/lt/search?q=" + paieska.Replace(" ", "+"));
             e.Result = sarasas;
             if (backgroundWorker1.CancellationPending)
             {
