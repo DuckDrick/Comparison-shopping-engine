@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Selenium;
 
 namespace Comparison_shopping_engine
 {
@@ -12,45 +13,37 @@ namespace Comparison_shopping_engine
             InitializeComponent();
         }
 
-        private Scraper2 bigboxscraper;
-        private Scraper rdescraper;
-        List<Product> ProductList = new List<Product>();
-        Database db;
+        private List<Product> _productList = new List<Product>();
+        // private Database _db;
         //private Scraper_Novastar scraperNovastar;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            db = new Database();
-            bigboxscraper = new Scraper2(productList, db);
-            rdescraper = new Scraper(productList, db);
+            // _db = new Database();
             PopulateProductList();
-            //scraperNovastar = new Scraper_Novastar(productList);
         }
 
         private void Scrape(object sender, EventArgs e)
         {
-            productList.Items.Clear();
+            if(backgroundWorker1.IsBusy)
+               backgroundWorker1.CancelAsync();
+            productListView.Items.Clear();
             PopulateProductListView();
-            rdescraper.Scrape(search.Text.Replace(" ", "+"), ProductList);
-            bigboxscraper.StartScraping(search.Text.Replace(" ", "+"), ProductList);
-            //scraperNovastar.StartScraping(search.Text.Replace(" ", "%20"));
-
+            backgroundWorker1.RunWorkerAsync(argument: search.Text);
         }
+
+
 
         private void productList_ClickOnItem(object sender, EventArgs e)
         {
-            var itemname = productList.SelectedItems[0].SubItems[0].Text;
-            var itemprice = productList.SelectedItems[0].SubItems[1].Text;
-            foreach (var product in ProductList)
+            var itemName = productListView.SelectedItems[0].SubItems[0].Text;
+            var itemPrice = productListView.SelectedItems[0].SubItems[1].Text;
+            foreach (var product in _productList.Where(product => itemName.Equals(product.name) && itemPrice.Equals(product.price)))
             {
-                if (String.Compare(product.name, itemname) == 0 && String.Compare(product.price, itemprice) == 0)
-                {
-                    productN.Text = product.name;
-                    productPicture.Load(product.imageurl);
-                    productGroup.Text = product.group;
-                
-                    productLink.Text = product.link;
-                }
+                productN.Text = product.name;
+                productPicture.Load(product.imageurl);
+                productGroup.Text = product.group;
+                productLink.Text = product.link;
             }
         }
 
@@ -61,8 +54,8 @@ namespace Comparison_shopping_engine
 
         private async void PopulateProductList()
         {
-            ProductList = await Database.Get("", "rde");
-            ProductList.AddRange(await Database.Get("", "bigbox"));
+            _productList = await Database.Get("", "rde");
+            _productList.AddRange(await Database.Get("", "bigbox"));
         }
 
         private async void PopulateProductListView()
@@ -70,17 +63,45 @@ namespace Comparison_shopping_engine
             var list = await Database.Get(search.Text.Replace(" ", "%"), "rde");
             foreach (var product in list)
             {
-                string[] row = { product.name, product.price‎, "rde.lt" };
+                string[] row = { product.name, product.price, "rde.lt" };
                 var item = new ListViewItem(row);
-                productList.Items.Add(item);
+                productListView.Items.Add(item);
             }
             list = await Database.Get(search.Text.Replace(" ", "%"), "bigbox");
             foreach (var product in list)
             {
-                string[] row = { product.name, product.price‎, "bigbox.lt" };
+                string[] row = { product.name, product.price, "bigbox.lt" };
                 var item = new ListViewItem(row);
-                productList.Items.Add(item);
+                productListView.Items.Add(item);
             }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var paieska = (string) e.Argument;
+            var sarasas = new PiguScraper().ScrapeWithSelenium("https://pigu.lt/lt/search?q=" + paieska.Replace(" ", "+"));
+            e.Result = sarasas;
+            if (backgroundWorker1.CancellationPending)
+            {
+                //CANCEL
+                e.Cancel = true;
+            }
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            List<Product> pL = (List<Product>) e.Result;
+            foreach (var product in pL)
+            {
+                string[] row = {product.name, product.price, "Pigu.lt"};
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            
         }
     }
 
