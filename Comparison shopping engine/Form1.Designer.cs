@@ -245,19 +245,20 @@
             // 
             // buttonExit
             // 
+            this.buttonExit.BackColor = System.Drawing.Color.Thistle;
             this.buttonExit.Image = ((System.Drawing.Image)(resources.GetObject("buttonExit.Image")));
             this.buttonExit.Location = new System.Drawing.Point(1265, 13);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(44, 40);
             this.buttonExit.TabIndex = 8;
-            this.buttonExit.UseVisualStyleBackColor = true;
+            this.buttonExit.UseVisualStyleBackColor = false;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Thistle;
-            this.ClientSize = new System.Drawing.Size(1334, 616);
+            this.ClientSize = new System.Drawing.Size(1350, 625);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.productCategory);

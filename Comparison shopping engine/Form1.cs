@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Forms;
 using Comparison_shopping_engine.Selenium;
 
 namespace Comparison_shopping_engine
@@ -111,6 +112,11 @@ namespace Comparison_shopping_engine
         private void buttonGaming_Click(object sender, EventArgs e)
         {
             //filtruojam duombaze su žodžiais susijusais su kategorija žaidimai
+            Form forma= new FormDefault();
+            this.Hide();
+            forma.ShowDialog(this);
+            forma.StartPosition = FormStartPosition.Manual;
+            forma.Location = new Point(this.DesktopLocation.X, this.DesktopLocation.Y);
         }
 
         private void buttonTelecomunication_Click(object sender, EventArgs e)
@@ -155,6 +161,7 @@ namespace Comparison_shopping_engine
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
     }
+
 
 
 }
