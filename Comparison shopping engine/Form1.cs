@@ -112,11 +112,11 @@ namespace Comparison_shopping_engine
         private void buttonGaming_Click(object sender, EventArgs e)
         {
             //filtruojam duombaze su žodžiais susijusais su kategorija žaidimai
-            Form forma= new FormDefault();
+            /*Form forma= new FormDefault();
             this.Hide();
             forma.ShowDialog(this);
             forma.StartPosition = FormStartPosition.Manual;
-            forma.Location = new Point(this.DesktopLocation.X, this.DesktopLocation.Y);
+            forma.Location = new Point(this.DesktopLocation.X, this.DesktopLocation.Y);*/
         }
 
         private void buttonTelecomunication_Click(object sender, EventArgs e)
