@@ -45,6 +45,7 @@ namespace Comparison_shopping_engine.Selenium
         {
             var price = product.FindElement(By.XPath("div/div/div[2]/span[2]")).Text.Replace(" ", "").Replace("€", "") + "€";
             var name = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("alt");
+            name = name.Substring(0, name.IndexOf("kaina ir informacija")).Trim();
             var productUrl = product.FindElement(By.XPath("div/div/a[2]")).GetAttribute("href");
             var photoUrl = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("src");
 
