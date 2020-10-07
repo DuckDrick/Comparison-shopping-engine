@@ -100,7 +100,7 @@ public class Scraper
                     .Where(node => node.GetAttributeValue("class", "")
                     .Equals("selected_menu")).FirstOrDefault().InnerText).Trim();
 
-                productsList.Add(new Product(name, price + " €‎", productUrl, productImageUrl, group));
+                productsList.Add(new Product(name, price + " €‎", productUrl, productImageUrl, group, "rde"));
                 string[] row = { name, price‎ + " €‎", "rde.lt" };
                 var item = new ListViewItem(row);
                 results.Items.Add(item);

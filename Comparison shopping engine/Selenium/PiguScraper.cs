@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -6,6 +7,11 @@ namespace Comparison_shopping_engine.Selenium
 {
     class PiguScraper : AbstractSeleniumScraper
     {
+        protected override bool AnyElements(ChromeDriver driver)
+        {
+            return driver.FindElementsByXPath("//*[@id=\"productListLoader\"]").Count > 0;
+        }
+
         protected override string GetProductGroup(ChromeDriver driver)
         {
             var groups = driver.FindElementByXPath("//*[@id=\"breadCrumbs\"]").FindElements(By.TagName("li"));
@@ -43,6 +49,10 @@ namespace Comparison_shopping_engine.Selenium
             var photoUrl = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("src");
 
             return (price, name, productUrl, photoUrl);
+        }
+
+        public PiguScraper(BackgroundWorker bw, string source) : base(bw, "https://pigu.lt/lt/search?q=" + source)
+        {
         }
     }
 }

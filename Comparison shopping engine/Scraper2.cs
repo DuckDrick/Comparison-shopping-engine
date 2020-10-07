@@ -81,7 +81,7 @@ namespace Comparison_shopping_engine
                     string[] row = { name, price, "bigbox.lt" };
                     var item = new ListViewItem(row);
                     results.Items.Add(item);
-                    productsList.Add(new Product(name, price, producturl, productImageUrl, group));
+                    productsList.Add(new Product(name, price, producturl, productImageUrl, group, "bigbox"));
                     try
                     {
                         db.addOrUpdate("bigbox", name.Replace("'", "''"), group, producturl, productImageUrl.Trim(), price.Replace("€", "").Replace(" ", "").Trim());

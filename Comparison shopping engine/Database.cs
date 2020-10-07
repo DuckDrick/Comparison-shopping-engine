@@ -91,7 +91,7 @@ namespace Comparison_shopping_engine
                 Console.WriteLine(s);
                 Console.WriteLine(e.Message);
                 return true;
-                
+
             }
         }
 
@@ -109,7 +109,7 @@ namespace Comparison_shopping_engine
 
                     while (dr.Read())
                     {
-                        pl.Add(new Product(dr[0].ToString(), dr[4].ToString() + "€", dr[2].ToString(), dr[3].ToString(), dr[1].ToString()));
+                        pl.Add(new Product(dr[0].ToString(), dr[4].ToString() + "€", dr[2].ToString(), dr[3].ToString(), dr[1].ToString(), table));
                     }
                     dr.Close();
                     return pl;
@@ -117,7 +117,7 @@ namespace Comparison_shopping_engine
             }
             catch (Exception e)
             {
-                
+
                 Console.WriteLine(e.Message);
                 return pl;
 
