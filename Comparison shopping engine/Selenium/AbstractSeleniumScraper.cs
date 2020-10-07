@@ -29,44 +29,47 @@ namespace Comparison_shopping_engine.Selenium
                 string nextPage = _scrape;
                 driver.Navigate().GoToUrl(nextPage);
                 Regex rgx = new Regex("\\..*\\.");
-                do
+                if (AnyElements(driver))
                 {
-                    var productList = GetProductList(driver);
-                    foreach (var product in productList)
+                    do
                     {
-                        if (ShouldScrapeIf(product))
+                        var productList = GetProductList(driver);
+                        foreach (var product in productList)
                         {
-                            var (price, name, productUrl, photoUrl) = GetInfo(product);
-                            products.Add(new Product(name, price, productUrl, photoUrl, "None", rgx.Match(_scrape).Value));
+                            if (ShouldScrapeIf(product))
+                            {
+                                var (price, name, productUrl, photoUrl) = GetInfo(product);
+                                products.Add(new Product(name, price, productUrl, photoUrl, "None",
+                                    rgx.Match(_scrape).Value));
+                            }
+
+                            if (!_bw.CancellationPending) continue;
+                            driver.Close();
+                            driver.Quit();
+                            return;
                         }
 
-                        if (!_bw.CancellationPending) continue;
-                        driver.Close();
-                        driver.Quit();
-                        return;
-                    }
 
+                        foreach (var product in products)
+                        {
+                            driver.Navigate().GoToUrl(product.Link);
+                            product.Group = GetProductGroup(driver);
 
-                    foreach (var product in products)
-                    {
-                        driver.Navigate().GoToUrl(product.Link);
-                        product.Group = GetProductGroup(driver);
+                            if (!_bw.CancellationPending) continue;
+                            driver.Close();
+                            driver.Quit();
+                            _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
+                            return;
+                        }
 
-                        if (!_bw.CancellationPending) continue;
-                        driver.Close();
-                        driver.Quit();
-                        _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
-                        return;
-                    }
+                        _bw.ReportProgress(1, products);
 
-                    _bw.ReportProgress(1, products);
+                        driver.Navigate().GoToUrl(nextPage);
+                        nextPage = NextPage(driver);
+                        driver.Navigate().GoToUrl(nextPage);
+                    } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
 
-                    driver.Navigate().GoToUrl(nextPage);
-                    nextPage = NextPage(driver);
-                    driver.Navigate().GoToUrl(nextPage);
-                } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
-
-               
+                }
 
                 driver.Close();
                 driver.Quit();
@@ -74,6 +77,7 @@ namespace Comparison_shopping_engine.Selenium
 
         }
 
+        protected abstract bool AnyElements(ChromeDriver driver);
         protected abstract string GetProductGroup(ChromeDriver driver);
         protected abstract bool ShouldStopScraping(string nextPage);
         protected abstract string NextPage(ChromeDriver driver);

@@ -7,6 +7,11 @@ namespace Comparison_shopping_engine.Selenium
 {
     class PiguScraper : AbstractSeleniumScraper
     {
+        protected override bool AnyElements(ChromeDriver driver)
+        {
+            return driver.FindElementsByXPath("//*[@id=\"productListLoader\"]").Count > 0;
+        }
+
         protected override string GetProductGroup(ChromeDriver driver)
         {
             var groups = driver.FindElementByXPath("//*[@id=\"breadCrumbs\"]").FindElements(By.TagName("li"));
