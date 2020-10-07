@@ -24,17 +24,17 @@ namespace Comparison_shopping_engine
                 var check = await CheckIfExists(source, name, connection);
                 if (!check)
                 {
-                    Add(name, group, link, pLink, price, source, connection);
+                    await Add(name, group, link, pLink, price, source, connection);
                 }
                 else
                 {
-                    Update(name, price, source, connection);
+                    await Update(name, price, source, connection);
                 }
                 await connection.CloseAsync();
             }
         }
 
-        private static async void Add(string name, string group, string link, string pLink, string price, string source, NpgsqlConnection connection)
+        private static async Task Add(string name, string group, string link, string pLink, string price, string source, NpgsqlConnection connection)
         {
             var cmd = new NpgsqlCommand("INSERT INTO " + source + " values (" +
                                         "\'" + name + "\'," +
@@ -44,11 +44,11 @@ namespace Comparison_shopping_engine
                                         "" + price.Replace(",", ".").Replace(" ", "") + ")", connection);
             await cmd.ExecuteNonQueryAsync();
         }
-        private static async void Update(string name, string price, string source, NpgsqlConnection connection)
+        private static async Task Update(string name, string price, string source, NpgsqlConnection connection)
         {
-            var cmd = new NpgsqlCommand("UPDATE " + source + "" +
-                                        "SET price=" + price +
-                                        "WHERE name='" + name +"'", connection);
+            var cmd = new NpgsqlCommand("UPDATE " + source + " " +
+                                        "SET price=" + price.Replace(",", ".") +
+                                        " WHERE name='" + name +"'", connection);
            await cmd.ExecuteNonQueryAsync();
         }
 
