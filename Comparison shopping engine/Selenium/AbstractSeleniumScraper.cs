@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -28,6 +29,8 @@ namespace Comparison_shopping_engine.Selenium
             {
                 string nextPage = _scrape;
                 driver.Navigate().GoToUrl(nextPage);
+                driver.Manage().Window.Position = new Point(0, 0);
+                driver.Manage().Window.Size = new Size(1920, 1080);
                 Regex rgx = new Regex("\\..*\\.");
                 if (AnyElements(driver))
                 {
@@ -53,6 +56,8 @@ namespace Comparison_shopping_engine.Selenium
                         foreach (var product in products)
                         {
                             driver.Navigate().GoToUrl(product.Link);
+                            driver.Manage().Window.Position = new Point(0, 0);
+                            driver.Manage().Window.Size = new Size(1920, 1080);
                             product.Group = GetProductGroup(driver);
 
                             if (!_bw.CancellationPending) continue;
@@ -65,8 +70,12 @@ namespace Comparison_shopping_engine.Selenium
                         _bw.ReportProgress(1, products);
 
                         driver.Navigate().GoToUrl(nextPage);
+                        driver.Manage().Window.Position = new Point(0, 0);
+                        driver.Manage().Window.Size = new Size(1920, 1080);
                         nextPage = NextPage(driver);
                         driver.Navigate().GoToUrl(nextPage);
+                        driver.Manage().Window.Position = new Point(0, 0);
+                        driver.Manage().Window.Size = new Size(1920, 1080);
                     } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
 
                 }

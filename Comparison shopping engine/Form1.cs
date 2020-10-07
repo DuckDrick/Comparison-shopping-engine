@@ -36,25 +36,32 @@ namespace Comparison_shopping_engine
 
         private void Scrape(object sender, EventArgs e)
         {
-
-            if (backgroundWorker1.IsBusy)
-                backgroundWorker1.CancelAsync();
-            while (this.backgroundWorker1.CancellationPending)
+            if (!string.IsNullOrEmpty(search.Text))
             {
-                Application.DoEvents();
+                if (backgroundWorker1.IsBusy)
+                    backgroundWorker1.CancelAsync();
+                while (this.backgroundWorker1.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
+
+                if (backgroundWorker2.IsBusy)
+                    backgroundWorker2.CancelAsync();
+                while (this.backgroundWorker2.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
+
+
+                productListView.Items.Clear();
+                PopulateProductListView();
+                backgroundWorker1.RunWorkerAsync(argument: search.Text);
+                backgroundWorker2.RunWorkerAsync(argument: search.Text);
             }
-            if (backgroundWorker2.IsBusy)
-                backgroundWorker2.CancelAsync();
-            while (this.backgroundWorker2.CancellationPending)
+            else
             {
-                Application.DoEvents();
+                MessageBox.Show("Paieškos laukas tuščias");
             }
-
-
-            productListView.Items.Clear();
-            PopulateProductListView();
-            //backgroundWorker1.RunWorkerAsync(argument: search.Text);
-            backgroundWorker2.RunWorkerAsync(argument: search.Text);
         }
 
 
