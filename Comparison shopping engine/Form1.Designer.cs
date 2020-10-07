@@ -40,6 +40,7 @@
             this.productGroup = new System.Windows.Forms.Label();
             this.productLink = new System.Windows.Forms.LinkLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,11 +134,22 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(732, 43);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(103, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "StopScraping";
+            this.button1.UseVisualStyleBackColor = true;
+          //  this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1310, 542);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.productLink);
             this.Controls.Add(this.productGroup);
             this.Controls.Add(this.productN);
@@ -168,6 +180,7 @@
         private System.Windows.Forms.Label productGroup;
         private System.Windows.Forms.LinkLabel productLink;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

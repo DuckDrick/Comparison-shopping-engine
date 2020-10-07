@@ -38,12 +38,12 @@ namespace Comparison_shopping_engine
         {
             var itemName = productListView.SelectedItems[0].SubItems[0].Text;
             var itemPrice = productListView.SelectedItems[0].SubItems[1].Text;
-            foreach (var product in _productList.Where(product => itemName.Equals(product.name) && itemPrice.Equals(product.price)))
+            foreach (var product in _productList.Where(product => itemName.Equals(product.Name) && itemPrice.Equals(product.Price)))
             {
-                productN.Text = product.name;
-                productPicture.Load(product.imageurl);
-                productGroup.Text = product.group;
-                productLink.Text = product.link;
+                productN.Text = product.Name;
+                productPicture.Load(product.ImageUrl);
+                productGroup.Text = product.Group;
+                productLink.Text = product.Link;
             }
         }
 
@@ -63,14 +63,14 @@ namespace Comparison_shopping_engine
             var list = await Database.Get(search.Text.Replace(" ", "%"), "rde");
             foreach (var product in list)
             {
-                string[] row = { product.name, product.price, "rde.lt" };
+                string[] row = { product.Name, product.Price, "rde.lt" };
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
             list = await Database.Get(search.Text.Replace(" ", "%"), "bigbox");
             foreach (var product in list)
             {
-                string[] row = { product.name, product.price, "bigbox.lt" };
+                string[] row = { product.Name, product.Price, "bigbox.lt" };
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
@@ -98,7 +98,7 @@ namespace Comparison_shopping_engine
             List<Product> pL = (List<Product>) e.Result;
             foreach (var product in pL)
             {
-                string[] row = {product.name, product.price, "Pigu.lt"};
+                string[] row = {product.Name, product.Price, "Pigu.lt"};
                 productListView.Items.Add(new ListViewItem(row));
             }
             
