@@ -36,9 +36,16 @@ namespace Comparison_shopping_engine
 
         private void Scrape(object sender, EventArgs e)
         {
+
             if (backgroundWorker1.IsBusy)
                 backgroundWorker1.CancelAsync();
             while (this.backgroundWorker1.CancellationPending)
+            {
+                Application.DoEvents();
+            }
+            if (backgroundWorker2.IsBusy)
+                backgroundWorker2.CancelAsync();
+            while (this.backgroundWorker2.CancellationPending)
             {
                 Application.DoEvents();
             }
@@ -46,7 +53,8 @@ namespace Comparison_shopping_engine
 
             productListView.Items.Clear();
             PopulateProductListView();
-            backgroundWorker1.RunWorkerAsync(argument: search.Text);
+            //backgroundWorker1.RunWorkerAsync(argument: search.Text);
+            backgroundWorker2.RunWorkerAsync(argument: search.Text);
         }
 
 
@@ -124,6 +132,31 @@ namespace Comparison_shopping_engine
                 backgroundWorker1.CancelAsync();
             }
         }
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new NovastarScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "Novastar.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
+
+        }
+
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Scraping Done");
+        }
+
+
 
         private void buttonGaming_Click(object sender, EventArgs e)
         {
