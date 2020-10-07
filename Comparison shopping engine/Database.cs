@@ -91,7 +91,7 @@ namespace Comparison_shopping_engine
                 Console.WriteLine(s);
                 Console.WriteLine(e.Message);
                 return true;
-                
+
             }
         }
 
@@ -117,7 +117,7 @@ namespace Comparison_shopping_engine
             }
             catch (Exception e)
             {
-                
+
                 Console.WriteLine(e.Message);
                 return pl;
 
