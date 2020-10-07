@@ -84,7 +84,7 @@ namespace Comparison_shopping_engine
                     productsList.Add(new Product(name, price, producturl, productImageUrl, group, "bigbox"));
                     try
                     {
-                        db.addOrUpdate("bigbox", name.Replace("'", "''"), group, producturl, productImageUrl.Trim(), price.Replace("€", "").Replace(" ", "").Trim());
+                        db.AddOrUpdate("bigbox", name.Replace("'", "''"), group, producturl, productImageUrl.Trim(), price.Replace("€", "").Replace(" ", "").Trim());
                     }
                     catch (Exception e)
                     {

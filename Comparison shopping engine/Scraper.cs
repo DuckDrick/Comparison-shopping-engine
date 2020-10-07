@@ -106,7 +106,7 @@ public class Scraper
                 results.Items.Add(item);
                 try
                 {
-                    db.addOrUpdate("rde", name.Replace("'", "''"), group, productUrl, productImageUrl.Trim(), price.Replace(",", ".").Replace(" ", "").Trim());
+                    db.AddOrUpdate("rde", name.Replace("'", "''"), group, productUrl, productImageUrl.Trim(), price.Replace(",", ".").Replace(" ", "").Trim());
                 }
                 catch (Exception e)
                 {

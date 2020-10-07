@@ -1,68 +1,64 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Comparison_shopping_engine
 {
     public class Database
     {
-        //private NpgsqlConnection connection;
-        private string conString;
+        
+        private readonly string _conString;
         public Database()
         {
-            this.conString = VerySecretFile.connectionString;
+            this._conString = VerySecretFile.connectionString;
 
         }
 
-        private void connect(string conString)
-        {
-            //connection = new NpgsqlConnection(conString);
-            //connection.Open();
-        }
 
-        public async void addOrUpdate(string source, string name, string group, string link, string plink, string price)
+        public async void AddOrUpdate(string source, string name, string group, string link, string pLink, string price)
         {
-            using (var connection = new NpgsqlConnection(conString))
+            using (var connection = new NpgsqlConnection(_conString))
             {
                 connection.Open();
-                var check = await checkIfExists(source, name, connection);
+                var check = await CheckIfExists(source, name, connection);
                 if (!check)
                 {
-                    await add(name, group, link, plink, price, source, connection);
+                    Add(name, group, link, pLink, price, source, connection);
                 }
                 else
                 {
-
+                    Update(name, price, source, connection);
                 }
-                connection.Close();
+                await connection.CloseAsync();
             }
         }
 
-        private async Task add(string name, string group, string link, string plink, string price, string source, NpgsqlConnection connection)
+        private static async void Add(string name, string group, string link, string pLink, string price, string source, NpgsqlConnection connection)
         {
-            NpgsqlCommand cmd = new NpgsqlCommand("INSERT INTO " + source + " values (" +
-                     "\'" + name + "\'," +
-                     "\'" + group + "\'," +
-                     "\'" + link + "\'," +
-                     "\'" + plink + "\'," +
-                     "" + price.Replace(",", ".").Replace(" ", "") + ")", connection);
+            var cmd = new NpgsqlCommand("INSERT INTO " + source + " values (" +
+                                        "\'" + name + "\'," +
+                                        "\'" + group + "\'," +
+                                        "\'" + link + "\'," +
+                                        "\'" + pLink + "\'," +
+                                        "" + price.Replace(",", ".").Replace(" ", "") + ")", connection);
             await cmd.ExecuteNonQueryAsync();
         }
-        private void update(string name, string price)
+        private static async void Update(string name, string price, string source, NpgsqlConnection connection)
         {
-
+            var cmd = new NpgsqlCommand("UPDATE " + source + "" +
+                                        "SET price=" + price +
+                                        "WHERE name='" + name +"'", connection);
+           await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task<bool> checkIfExists(string source, string name, NpgsqlConnection connection)
+        public async Task<bool> CheckIfExists(string source, string name, NpgsqlConnection connection)
         {
             Console.WriteLine(name);
             var cmd = new NpgsqlCommand("SELECT * FROM " + source + " where name='" + name + "'", connection);
-            var reader = cmd.ExecuteReader();
+            var reader = await cmd.ExecuteReaderAsync();
             var res = await reader.ReadAsync();
-            reader.Close();
+            await reader.CloseAsync();
             return res;
         }
 
@@ -70,12 +66,12 @@ namespace Comparison_shopping_engine
         {
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection(VerySecretFile.connectionString))
+                using (var conn = new NpgsqlConnection(VerySecretFile.connectionString))
                 {
                     conn.Open();
 
-                    NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM " + table + " where name='" + s + "'", conn);
-                    NpgsqlDataReader dr = cmd.ExecuteReader();
+                    var cmd = new NpgsqlCommand("SELECT * FROM " + table + " where name='" + s + "'", conn);
+                    var dr = cmd.ExecuteReader();
 
                     if (dr.Read())
                     {
@@ -83,7 +79,7 @@ namespace Comparison_shopping_engine
                         return true;
                     }
                     dr.Close();
-                    return false; ;
+                    return false;
                 }
             }
             catch (Exception e)
@@ -97,21 +93,21 @@ namespace Comparison_shopping_engine
 
         public static async Task<List<Product>> Get(string s, string table)
         {
-            List<Product> pl = new List<Product>();
+            var pl = new List<Product>();
             try
             {
-                using (NpgsqlConnection conn = new NpgsqlConnection(VerySecretFile.connectionString))
+                using (var conn = new NpgsqlConnection(VerySecretFile.connectionString))
                 {
                     conn.Open();
 
-                    NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM " + table + " where upper(name) like upper('%" + s + "%')", conn);
-                    NpgsqlDataReader dr = cmd.ExecuteReader();
+                    var cmd = new NpgsqlCommand("SELECT * FROM " + table + " where upper(name) like upper('%" + s + "%')", conn);
+                    var dr = await cmd.ExecuteReaderAsync();
 
                     while (dr.Read())
                     {
-                        pl.Add(new Product(dr[0].ToString(), dr[4].ToString() + "€", dr[2].ToString(), dr[3].ToString(), dr[1].ToString(), table));
+                        pl.Add(new Product(dr[0].ToString(), dr[4] + "€", dr[2].ToString(), dr[3].ToString(), dr[1].ToString(), table));
                     }
-                    dr.Close();
+                    await dr.CloseAsync();
                     return pl;
                 }
             }
