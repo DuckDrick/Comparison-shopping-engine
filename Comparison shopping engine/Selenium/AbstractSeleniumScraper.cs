@@ -20,7 +20,7 @@ namespace Comparison_shopping_engine.Selenium
         }
         public void ScrapeWithSelenium()
         {
-            var products = new List<Product>();
+            
 
             var options = new ChromeOptions();
             //options.AddArgument("headless");
@@ -28,19 +28,23 @@ namespace Comparison_shopping_engine.Selenium
             {
                 string nextPage = _scrape;
                 driver.Navigate().GoToUrl(nextPage);
-                Regex rgx = new Regex("\\..*\\.");
+                Regex rgx = new Regex("\\/.*\\.");
                 if (AnyElements(driver))
                 {
+                    var db = new Database();
+                    var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", "");
                     do
                     {
+                        var products = new List<Product>();
                         var productList = GetProductList(driver);
                         foreach (var product in productList)
                         {
                             if (ShouldScrapeIf(product))
                             {
                                 var (price, name, productUrl, photoUrl) = GetInfo(product);
-                                products.Add(new Product(name, price, productUrl, photoUrl, "None",
-                                    rgx.Match(_scrape).Value));
+                                if (!Database.Search(name, site))
+                                    products.Add(new Product(name, price, productUrl, photoUrl, "None",
+                                    site + ".lt"));
                             }
 
                             if (!_bw.CancellationPending) continue;
@@ -54,7 +58,7 @@ namespace Comparison_shopping_engine.Selenium
                         {
                             driver.Navigate().GoToUrl(product.Link);
                             product.Group = GetProductGroup(driver);
-
+                            db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
                             if (!_bw.CancellationPending) continue;
                             driver.Close();
                             driver.Quit();
