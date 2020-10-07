@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.ComponentModel;
+
+using System.Drawing;
+
 using System.Linq;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Forms;
 using Comparison_shopping_engine.Selenium;
 
 namespace Comparison_shopping_engine
@@ -21,7 +26,12 @@ namespace Comparison_shopping_engine
         {
             // _db = new Database();
             PopulateProductList();
+
             productPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            PopulateProductCategory();
+            this.productCategory.AutoScroll = true;
+
         }
 
         private void Scrape(object sender, EventArgs e)
@@ -114,7 +124,60 @@ namespace Comparison_shopping_engine
                 backgroundWorker1.CancelAsync();
             }
         }
+
+        private void buttonGaming_Click(object sender, EventArgs e)
+        {
+            //filtruojam duombaze su žodžiais susijusais su kategorija žaidimai
+            /*Form forma= new FormDefault();
+            this.Hide();
+            forma.ShowDialog(this);
+            forma.StartPosition = FormStartPosition.Manual;
+            forma.Location = new Point(this.DesktopLocation.X, this.DesktopLocation.Y);*/
+        }
+
+        private void buttonTelecomunication_Click(object sender, EventArgs e)
+        {
+            //filtruojam duombaze su žodžiais susijusais su kategorija telefonai
+        }
+
+        private void buttonComputers_Click(object sender, EventArgs e)
+        {
+            //filtruojam duombaze su žodžiais susijusais su kategorija kompiuteriai
+        }
+        private void PopulateProductCategory()
+        {
+            //reiks is duombazes patraukti kategorijas musu padarytas ir is ju padaryti mygtukus
+            for (int i = 0; i < 10; i++)
+            {
+                Button button = new Button();
+                button.Height = 100;
+                button.Width = 200;
+                button.Dock = DockStyle.Bottom;
+                button.Text = "test" + i;
+                button.ForeColor = System.Drawing.Color.White;
+                button.BackColor = System.Drawing.Color.MediumOrchid;
+                button.Font = new Font("Centuary Gothic", 12, FontStyle.Bold);
+                this.productCategory.Controls.Add(button);
+            }
+
+        }
+
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == WM_NCHITTEST)
+                m.Result = (IntPtr)(HT_CAPTION);
+        }
+
+        private const int WM_NCHITTEST = 0x84;
+        private const int HT_CLIENT = 0x1;
+        private const int HT_CAPTION = 0x2;
     }
+
 
 
 }
