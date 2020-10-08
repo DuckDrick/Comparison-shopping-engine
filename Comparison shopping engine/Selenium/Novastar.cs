@@ -20,8 +20,10 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override string GetProductGroup(ChromeDriver driver)
         {
-            var group = driver.FindElement(By.ClassName("breadcrumbs")).Text;
-            return group;
+            var group = driver.FindElement(By.ClassName("breadcrumbs"));
+            var g = group.FindElements(By.TagName("span"));
+            var kk = g[1].Text;
+            return kk;
         }
 
         protected override bool ShouldStopScraping(string next_page)
@@ -92,12 +94,12 @@ namespace Comparison_shopping_engine.Selenium
             }
             var name = product.FindElement(By.ClassName("link--dark")).Text;
             var productUrl = product.FindElement(By.ClassName("link--dark")).GetAttribute("href");
-            var photoUrl = "https://www.novastar.lt/" + product.FindElement(By.ClassName("product__image_wrapper"))
+            var photoUrl = product.FindElement(By.TagName("img"))
                 .GetAttribute("src");
             return (price, name, productUrl, photoUrl);
         }
 
-        public NovastarScraper(BackgroundWorker bw, string scrape) : base(bw, "https://www.novastar.lt/search/?q=" + scrape)
+        public NovastarScraper(BackgroundWorker bw, string scrape) : base(bw, "https://novastar.lt/search/?q=" + scrape)
         {
 
         }

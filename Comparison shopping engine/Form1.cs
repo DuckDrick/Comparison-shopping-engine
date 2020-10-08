@@ -88,6 +88,8 @@ namespace Comparison_shopping_engine
         {
             _productList = await Database.Get("", "rde");
             _productList.AddRange(await Database.Get("", "bigbox"));
+            _productList.AddRange(await Database.Get("", "pigu"));
+            _productList.AddRange(await Database.Get("", "novastar"));
         }
 
         private async void PopulateProductListView()
@@ -103,6 +105,20 @@ namespace Comparison_shopping_engine
             foreach (var product in list)
             {
                 string[] row = { product.Name, product.Price, "bigbox.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "pigu");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "pigu.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "novastar");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "novastar.lt" };
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
