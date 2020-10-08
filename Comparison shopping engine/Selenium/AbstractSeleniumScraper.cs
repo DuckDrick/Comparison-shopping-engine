@@ -24,9 +24,9 @@ namespace Comparison_shopping_engine.Selenium
         {
             
 
-            var options = new ChromeOptions();
-            options.AddArgument("headless");
-            using (var driver = new ChromeDriver(options))
+            //var options = new ChromeOptions();
+            //options.AddArgument("headless");
+            using (var driver = new ChromeDriver())
             {
                 string nextPage = _scrape;
                 driver.Navigate().GoToUrl(nextPage);
