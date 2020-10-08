@@ -50,7 +50,7 @@ namespace Comparison_shopping_engine.Selenium
             return !splitLink[splitLink.Length - 1].Equals("#");
         }
 
-        public SenukaiScraper(BackgroundWorker bw, string source) : base(bw, "https://www.senukai.lt/paieska/?q=" + source)
+        public SenukaiScraper(BackgroundWorker bw, string source) : base(bw, "https://senukai.lt/paieska/?q=" + source)
         {
         }
     }
