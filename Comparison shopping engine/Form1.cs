@@ -168,16 +168,20 @@ namespace Comparison_shopping_engine
             {
                 backgroundWorker2.CancelAsync();
             }
+            if (backgroundWorker3.IsBusy)
+            {
+                backgroundWorker3.CancelAsync();
+            }
         }
 
-        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
             var paieska = (string)e.Argument;
             new SenukaiScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
         }
 
-        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             var l = (List<Product>)e.UserState;
             foreach (var product in l)
@@ -214,7 +218,7 @@ namespace Comparison_shopping_engine
 
 
 
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             MessageBox.Show("Scraping Done");
         } //RunWorkerCompleted nebutinas, nes ir pigu ir senuku scraperiai meta po lentele,kad scraping done

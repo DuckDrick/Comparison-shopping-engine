@@ -54,7 +54,7 @@
             this.buttonGaming = new System.Windows.Forms.Button();
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
-            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+    
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.productCategory.SuspendLayout();
             this.SuspendLayout();
@@ -352,7 +352,7 @@
         private System.Windows.Forms.Button buttonBuitinesprekes;
         private System.Windows.Forms.Label labelFilter;
         private System.Windows.Forms.Button buttonExit;
-        private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private System.ComponentModel.BackgroundWorker backgroundWorker3;
     }
 }
 

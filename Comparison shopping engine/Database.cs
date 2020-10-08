@@ -18,6 +18,7 @@ namespace Comparison_shopping_engine
 
         public async void AddOrUpdate(string source, string name, string group, string link, string pLink, string price)
         {
+
             using (var connection = new NpgsqlConnection(_conString))
             {
                 connection.Open();
@@ -36,6 +37,7 @@ namespace Comparison_shopping_engine
 
         private static async Task Add(string name, string group, string link, string pLink, string price, string source, NpgsqlConnection connection)
         {
+            
             var cmd = new NpgsqlCommand("INSERT INTO " + source + " values (" +
                                         "\'" + name + "\'," +
                                         "\'" + group + "\'," +

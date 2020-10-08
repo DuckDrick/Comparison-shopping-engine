@@ -48,8 +48,8 @@ namespace Comparison_shopping_engine.Selenium
                             if (ShouldScrapeIf(product))
                             {
                                 var (price, name, productUrl, photoUrl) = GetInfo(product);
-                                if (!Database.Search(name, site))
-                                    products.Add(new Product(name, price, productUrl, photoUrl, "None",
+                                if (!Database.Search(name.Replace("'", "''"), site))
+                                    products.Add(new Product(name.Replace("'", "''"), price, productUrl, photoUrl, "None",
                                     site + ".lt"));
                             }
 
