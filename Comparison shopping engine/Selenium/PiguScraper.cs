@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -31,8 +33,8 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
-            return driver.FindElementByXPath("//*[@id=\"productListLoader\"]")
-                .FindElements(By.ClassName("product-list-item"));
+            var products = driver.FindElementByXPath("//*[@id=\"productListLoader\"]").FindElements(By.XPath("//div[contains(@class, \"product-list-item\")]")).Where(product => product.GetAttribute("widget-old") != null).ToList(); ;
+            return new ReadOnlyCollection<IWebElement>(products);
         }
 
         protected override bool ShouldScrapeIf(IWebElement product)

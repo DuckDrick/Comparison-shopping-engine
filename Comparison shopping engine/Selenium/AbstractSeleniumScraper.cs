@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Comparison_shopping_engine.Selenium
 {
@@ -24,7 +25,7 @@ namespace Comparison_shopping_engine.Selenium
             
 
             var options = new ChromeOptions();
-            //options.AddArgument("headless");
+            options.AddArgument("headless");
             using (var driver = new ChromeDriver(options))
             {
                 string nextPage = _scrape;
@@ -62,10 +63,22 @@ namespace Comparison_shopping_engine.Selenium
                         foreach (var product in products)
                         {
                             driver.Navigate().GoToUrl(product.Link);
-                            driver.Manage().Window.Position = new Point(0, 0);
-                            driver.Manage().Window.Size = new Size(1920, 1080);
-                            product.Group = GetProductGroup(driver);
-                            db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+                            var tries = 0;
+                            while (tries < 5)
+                            {
+                                try
+                                {
+                                    product.Group = GetProductGroup(driver);
+                                    db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+
+                                    break;
+                                }
+                                catch
+                                {
+                                    tries++;
+                                }
+                            }
+
                             if (!_bw.CancellationPending) continue;
                             driver.Close();
                             driver.Quit();
@@ -76,12 +89,10 @@ namespace Comparison_shopping_engine.Selenium
                         _bw.ReportProgress(1, products);
 
                         driver.Navigate().GoToUrl(nextPage);
-                        driver.Manage().Window.Position = new Point(0, 0);
-                        driver.Manage().Window.Size = new Size(1920, 1080);
+    
                         nextPage = NextPage(driver);
                         driver.Navigate().GoToUrl(nextPage);
-                        driver.Manage().Window.Position = new Point(0, 0);
-                        driver.Manage().Window.Size = new Size(1920, 1080);
+       
                     } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
 
                 }
