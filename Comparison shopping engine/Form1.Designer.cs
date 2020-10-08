@@ -40,6 +40,11 @@
             this.productGroup = new System.Windows.Forms.Label();
             this.productLink = new System.Windows.Forms.LinkLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
+
+
             this.button1 = new System.Windows.Forms.Button();
             this.productCategory = new System.Windows.Forms.Panel();
             this.buttonProductsforkids = new System.Windows.Forms.Button();
@@ -145,6 +150,25 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+
+            // backgroundWorker2
+            //
+            this.backgroundWorker2.WorkerReportsProgress = true;
+            this.backgroundWorker2.WorkerSupportsCancellation = true;
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
+            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            //
+            
+            // backgroundWorker2
+            //
+            this.backgroundWorker3.WorkerReportsProgress = true;
+            this.backgroundWorker3.WorkerSupportsCancellation = true;
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
+            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
+            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
+            //
+
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(732, 43);
@@ -316,6 +340,7 @@
         private System.Windows.Forms.Label productGroup;
         private System.Windows.Forms.LinkLabel productLink;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
 
         private System.Windows.Forms.Button button1;
 
