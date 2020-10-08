@@ -37,32 +37,41 @@ namespace Comparison_shopping_engine
 
         private void Scrape(object sender, EventArgs e)
         {
-            if (backgroundWorker1.IsBusy)
-                backgroundWorker1.CancelAsync();
-            while (this.backgroundWorker1.CancellationPending)
+            if (!string.IsNullOrEmpty(search.Text))
             {
-                Application.DoEvents();
+                if (backgroundWorker1.IsBusy)
+                    backgroundWorker1.CancelAsync();
+                while (this.backgroundWorker1.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
+
+                if (backgroundWorker2.IsBusy)
+                    backgroundWorker2.CancelAsync();
+                while (this.backgroundWorker2.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
+                
+                if (backgroundWorker3.IsBusy)
+                    backgroundWorker3.CancelAsync();
+                while (this.backgroundWorker3.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
+
+
+                productListView.Items.Clear();
+                PopulateProductListView();
+                backgroundWorker1.RunWorkerAsync(argument: search.Text);
+                backgroundWorker2.RunWorkerAsync(argument: search.Text);
+                backgroundWorker3.RunWorkerAsync(argument: search.Text);
+            }
+            else
+            {
+                MessageBox.Show("Paieškos laukas tuščias");
             }
 
-
-            productListView.Items.Clear();
-            PopulateProductListView();
-            backgroundWorker1.RunWorkerAsync(argument: search.Text);
-
-
-
-
-            if (backgroundWorker2.IsBusy)
-                backgroundWorker2.CancelAsync();
-            while (this.backgroundWorker2.CancellationPending)
-            {
-                Application.DoEvents();
-            }
-
-
-            productListView.Items.Clear();
-            PopulateProductListView();
-            backgroundWorker2.RunWorkerAsync(argument: search.Text);
         }
 
 
@@ -89,6 +98,8 @@ namespace Comparison_shopping_engine
         {
             _productList = await Database.Get("", "rde");
             _productList.AddRange(await Database.Get("", "bigbox"));
+            _productList.AddRange(await Database.Get("", "pigu"));
+            _productList.AddRange(await Database.Get("", "novastar"));
         }
 
         private async void PopulateProductListView()
@@ -104,6 +115,20 @@ namespace Comparison_shopping_engine
             foreach (var product in list)
             {
                 string[] row = { product.Name, product.Price, "bigbox.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "pigu");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "pigu.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "novastar");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "novastar.lt" };
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
@@ -163,6 +188,31 @@ namespace Comparison_shopping_engine
             _productList2.AddRange(l);
 
         }
+        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new NovastarScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "Novastar.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
+
+        }
+
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Scraping Done");
+        }
+
+
 
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {

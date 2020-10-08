@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -31,8 +33,8 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
-            return driver.FindElementByXPath("//*[@id=\"productListLoader\"]")
-                .FindElements(By.ClassName("product-list-item"));
+            var products = driver.FindElementByXPath("//*[@id=\"productListLoader\"]").FindElements(By.XPath("//div[contains(@class, \"product-list-item\")]")).Where(product => product.GetAttribute("widget-old") != null).ToList(); ;
+            return new ReadOnlyCollection<IWebElement>(products);
         }
 
         protected override bool ShouldScrapeIf(IWebElement product)
@@ -45,6 +47,7 @@ namespace Comparison_shopping_engine.Selenium
         {
             var price = product.FindElement(By.XPath("div/div/div[2]/span[2]")).Text.Replace(" ", "").Replace("€", "") + "€";
             var name = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("alt");
+            name = name.Substring(0, name.IndexOf("kaina ir informacija")).Trim();
             var productUrl = product.FindElement(By.XPath("div/div/a[2]")).GetAttribute("href");
             var photoUrl = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("src");
 

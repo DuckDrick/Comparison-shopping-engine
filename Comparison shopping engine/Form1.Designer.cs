@@ -40,7 +40,10 @@
             this.productGroup = new System.Windows.Forms.Label();
             this.productLink = new System.Windows.Forms.LinkLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
+
 
             this.button1 = new System.Windows.Forms.Button();
             this.productCategory = new System.Windows.Forms.Panel();
@@ -51,7 +54,7 @@
             this.buttonGaming = new System.Windows.Forms.Button();
             this.labelFilter = new System.Windows.Forms.Label();
             this.buttonExit = new System.Windows.Forms.Button();
-
+            this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.productCategory.SuspendLayout();
             this.SuspendLayout();
@@ -147,6 +150,7 @@
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+
             // backgroundWorker2
             //
             this.backgroundWorker2.WorkerReportsProgress = true;
@@ -154,6 +158,15 @@
             this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
             this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
             this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            //
+            
+            // backgroundWorker2
+            //
+            this.backgroundWorker3.WorkerReportsProgress = true;
+            this.backgroundWorker3.WorkerSupportsCancellation = true;
+            this.backgroundWorker3.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker3_DoWork);
+            this.backgroundWorker3.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker3_ProgressChanged);
+            this.backgroundWorker3.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker3_RunWorkerCompleted);
             //
 
             // button1
@@ -166,13 +179,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1310, 542);
-            this.Controls.Add(this.button1);
-
             // productCategory
             // 
             this.productCategory.Controls.Add(this.buttonProductsforkids);
@@ -284,15 +290,23 @@
             this.buttonExit.UseVisualStyleBackColor = false;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
+            // backgroundWorker2
+            // 
+            this.backgroundWorker2.WorkerReportsProgress = true;
+            this.backgroundWorker2.WorkerSupportsCancellation = true;
+            this.backgroundWorker2.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker2_DoWork);
+            this.backgroundWorker2.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker2_ProgressChanged);
+            this.backgroundWorker2.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker2_RunWorkerCompleted);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Thistle;
             this.ClientSize = new System.Drawing.Size(1350, 625);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.productCategory);
-
             this.Controls.Add(this.productLink);
             this.Controls.Add(this.productGroup);
             this.Controls.Add(this.productN);
@@ -338,7 +352,7 @@
         private System.Windows.Forms.Button buttonBuitinesprekes;
         private System.Windows.Forms.Label labelFilter;
         private System.Windows.Forms.Button buttonExit;
-
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
 
