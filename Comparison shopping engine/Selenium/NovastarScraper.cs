@@ -98,12 +98,37 @@ namespace Comparison_shopping_engine.Selenium
 
         public NovastarScraper(BackgroundWorker bw, string scrape) : base(bw, "https://novastar.lt/search/?q=" + scrape)
         {
-
         }
 
         private string getcurrentpage(ChromeDriver driver)
         {
             return driver.FindElement(By.CssSelector("a.page-selector.number")).Text;
+        }
+
+        protected override void GroupItems(List<Product> products)
+        {
+            Parallel.ForEach(products, product =>
+            {
+                var options = new ChromeOptions();
+                options.AddArgument("headless");
+                var driver = new ChromeDriver(options);
+                driver.Navigate().GoToUrl(product.Link);
+                var tries = 0;
+                while (tries < 5)
+                {
+                    try
+                    {
+                        product.Group = GetProductGroup(driver);
+                        break;
+                    }
+                    catch
+                    {
+                        tries++;
+                    }
+                }
+                driver.Close();
+            }
+            );
         }
     }
 }

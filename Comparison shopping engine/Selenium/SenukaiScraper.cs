@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -48,6 +50,33 @@ namespace Comparison_shopping_engine.Selenium
         {
             var splitLink = nextPage.Split('/');
             return !splitLink[splitLink.Length - 1].Equals("#");
+        }
+
+
+        protected override void GroupItems(List<Product> products)
+        {
+            Parallel.ForEach(products, product =>
+            {
+                var options = new ChromeOptions();
+                options.AddArgument("headless");
+                var driver = new ChromeDriver(options);
+                driver.Navigate().GoToUrl(product.Link);
+                var tries = 0;
+                while (tries < 5)
+                {
+                    try
+                    {
+                        product.Group = GetProductGroup(driver);
+                        break;
+                    }
+                    catch
+                    {
+                        tries++;
+                    }
+                }
+                driver.Close();
+            }
+);
         }
 
         public SenukaiScraper(BackgroundWorker bw, string source) : base(bw, "https://senukai.lt/paieska/?q=" + source)

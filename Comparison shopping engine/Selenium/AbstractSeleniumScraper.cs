@@ -24,9 +24,9 @@ namespace Comparison_shopping_engine.Selenium
         {
             
 
-            //var options = new ChromeOptions();
-            //options.AddArgument("headless");
-            using (var driver = new ChromeDriver())
+            var options = new ChromeOptions();
+            options.AddArgument("headless");
+            using (var driver = new ChromeDriver(options))
             {
                 string nextPage = _scrape;
                 driver.Navigate().GoToUrl(nextPage);
@@ -59,10 +59,11 @@ namespace Comparison_shopping_engine.Selenium
                             return;
                         }
 
-
+                        GroupItems(products);
                         foreach (var product in products)
                         {
-                            driver.Navigate().GoToUrl(product.Link);
+                            db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+                            /*driver.Navigate().GoToUrl(product.Link);
                             var tries = 0;
                             while (tries < 5)
                             {
@@ -83,7 +84,7 @@ namespace Comparison_shopping_engine.Selenium
                             driver.Close();
                             driver.Quit();
                             _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
-                            return;
+                            return;*/
                         }
 
                         _bw.ReportProgress(1, products);
@@ -103,6 +104,7 @@ namespace Comparison_shopping_engine.Selenium
 
         }
 
+        protected abstract void GroupItems(List<Product> products);
         protected abstract bool AnyElements(ChromeDriver driver);
         protected abstract string GetProductGroup(ChromeDriver driver);
         protected abstract bool ShouldStopScraping(string nextPage);

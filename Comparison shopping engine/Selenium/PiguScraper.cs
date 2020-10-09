@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -52,6 +54,32 @@ namespace Comparison_shopping_engine.Selenium
             var photoUrl = product.FindElement(By.XPath("div/div/a[2]/img")).GetAttribute("src");
 
             return (price, name, productUrl, photoUrl);
+        }
+
+        protected override void GroupItems(List<Product> products)
+        {
+            Parallel.ForEach(products, product =>
+            {
+                var options = new ChromeOptions();
+                options.AddArgument("headless");
+                var driver = new ChromeDriver(options);
+                driver.Navigate().GoToUrl(product.Link);
+                var tries = 0;
+                while (tries < 5)
+                {
+                    try
+                    {
+                        product.Group = GetProductGroup(driver);
+                        break;
+                    }
+                    catch
+                    {
+                        tries++;
+                    }
+                }
+                driver.Close();
+            }
+);
         }
 
         public PiguScraper(BackgroundWorker bw, string source) : base(bw, "https://pigu.lt/lt/search?q=" + source)
