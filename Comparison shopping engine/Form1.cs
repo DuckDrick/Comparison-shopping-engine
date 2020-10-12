@@ -170,7 +170,19 @@ namespace Comparison_shopping_engine
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Scraping Done");
+            MessageBox.Show("Pigu scraping done");
+        }
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Novastar scraping Done");
+        }
+        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Senuku scraping Done");
+        }
+        private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Topocentras scraping Done");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -230,10 +242,6 @@ namespace Comparison_shopping_engine
 
         }
 
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Scraping Done");
-        }
 
 
 
