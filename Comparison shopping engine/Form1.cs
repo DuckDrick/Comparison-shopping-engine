@@ -59,6 +59,12 @@ namespace Comparison_shopping_engine
                 {
                     Application.DoEvents();
                 }
+                if (backgroundWorker4.IsBusy)
+                    backgroundWorker4.CancelAsync();
+                while (this.backgroundWorker3.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
 
 
                 productListView.Items.Clear();
@@ -66,6 +72,7 @@ namespace Comparison_shopping_engine
                 backgroundWorker1.RunWorkerAsync(argument: search.Text);
                 backgroundWorker2.RunWorkerAsync(argument: search.Text);
                 backgroundWorker3.RunWorkerAsync(argument: search.Text);
+                backgroundWorker4.RunWorkerAsync(argument: search.Text);
             }
             else
             {
@@ -100,6 +107,7 @@ namespace Comparison_shopping_engine
             _productList.AddRange(await Database.Get("", "bigbox"));
             _productList.AddRange(await Database.Get("", "pigu"));
             _productList.AddRange(await Database.Get("", "novastar"));
+            _productList.AddRange(await Database.Get("", "topocentras"));
         }
 
         private async void PopulateProductListView()
@@ -132,6 +140,13 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "wwwtopocentras");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "topocentras.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -155,7 +170,19 @@ namespace Comparison_shopping_engine
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Scraping Done");
+            MessageBox.Show("Pigu scraping done");
+        }
+        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Novastar scraping Done");
+        }
+        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Senuku scraping Done");
+        }
+        private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Topocentras scraping Done");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -171,6 +198,10 @@ namespace Comparison_shopping_engine
             if (backgroundWorker3.IsBusy)
             {
                 backgroundWorker3.CancelAsync();
+            }
+            if (backgroundWorker4.IsBusy)
+            {
+                backgroundWorker4.CancelAsync();
             }
         }
 
@@ -211,17 +242,9 @@ namespace Comparison_shopping_engine
 
         }
 
-        private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Scraping Done");
-        }
 
 
 
-        private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Scraping Done");
-        } //RunWorkerCompleted nebutinas, nes ir pigu ir senuku scraperiai meta po lentele,kad scraping done
 
         private void buttonGaming_Click(object sender, EventArgs e)
         {
@@ -274,6 +297,25 @@ namespace Comparison_shopping_engine
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
+
+        private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new TopocentasScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "topocentras.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList2.AddRange(l);
+
+        }
     }
 
 

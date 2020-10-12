@@ -22,7 +22,6 @@ namespace Comparison_shopping_engine.Selenium
         }
         public void ScrapeWithSelenium()
         {
-            
 
             var options = new ChromeOptions();
             options.AddArgument("headless");
@@ -41,6 +40,7 @@ namespace Comparison_shopping_engine.Selenium
                     var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", "");
                     do
                     {
+                        driver.Navigate().GoToUrl(nextPage);
                         var products = new List<Product>();
                         var productList = GetProductList(driver);
                         foreach (var product in productList)
@@ -59,10 +59,11 @@ namespace Comparison_shopping_engine.Selenium
                             return;
                         }
 
-
+                        GroupItems(products);
                         foreach (var product in products)
                         {
-                            driver.Navigate().GoToUrl(product.Link);
+                            db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+                            /*driver.Navigate().GoToUrl(product.Link);
                             var tries = 0;
                             while (tries < 5)
                             {
@@ -83,7 +84,7 @@ namespace Comparison_shopping_engine.Selenium
                             driver.Close();
                             driver.Quit();
                             _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
-                            return;
+                            return;*/
                         }
 
                         _bw.ReportProgress(1, products);
@@ -91,7 +92,7 @@ namespace Comparison_shopping_engine.Selenium
                         driver.Navigate().GoToUrl(nextPage);
     
                         nextPage = NextPage(driver);
-                        driver.Navigate().GoToUrl(nextPage);
+                        //driver.Navigate().GoToUrl(nextPage);
        
                     } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
 
@@ -103,6 +104,7 @@ namespace Comparison_shopping_engine.Selenium
 
         }
 
+        protected abstract void GroupItems(List<Product> products);
         protected abstract bool AnyElements(ChromeDriver driver);
         protected abstract string GetProductGroup(ChromeDriver driver);
         protected abstract bool ShouldStopScraping(string nextPage);

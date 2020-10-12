@@ -28,30 +28,27 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldStopScraping(string next_page)
         {
-            if (next_page.Equals("https://www.novastar.lt/"))
+            /*if (next_page.Equals("https://www.novastar.lt/"))
             {
                 return false;
-            }
+            }*/
             return false;
         }
 
         protected override string NextPage(ChromeDriver driver)
-        {//*[@id="pagination"]/div[1]/span/a[2]
-            //return driver.FindElementByXPath("//*[@id=\"react-root\"]/div[2]/div/div[2]/div[3]/div/a[3]").GetAttribute("href");
-            /*var link = driver.FindElementsByClassName("page-selector");
-            if (link.Count == 0)
-            {
-                return "https://www.novastar.lt/";
-            }
-            else
-            {
-                return link[0].GetAttribute("href");
-            }*/
-            /*if (driver.FindElementsByClassName("page_selector selected").Count == 1)
+        {
+            /*var link = driver.FindElements(By.CssSelector("a.page-selector.selected")).Count;
+            if ((driver.FindElements(By.CssSelector("a.page-selector.selected")).Count == 1)||(driver.FindElements(By.CssSelector("a.page-selector.selected")).Count == 2 && Convert.ToInt32(getcurrentpage(driver)) == 1))
             {
                 string url = driver.Url;
-                return url.Replace(getcurrentpage(driver), getcurrentpage(driver) + 1);
-                //return "https://www.novastar.lt/search/?page=" + getcurrentpage(driver) +1+"&q="
+                if (Convert.ToInt32(getcurrentpage(driver)) == 1)
+                {
+                    return "https://www.novastar.lt/search/?page=2&q=xbox%20one";
+                }
+                else
+                {
+                    return "https://www.novastar.lt/search/?page="+(Convert.ToInt32(getcurrentpage(driver)) +1)+"&q=xbox%20one";
+                }
             }
             else
             {
@@ -62,6 +59,8 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
+            //driver.FindElement(By.CssSelector("i.icon.icon--caret")).Click();
+            //driver.FindElement(By.CssSelector("div.dropdown-menu__item")).Click();
             var list= driver.FindElements(By.ClassName("product__item"));
             if (list != null)
             {
@@ -76,8 +75,6 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
-            //var spanList = product.FindElements(By.ClassName("product__item-mobile"));
-            //return spanList.Count > 0;
             return true;
         }
 
@@ -101,12 +98,39 @@ namespace Comparison_shopping_engine.Selenium
 
         public NovastarScraper(BackgroundWorker bw, string scrape) : base(bw, "https://novastar.lt/search/?q=" + scrape)
         {
-
         }
 
         private string getcurrentpage(ChromeDriver driver)
         {
-            return driver.FindElement(By.ClassName("page-selector selected number")).Text;
+            return driver.FindElement(By.CssSelector("a.page-selector.number")).Text;
+        }
+
+        protected override void GroupItems(List<Product> products)
+        {
+            Parallel.ForEach(products, product =>
+            {
+                var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                chromeDriverService.HideCommandPromptWindow = true;
+                var options = new ChromeOptions();
+                options.AddArguments("--headless", "--no-sandbox", "--disable-gpu", "--incognito", "--proxy-bypass-list=*", "--proxy-server='direct://'", "--log-level=3", "--hide-scrollbars");
+                var driver = new ChromeDriver(chromeDriverService, options);
+                driver.Navigate().GoToUrl(product.Link);
+                var tries = 0;
+                while (tries < 5)
+                {
+                    try
+                    {
+                        product.Group = GetProductGroup(driver);
+                        break;
+                    }
+                    catch
+                    {
+                        tries++;
+                    }
+                }
+                driver.Close();
+            }
+            );
         }
     }
 }
