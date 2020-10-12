@@ -22,7 +22,6 @@ namespace Comparison_shopping_engine.Selenium
         }
         public void ScrapeWithSelenium()
         {
-            
 
             var options = new ChromeOptions();
             options.AddArgument("headless");
@@ -41,6 +40,7 @@ namespace Comparison_shopping_engine.Selenium
                     var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", "");
                     do
                     {
+                        driver.Navigate().GoToUrl(nextPage);
                         var products = new List<Product>();
                         var productList = GetProductList(driver);
                         foreach (var product in productList)
@@ -92,7 +92,7 @@ namespace Comparison_shopping_engine.Selenium
                         driver.Navigate().GoToUrl(nextPage);
     
                         nextPage = NextPage(driver);
-                        driver.Navigate().GoToUrl(nextPage);
+                        //driver.Navigate().GoToUrl(nextPage);
        
                     } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
 

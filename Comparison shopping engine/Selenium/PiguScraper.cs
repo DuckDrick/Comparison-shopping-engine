@@ -60,9 +60,11 @@ namespace Comparison_shopping_engine.Selenium
         {
             Parallel.ForEach(products, product =>
             {
+                var chromeDriverService = ChromeDriverService.CreateDefaultService();
+                chromeDriverService.HideCommandPromptWindow = true;
                 var options = new ChromeOptions();
-                options.AddArgument("headless");
-                var driver = new ChromeDriver(options);
+                options.AddArguments("--headless", "--no-sandbox", "--disable-gpu", "--incognito", "--proxy-bypass-list=*", "--proxy-server='direct://'", "--log-level=3", "--hide-scrollbars");
+                var driver = new ChromeDriver(chromeDriverService, options);
                 driver.Navigate().GoToUrl(product.Link);
                 var tries = 0;
                 while (tries < 5)
