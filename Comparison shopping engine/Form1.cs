@@ -75,10 +75,10 @@ namespace Comparison_shopping_engine
 
                 productListView.Items.Clear();
                 PopulateProductListView();
-                //backgroundWorker1.RunWorkerAsync(argument: search.Text);
-                //backgroundWorker2.RunWorkerAsync(argument: search.Text);
-                //backgroundWorker3.RunWorkerAsync(argument: search.Text);
-                //backgroundWorker4.RunWorkerAsync(argument: search.Text);
+                backgroundWorker1.RunWorkerAsync(argument: search.Text);
+                backgroundWorker2.RunWorkerAsync(argument: search.Text);
+                backgroundWorker3.RunWorkerAsync(argument: search.Text);
+                backgroundWorker4.RunWorkerAsync(argument: search.Text);
                 backgroundWorker5.RunWorkerAsync(argument: search.Text);
             }
             else
