@@ -12,18 +12,19 @@ namespace Comparison_shopping_engine.Selenium
 {
     class TopocentasScraper : AbstractSeleniumScraper
     {
-        public TopocentasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://www.topocentras.lt/catalogsearch/result/?q="+scrape)
+        public TopocentasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://topocentras.lt/catalogsearch/result/?q="+scrape)
         {
         }
 
         protected override void GroupItems(List<Product> products)
         {
+            int i=0;
             Parallel.ForEach(products, product =>
             {
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
                 chromeDriverService.HideCommandPromptWindow = true;
                 var options = new ChromeOptions();
-                options.AddArguments("--headless", "--no-sandbox", "--disable-gpu", "--incognito", "--proxy-bypass-list=*", "--proxy-server='direct://'", "--log-level=3", "--hide-scrollbars");
+                options.AddArguments("--headless", "--no-sandbox");
                 var driver = new ChromeDriver(chromeDriverService, options);
                 //var driver = new ChromeDriver();
                 driver.Navigate().GoToUrl(product.Link);
@@ -32,6 +33,7 @@ namespace Comparison_shopping_engine.Selenium
                 {
                     try
                     {
+                        i++;
                         product.Group = GetProductGroup(driver);
                         break;
                     }
@@ -67,7 +69,7 @@ namespace Comparison_shopping_engine.Selenium
                 }
             }
 
-            return "unknown group";
+            return "None";
         }
 
         protected override bool ShouldStopScraping(string nextPage)
@@ -107,7 +109,21 @@ namespace Comparison_shopping_engine.Selenium
             price = product.FindElement(By.ClassName("Price-price-27p")).Text;
             var name = product.FindElement(By.ClassName("ProductGrid-productName-1JN")).Text;
             var productUrl = product.FindElement(By.ClassName("ProductGrid-link-3Q6")).GetAttribute("href");
-            var photoUrl =product.FindElement(By.ClassName("ProductGrid-imageContainer-3rN")).GetAttribute("src");
+            string photoUrl ="";
+            var tries = 0;
+            while (tries < 5)
+            {
+                try
+                {
+                    photoUrl = product.FindElement(By.TagName("img")).GetAttribute("src");
+                    break;
+                }
+                catch
+                {
+                    tries++;
+                }
+            }
+
             return (price, name, productUrl, photoUrl);
 
         }

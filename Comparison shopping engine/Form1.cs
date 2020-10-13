@@ -140,7 +140,7 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
-            list = await Database.Get(search.Text.Replace(" ", "%"), "wwwtopocentras");
+            list = await Database.Get(search.Text.Replace(" ", "%"), "topocentras");
             foreach (var product in list)
             {
                 string[] row = { product.Name, product.Price, "topocentras.lt" };

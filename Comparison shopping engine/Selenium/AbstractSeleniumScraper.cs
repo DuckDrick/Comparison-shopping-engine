@@ -62,14 +62,14 @@ namespace Comparison_shopping_engine.Selenium
                         GroupItems(products);
                         foreach (var product in products)
                         {
-                            db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
-                            /*driver.Navigate().GoToUrl(product.Link);
+                            //db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+                            //driver.Navigate().GoToUrl(product.Link);
                             var tries = 0;
                             while (tries < 5)
                             {
                                 try
                                 {
-                                    product.Group = GetProductGroup(driver);
+                                    //product.Group = GetProductGroup(driver);
                                     db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
 
                                     break;
@@ -81,10 +81,10 @@ namespace Comparison_shopping_engine.Selenium
                             }
 
                             if (!_bw.CancellationPending) continue;
-                            driver.Close();
-                            driver.Quit();
+                            //driver.Close();
+                            //driver.Quit();
                             _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
-                            return;*/
+                            return;
                         }
 
                         _bw.ReportProgress(1, products);
