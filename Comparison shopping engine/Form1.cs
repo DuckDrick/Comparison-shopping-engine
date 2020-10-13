@@ -65,14 +65,21 @@ namespace Comparison_shopping_engine
                 {
                     Application.DoEvents();
                 }
+                if (backgroundWorker5.IsBusy)
+                    backgroundWorker5.CancelAsync();
+                while (this.backgroundWorker5.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
 
 
                 productListView.Items.Clear();
                 PopulateProductListView();
-                backgroundWorker1.RunWorkerAsync(argument: search.Text);
-                backgroundWorker2.RunWorkerAsync(argument: search.Text);
-                backgroundWorker3.RunWorkerAsync(argument: search.Text);
-                backgroundWorker4.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker1.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker2.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker3.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker4.RunWorkerAsync(argument: search.Text);
+                backgroundWorker5.RunWorkerAsync(argument: search.Text);
             }
             else
             {
@@ -108,6 +115,7 @@ namespace Comparison_shopping_engine
             _productList.AddRange(await Database.Get("", "pigu"));
             _productList.AddRange(await Database.Get("", "novastar"));
             _productList.AddRange(await Database.Get("", "topocentras"));
+            _productList.AddRange(await Database.Get("", "skytech"));
         }
 
         private async void PopulateProductListView()
@@ -147,6 +155,13 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "skytech");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "skytech.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -174,15 +189,19 @@ namespace Comparison_shopping_engine
         }
         private void backgroundWorker2_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Novastar scraping Done");
+            MessageBox.Show("Novastar scraping done");
         }
         private void backgroundWorker3_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Senuku scraping Done");
+            MessageBox.Show("Senuku scraping done");
         }
         private void backgroundWorker4_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("Topocentras scraping Done");
+            MessageBox.Show("Topocentras scraping done");
+        }
+        private void backgroundWorker5_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Skytech scraping done");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -203,6 +222,10 @@ namespace Comparison_shopping_engine
             {
                 backgroundWorker4.CancelAsync();
             }
+            if (backgroundWorker5.IsBusy)
+            {
+                backgroundWorker5.CancelAsync();
+            }
         }
 
         private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
@@ -220,7 +243,7 @@ namespace Comparison_shopping_engine
                 string[] row = { product.Name, product.Price, "Senukai.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
-            _productList2.AddRange(l);
+            _productList.AddRange(l);
 
         }
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
@@ -313,7 +336,25 @@ namespace Comparison_shopping_engine
                 string[] row = { product.Name, product.Price, "topocentras.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
-            _productList2.AddRange(l);
+            _productList.AddRange(l);
+
+        }
+        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new SkytechScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "Skytech.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
 
         }
     }

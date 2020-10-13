@@ -32,7 +32,7 @@ namespace Comparison_shopping_engine.Selenium
 
                 driver.Manage().Window.Position = new Point(0, 0);
                 driver.Manage().Window.Size = new Size(1920, 1080);
-                Regex rgx = new Regex("\\/.*\\.");
+                Regex rgx = new Regex("\\/[^.]*\\.");
 
                 if (AnyElements(driver))
                 {

@@ -10,9 +10,9 @@ using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class TopocentasScraper : AbstractSeleniumScraper
+    class SkytechScraper : AbstractSeleniumScraper
     {
-        public TopocentasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://topocentras.lt/catalogsearch/result/?q="+scrape)
+        public SkytechScraper(BackgroundWorker bw, string scrape) : base(bw, "http://skytech.lt/search.php?keywords=" + scrape + "&x=0&y=0&search_in_description=0&pagesize=500")
         {
         }
 
@@ -41,13 +41,32 @@ namespace Comparison_shopping_engine.Selenium
                     }
                 }
 
+                tries = 0;
+                while (tries < 5)
+                {
+                    try
+                    {
+                        product.ImageUrl = GetProductImage(driver);
+                        break;
+                    }
+                    catch
+                    {
+                        tries++;
+                    }
+                }
+
                 driver.Close();
             });
         }
 
+        private string GetProductImage(ChromeDriver driver)
+        {
+            return driver.FindElement(By.Id("main-product-image")).GetAttribute("src");
+        }
+
         protected override bool AnyElements(ChromeDriver driver)
         {
-            if (driver.FindElements(By.ClassName("ProductNotFoundPage-errorHeader-2Xo")).Count == 0)
+            if (driver.FindElements(By.ClassName("productListing-info")).Count == 0)
             {
                 return true;
             }
@@ -57,11 +76,11 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override string GetProductGroup(ChromeDriver driver)
         {
-            var group = driver.FindElements(By.ClassName("breadcrumbs-breadcrumbLink-2NB"));
-            List<String> list;
+            var list = driver.FindElement(By.ClassName("navba-breadcrumb"));
+            var group = list.FindElements(By.CssSelector("a"));
             foreach (var productgroup in group)
             {
-                if (!productgroup.Text.Equals("Topocentras"))
+                if (!productgroup.Text.Equals("Pradžia"))
                 {
                     return productgroup.Text;
                 }
@@ -72,27 +91,17 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldStopScraping(string nextPage)
         {
-            if (nextPage.Equals("done"))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
         protected override string NextPage(ChromeDriver driver)
         {
-            if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
-            {
-                return driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
-            }
-
             return "done";
         }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
-            var list = driver.FindElements(By.ClassName("ProductGrid-productWrapper-1hm"));
+            var list = driver.FindElements(By.CssSelector("tr.productListing"));
             return list;
         }
 
@@ -104,26 +113,12 @@ namespace Comparison_shopping_engine.Selenium
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
             string price;
-            price = product.FindElement(By.ClassName("Price-price-27p")).Text;
-            var name = product.FindElement(By.ClassName("ProductGrid-productName-1JN")).Text;
-            var productUrl = product.FindElement(By.ClassName("ProductGrid-link-3Q6")).GetAttribute("href");
-            string photoUrl ="";
-            var tries = 0;
-            while (tries < 5)
-            {
-                try
-                {
-                    photoUrl = product.FindElement(By.TagName("img")).GetAttribute("src");
-                    break;
-                }
-                catch
-                {
-                    tries++;
-                }
-            }
+            price = product.FindElement(By.CssSelector("strong")).Text;
+            var name = product.FindElement(By.ClassName("name")).Text;
+            var productUrl = product.FindElement(By.CssSelector("a")).GetAttribute("href");
+            string photoUrl = "";
 
             return (price, name, productUrl, photoUrl);
-
         }
     }
 }
