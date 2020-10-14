@@ -29,8 +29,8 @@ namespace Comparison_shopping_engine.Selenium
 
             var options = new ChromeOptions();
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
-            chromeDriverService.HideCommandPromptWindow = true;
-            options.AddArguments("--window-size=1920,1080", "--headless");
+            //chromeDriverService.HideCommandPromptWindow = true;
+            options.AddArguments("--window-size=1920,1080");//, "--headless");
             try
             {
                 using (var driver = new ChromeDriver(chromeDriverService, options))
@@ -88,18 +88,17 @@ namespace Comparison_shopping_engine.Selenium
 
                             for (var take = 0;; take++)
                             {
-                                var start = take * 5;
-                                var count = 5;
+                                var start = take * 2;
                                 if (products.Count - 1 > start && !_bw.CancellationPending)
                                 {
-                                    count = products.Count - 1 - start > 5 ? 5 : products.Count - 1 - start;
+                                    var count = products.Count - 1 - start > 2 ? 2 : products.Count - 1 - start;
 
                                     Parallel.ForEach(products.GetRange(start, count), (product) =>
                                     {
                                         var chromeDriverServicep = ChromeDriverService.CreateDefaultService();
-                                        chromeDriverServicep.HideCommandPromptWindow = true;
+                                        //chromeDriverServicep.HideCommandPromptWindow = true;
                                         var op = new ChromeOptions();
-                                        op.AddArguments("--window-size=1920,1080", "--headless");
+                                        op.AddArguments("--window-size=1920,1080");//, "--headless");
                                         try
                                         {
                                             using (var driverp = new ChromeDriver(chromeDriverServicep, op))
