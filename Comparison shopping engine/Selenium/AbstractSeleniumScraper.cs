@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Comparison_shopping_engine.Selenium
 {
@@ -14,7 +16,7 @@ namespace Comparison_shopping_engine.Selenium
     {
         private readonly string _scrape;
         private readonly BackgroundWorker _bw;
-        
+
         protected AbstractSeleniumScraper(BackgroundWorker bw, string scrape)
         {
             this._scrape = scrape;
@@ -24,23 +26,24 @@ namespace Comparison_shopping_engine.Selenium
         {
 
             var options = new ChromeOptions();
-            options.AddArgument("headless");
-            using (var driver = new ChromeDriver(options))
+            var chromeDriverService = ChromeDriverService.CreateDefaultService();
+            chromeDriverService.HideCommandPromptWindow = true;
+            options.AddArguments("--window-size=1920,1080", "--headless");
+
+            using (var driver = new ChromeDriver(chromeDriverService, options))
             {
-                string nextPage = _scrape;
-                driver.Navigate().GoToUrl(nextPage);
+                driver.Navigate().GoToUrl(_scrape);
 
-                driver.Manage().Window.Position = new Point(0, 0);
-                driver.Manage().Window.Size = new Size(1920, 1080);
-                Regex rgx = new Regex("\\/.*\\.");
-
+                Regex rgx = new Regex("\\/[^.]*\\.");
+                string urlBefore;
                 if (AnyElements(driver))
                 {
                     var db = new Database();
                     var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", "");
                     do
                     {
-                        driver.Navigate().GoToUrl(nextPage);
+
+
                         var products = new List<Product>();
                         var productList = GetProductList(driver);
                         foreach (var product in productList)
@@ -59,42 +62,62 @@ namespace Comparison_shopping_engine.Selenium
                             return;
                         }
 
-                        GroupItems(products);
-                        foreach (var product in products)
+                        for (var take = 0; ; take++)
                         {
-                            //db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
-                            //driver.Navigate().GoToUrl(product.Link);
-                            var tries = 0;
-                            while (tries < 5)
+                            var start = take * 5;
+                            var count = 5;
+                            if (products.Count - 1 > start && !_bw.CancellationPending)
                             {
-                                try
-                                {
-                                    //product.Group = GetProductGroup(driver);
-                                    db.AddOrUpdate(site, product.Name, product.Group, product.Link, product.ImageUrl, product.Price.Replace("€", "").Trim());
+                                count = products.Count - 1 - start > 5 ? 5 : products.Count - 1 - start;
 
-                                    break;
-                                }
-                                catch
+                                Parallel.ForEach(products.GetRange(start, count), (product) =>
                                 {
-                                    tries++;
-                                }
+                                    var chromeDriverServicep = ChromeDriverService.CreateDefaultService();
+                                    chromeDriverServicep.HideCommandPromptWindow = true;
+                                    var op = new ChromeOptions();
+                                    op.AddArguments("--window-size=1920,1080", "--headless");
+                                    using (var driverp = new ChromeDriver(chromeDriverServicep, op))
+
+                                    {
+                                        driverp.Navigate().GoToUrl(product.Link);
+                                        var tries = 0;
+                                        while (tries < 5)
+                                        {
+
+                                            try
+                                            {
+                                                product.Group = GetProductGroup(driverp);
+                                                db.AddOrUpdate(site, product.Name, product.Group, product.Link,
+                                                    product.ImageUrl, product.Price.Replace("€", "").Trim());
+
+
+                                                break;
+                                            }
+                                            catch
+                                            {
+                                                tries++;
+                                            }
+                                        }
+
+                                        driverp.Quit();
+                                    }
+
+                                });
                             }
-
-                            if (!_bw.CancellationPending) continue;
-                            //driver.Close();
-                            //driver.Quit();
-                            _bw.ReportProgress(1, products.Where(p => !p.Group.Equals("None")).ToList());
-                            return;
+                            else
+                            {
+                                break;
+                            }
                         }
 
-                        _bw.ReportProgress(1, products);
+                        _bw.ReportProgress(1, products.Where(e => !e.Group.Equals("None")).ToList());
 
-                        driver.Navigate().GoToUrl(nextPage);
-    
-                        nextPage = NextPage(driver);
-                        //driver.Navigate().GoToUrl(nextPage);
-       
-                    } while (ShouldStopScraping(nextPage) && !_bw.CancellationPending);
+                        urlBefore = driver.Url;
+                        NavigateToNextPage(driver);
+
+
+
+                    } while (ShouldStopScraping(driver, urlBefore) && !_bw.CancellationPending);
 
                 }
 
@@ -104,10 +127,15 @@ namespace Comparison_shopping_engine.Selenium
 
         }
 
-        protected abstract void GroupItems(List<Product> products);
+
+        protected abstract void NavigateToNextPage(ChromeDriver driver);
+
+        protected abstract void GoBackToSearchSite(ChromeDriver driver);
+
+
         protected abstract bool AnyElements(ChromeDriver driver);
         protected abstract string GetProductGroup(ChromeDriver driver);
-        protected abstract bool ShouldStopScraping(string nextPage);
+        protected abstract bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor);
         protected abstract string NextPage(ChromeDriver driver);
         protected abstract ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver);
         protected abstract bool ShouldScrapeIf(IWebElement product);
