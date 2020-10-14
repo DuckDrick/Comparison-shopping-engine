@@ -20,7 +20,7 @@ namespace Comparison_shopping_engine
         }
 
         private List<Product> _productList = new List<Product>();
-        private List<Product> _productList2 = new List<Product>();
+    
         // private Database _db;
 
         private void Form1_Load(object sender, EventArgs e)
@@ -68,7 +68,7 @@ namespace Comparison_shopping_engine
 
 
                 productListView.Items.Clear();
-                PopulateProductListView();
+                PopulateProductListView(); 
                 backgroundWorker1.RunWorkerAsync(argument: search.Text);
                 backgroundWorker2.RunWorkerAsync(argument: search.Text);
                 backgroundWorker3.RunWorkerAsync(argument: search.Text);
@@ -220,7 +220,7 @@ namespace Comparison_shopping_engine
                 string[] row = { product.Name, product.Price, "Senukai.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
-            _productList2.AddRange(l);
+            _productList.AddRange(l);
 
         }
         private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
@@ -313,7 +313,7 @@ namespace Comparison_shopping_engine
                 string[] row = { product.Name, product.Price, "topocentras.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
-            _productList2.AddRange(l);
+            _productList.AddRange(l);
 
         }
     }
