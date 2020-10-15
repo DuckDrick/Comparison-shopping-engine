@@ -43,13 +43,13 @@ namespace Comparison_shopping_engine.Selenium
             return true; //Kodėl įhardcodintas true?
         }
 
-        protected override string GetProductGroup(ChromeDriver driver)
+        protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl)
         {
             Thread.Sleep(1500);
             var group = driver.FindElement(By.ClassName("breadcrumbs"));
             var g = group.FindElements(By.TagName("span"));
             var kk = g[1].Text;
-            return kk;
+            return (kk, productUrl);
         }
 
         protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefore)

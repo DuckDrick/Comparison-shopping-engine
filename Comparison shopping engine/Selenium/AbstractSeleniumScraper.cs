@@ -30,7 +30,7 @@ namespace Comparison_shopping_engine.Selenium
             var options = new ChromeOptions();
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             //chromeDriverService.HideCommandPromptWindow = true;
-            options.AddArguments("--window-size=1920,1080");//, "--headless");
+            options.AddArguments("--window-size=1920,1080", "--no-sandbox", "--headless");
             try
             {
                 using (var driver = new ChromeDriver(chromeDriverService, options))
@@ -88,31 +88,35 @@ namespace Comparison_shopping_engine.Selenium
 
                             }
 
+
+                            const int amount = 3;
                             for (var take = 0;; take++)
                             {
-                                var start = take * 2;
+                                var start = take * amount;
                                 if (products.Count - 1 > start && !_bw.CancellationPending)
                                 {
-                                    var count = products.Count - 1 - start > 2 ? 2 : products.Count - 1 - start;
+                                    var count = products.Count - 1 - start > amount ? amount : products.Count - 1 - start;
 
                                     Parallel.ForEach(products.GetRange(start, count), (product) =>
                                     {
                                         var chromeDriverServicep = ChromeDriverService.CreateDefaultService();
-                                        //chromeDriverServicep.HideCommandPromptWindow = true;
+                                        chromeDriverServicep.HideCommandPromptWindow = true;
                                         var op = new ChromeOptions();
-                                        op.AddArguments("--window-size=1920,1080");//, "--headless");
+                                        op.AddArguments("--window-size=1920,1080" , "--no-sandbox", "--headless");
                                         try
                                         {
                                             using (var driverp = new ChromeDriver(chromeDriverServicep, op))
                                             {
-                                                driverp.Navigate().GoToUrl(product.Link);
+                                                
+                                                    driverp.Navigate().GoToUrl(product.Link);
+                                             
                                                 var tries = 0;
                                                 while (tries < 5)
                                                 {
 
                                                     try
                                                     {
-                                                        product.Group = GetProductGroup(driverp);
+                                                        (product.Group, product.ImageUrl) = GetProductGroupAndMaybePhotoLink(driverp, product.ImageUrl);
                                                         db.AddOrUpdate(site, product.Name, product.Group, product.Link,
                                                             product.ImageUrl, product.Price.Replace("€", "").Trim());
 
@@ -174,7 +178,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected abstract void NavigateToNextPage(ChromeDriver driver);
         protected abstract bool AnyElements(ChromeDriver driver);
-        protected abstract string GetProductGroup(ChromeDriver driver);
+        protected abstract (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl);
         protected abstract bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor);
         protected abstract ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver);
         protected abstract bool ShouldScrapeIf(IWebElement product);
