@@ -37,6 +37,7 @@ namespace Comparison_shopping_engine.Selenium
                 {
                     driver.Navigate().GoToUrl(_scrape);
 
+
                     Regex rgx = new Regex("\\/[^.]*\\.");
                     string urlBefore;
                     bool any;
@@ -49,6 +50,7 @@ namespace Comparison_shopping_engine.Selenium
                         Trace.WriteLine(e.ToString());
                         any = false;
                     }
+
 
                     if (any)
                     {

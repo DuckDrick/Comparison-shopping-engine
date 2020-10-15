@@ -18,11 +18,13 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
+
             if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
             {
                  var nuoroda = driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
                  driver.Navigate().GoToUrl(nuoroda);
             }
+
         }
 
         protected override bool AnyElements(ChromeDriver driver)
