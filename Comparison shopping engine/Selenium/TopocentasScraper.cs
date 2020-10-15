@@ -16,35 +16,13 @@ namespace Comparison_shopping_engine.Selenium
         {
         }
 
-        protected override void GroupItems(List<Product> products)
+        protected override void NavigateToNextPage(ChromeDriver driver)
         {
-            int i=0;
-            Parallel.ForEach(products, product =>
+            if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
             {
-                var chromeDriverService = ChromeDriverService.CreateDefaultService();
-                chromeDriverService.HideCommandPromptWindow = true;
-                var options = new ChromeOptions();
-                options.AddArguments("--headless", "--no-sandbox");
-                var driver = new ChromeDriver(chromeDriverService, options);
-                //var driver = new ChromeDriver();
-                driver.Navigate().GoToUrl(product.Link);
-                var tries = 0;
-                while (tries < 5)
-                {
-                    try
-                    {
-                        i++;
-                        product.Group = GetProductGroup(driver);
-                        break;
-                    }
-                    catch
-                    {
-                        tries++;
-                    }
-                }
-
-                driver.Close();
-            });
+                 var nuoroda = driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
+                 driver.Navigate().GoToUrl(nuoroda);
+            }
         }
 
         protected override bool AnyElements(ChromeDriver driver)
@@ -72,24 +50,9 @@ namespace Comparison_shopping_engine.Selenium
             return "None";
         }
 
-        protected override bool ShouldStopScraping(string nextPage)
+        protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefore)
         {
-            if (nextPage.Equals("done"))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        protected override string NextPage(ChromeDriver driver)
-        {
-            if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
-            {
-                return driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
-            }
-
-            return "done";
+            return nextPage.Url == urlBefore;
         }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)

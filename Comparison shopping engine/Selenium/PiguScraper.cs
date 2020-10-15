@@ -11,6 +11,13 @@ namespace Comparison_shopping_engine.Selenium
 {
     class PiguScraper : AbstractSeleniumScraper
     {
+        protected override void NavigateToNextPage(ChromeDriver driver)
+        {
+            driver.Navigate().GoToUrl(driver.FindElementByXPath("//*[@id=\"pagination\"]/div[1]/a[2]").GetAttribute("href"));
+        }
+
+ 
+
         protected override bool AnyElements(ChromeDriver driver)
         {
             return driver.FindElementsByXPath("//*[@id=\"productListLoader\"]").Count > 0;
@@ -18,19 +25,16 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override string GetProductGroup(ChromeDriver driver)
         {
-            var groups = driver.FindElementByXPath("//*[@id=\"breadCrumbs\"]").FindElements(By.TagName("li"));
-            return groups[1].Text.Trim();
+            var pagehtml = driver.FindElementByTagName("body").GetProperty("innerHTML");
+            var groups = driver.FindElementByXPath("//*[@id=\"breadCrumbs\"]");
+            var list = groups.FindElements(By.TagName("li"));
+            return list[1].Text.Trim();
         }
 
-        protected override bool ShouldStopScraping(string nextPage)
+        protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefor)
         {
-            var splitLink = nextPage.Split('/');
-            return !splitLink[splitLink.Length - 1].Equals("#");
-        }
-
-        protected override string NextPage(ChromeDriver driver)
-        {
-            return driver.FindElementByXPath("//*[@id=\"pagination\"]/div[1]/a[2]").GetAttribute("href");
+            var splitLink = chromeDriver.Url.Split('/');
+            return splitLink[splitLink.Length - 1].Equals("#");
         }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
@@ -56,7 +60,7 @@ namespace Comparison_shopping_engine.Selenium
             return (price, name, productUrl, photoUrl);
         }
 
-        protected override void GroupItems(List<Product> products)
+        protected void GroupItems(List<Product> products)
         {
             Parallel.ForEach(products, product =>
             {
