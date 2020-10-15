@@ -23,12 +23,13 @@ namespace Comparison_shopping_engine.Selenium
             return driver.FindElementsByXPath("//*[@id=\"productListLoader\"]").Count > 0;
         }
 
-        protected override string GetProductGroup(ChromeDriver driver)
+
+        protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string imageUrl)
         {
             var pagehtml = driver.FindElementByTagName("body").GetProperty("innerHTML");
             var groups = driver.FindElementByXPath("//*[@id=\"breadCrumbs\"]");
             var list = groups.FindElements(By.TagName("li"));
-            return list[1].Text.Trim();
+            return (list[1].Text.Trim(), imageUrl);
         }
 
         protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefor)
@@ -60,33 +61,7 @@ namespace Comparison_shopping_engine.Selenium
             return (price, name, productUrl, photoUrl);
         }
 
-        protected void GroupItems(List<Product> products)
-        {
-            Parallel.ForEach(products, product =>
-            {
-                var chromeDriverService = ChromeDriverService.CreateDefaultService();
-                chromeDriverService.HideCommandPromptWindow = true;
-                var options = new ChromeOptions();
-                options.AddArguments("--headless", "--no-sandbox", "--disable-gpu", "--incognito", "--proxy-bypass-list=*", "--proxy-server='direct://'", "--log-level=3", "--hide-scrollbars");
-                var driver = new ChromeDriver(chromeDriverService, options);
-                driver.Navigate().GoToUrl(product.Link);
-                var tries = 0;
-                while (tries < 5)
-                {
-                    try
-                    {
-                        product.Group = GetProductGroup(driver);
-                        break;
-                    }
-                    catch
-                    {
-                        tries++;
-                    }
-                }
-                driver.Close();
-            }
-);
-        }
+        
 
         public PiguScraper(BackgroundWorker bw, string source) : base(bw, "https://pigu.lt/lt/search?q=" + source)
         {

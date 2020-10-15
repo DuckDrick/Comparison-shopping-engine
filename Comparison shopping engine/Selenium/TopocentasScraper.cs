@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -37,7 +38,7 @@ namespace Comparison_shopping_engine.Selenium
             return false;
         }
 
-        protected override string GetProductGroup(ChromeDriver driver)
+        protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl)
         {
             var group = driver.FindElements(By.ClassName("breadcrumbs-breadcrumbLink-2NB"));
             List<String> list;
@@ -45,11 +46,12 @@ namespace Comparison_shopping_engine.Selenium
             {
                 if (!productgroup.Text.Equals("Topocentras"))
                 {
-                    return productgroup.Text;
+                    var img = driver.FindElementByClassName("carousel-activeImageContainer-2O-").FindElement(By.TagName("img")).GetAttribute("src");
+                    return (productgroup.Text, img);
                 }
             }
 
-            return "None";
+            return ("None", "");
         }
 
         protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefore)
@@ -75,19 +77,6 @@ namespace Comparison_shopping_engine.Selenium
             var name = product.FindElement(By.ClassName("ProductGrid-productName-1JN")).Text;
             var productUrl = product.FindElement(By.ClassName("ProductGrid-link-3Q6")).GetAttribute("href");
             string photoUrl ="";
-            var tries = 0;
-            while (tries < 5)
-            {
-                try
-                {
-                    photoUrl = product.FindElement(By.TagName("img")).GetAttribute("src");
-                    break;
-                }
-                catch
-                {
-                    tries++;
-                }
-            }
 
             return (price, name, productUrl, photoUrl);
 

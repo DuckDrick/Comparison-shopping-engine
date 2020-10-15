@@ -16,52 +16,14 @@ namespace Comparison_shopping_engine.Selenium
         {
         }
 
-        protected override void GroupItems(List<Product> products)
-        {
-            Parallel.ForEach(products, product =>
-            {
-                var chromeDriverService = ChromeDriverService.CreateDefaultService();
-                chromeDriverService.HideCommandPromptWindow = true;
-                var options = new ChromeOptions();
-                options.AddArguments("--headless", "--no-sandbox");
-                var driver = new ChromeDriver(chromeDriverService, options);
-                //var driver = new ChromeDriver();
-                driver.Navigate().GoToUrl(product.Link);
-                var tries = 0;
-                while (tries < 5)
-                {
-                    try
-                    {
-                        product.Group = GetProductGroup(driver);
-                        break;
-                    }
-                    catch
-                    {
-                        tries++;
-                    }
-                }
-
-                tries = 0;
-                while (tries < 5)
-                {
-                    try
-                    {
-                        product.ImageUrl = GetProductImage(driver);
-                        break;
-                    }
-                    catch
-                    {
-                        tries++;
-                    }
-                }
-
-                driver.Close();
-            });
-        }
 
         private string GetProductImage(ChromeDriver driver)
         {
             return driver.FindElement(By.Id("main-product-image")).GetAttribute("src");
+        }
+
+        protected override void NavigateToNextPage(ChromeDriver driver)
+        {
         }
 
         protected override bool AnyElements(ChromeDriver driver)
@@ -74,29 +36,24 @@ namespace Comparison_shopping_engine.Selenium
             return false;
         }
 
-        protected override string GetProductGroup(ChromeDriver driver)
+        protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl)
         {
-            var list = driver.FindElement(By.ClassName("navba-breadcrumb"));
+            var list = driver.FindElement(By.ClassName("navbar-breadcrumb"));
             var group = list.FindElements(By.CssSelector("a"));
             foreach (var productgroup in group)
             {
                 if (!productgroup.Text.Equals("Pradžia"))
                 {
-                    return productgroup.Text;
+                    return (productgroup.Text, GetProductImage(driver));
                 }
             }
 
-            return "None";
+            return ("None", "");
         }
 
-        protected override bool ShouldStopScraping(string nextPage)
+        protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor)
         {
             return false;
-        }
-
-        protected override string NextPage(ChromeDriver driver)
-        {
-            return "done";
         }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
