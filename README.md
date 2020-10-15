@@ -1,5 +1,4 @@
 # Comparison shopping engine
 
 
-//todo UI
-       Selenium scrapers
+//todo Filtering + scapers
