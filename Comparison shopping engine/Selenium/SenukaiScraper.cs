@@ -9,6 +9,12 @@ namespace Comparison_shopping_engine.Selenium
 {
     class SenukaiScraper : AbstractSeleniumScraper
     {
+        protected override void NavigateToNextPage(ChromeDriver driver)
+        {
+            driver.Navigate().GoToUrl(driver.FindElementByXPath("//*[@id=\"next\"]/div[1]/a[2]").GetAttribute("href"));
+        }
+
+
         protected override bool AnyElements(ChromeDriver driver)
         {
             return driver.FindElementsByXPath("//*[@id=\"catalog-taxons-products-container\"]").Count > 0;
@@ -35,10 +41,7 @@ namespace Comparison_shopping_engine.Selenium
                 .FindElements(By.ClassName("catalog-taxons-product"));
         }
 
-        protected override string NextPage(ChromeDriver driver)
-        {
-            return driver.FindElementByXPath("//*[@id=\"next\"]/div[1]/a[2]").GetAttribute("href"); //tf is div[1]/a[2] //tf is href
-        }
+      
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
@@ -46,14 +49,14 @@ namespace Comparison_shopping_engine.Selenium
             return spanList.Count > 1;
         }
 
-        protected override bool ShouldStopScraping(string nextPage)
+        protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefor)
         {
-            var splitLink = nextPage.Split('/');
-            return !splitLink[splitLink.Length - 1].Equals("#");
+            var splitLink = chromeDriver.Url.Split('/');
+            return splitLink[splitLink.Length - 1].Equals("#");
         }
 
 
-        protected override void GroupItems(List<Product> products)
+        protected void GroupItems(List<Product> products)
         {
             Parallel.ForEach(products, product =>
             {

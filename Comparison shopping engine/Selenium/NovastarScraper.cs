@@ -5,62 +5,69 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 
 namespace Comparison_shopping_engine.Selenium
 {
     class NovastarScraper : AbstractSeleniumScraper
     {
+        protected override void NavigateToNextPage(ChromeDriver driver)
+        {
+            var m = driver.FindElementsByClassName("list-pagination");
+            if (m.Count != 0)
+            {
+                var pages = m[0].FindElements(By.TagName("a"));
+                var n = pages[pages.Count - 1];
+               
+                ((IJavaScriptExecutor)driver)
+                    .ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
+                Actions action = new Actions(driver);
+                action.MoveToElement(n);
+                var ad = driver.FindElementByXPath("//*[@id=\"soundest-forms-container\"]")
+                    .FindElements(By.TagName("div")).Count;
+                if (ad > 80)
+                {
+                    driver.FindElementByClassName("soundest-form-background-image-close").Click();
+                }
+                action.Click().Build().Perform();
+                Thread.Sleep(3000);
+            }
+        }
+
         protected override bool AnyElements(ChromeDriver driver)
         {
-            return true;
+            return true; //Kodėl įhardcodintas true?
         }
 
         protected override string GetProductGroup(ChromeDriver driver)
         {
+            Thread.Sleep(1500);
             var group = driver.FindElement(By.ClassName("breadcrumbs"));
             var g = group.FindElements(By.TagName("span"));
             var kk = g[1].Text;
             return kk;
         }
 
-        protected override bool ShouldStopScraping(string next_page)
+        protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefore)
         {
-            /*if (next_page.Equals("https://www.novastar.lt/"))
+
+            Thread.Sleep(1000);
+            if (chromeDriver.Url.Equals(urlBefore))
             {
-                return false;
-            }*/
+                return true;
+            }
             return false;
+
         }
 
-        protected override string NextPage(ChromeDriver driver)
-        {
-            /*var link = driver.FindElements(By.CssSelector("a.page-selector.selected")).Count;
-            if ((driver.FindElements(By.CssSelector("a.page-selector.selected")).Count == 1)||(driver.FindElements(By.CssSelector("a.page-selector.selected")).Count == 2 && Convert.ToInt32(getcurrentpage(driver)) == 1))
-            {
-                string url = driver.Url;
-                if (Convert.ToInt32(getcurrentpage(driver)) == 1)
-                {
-                    return "https://www.novastar.lt/search/?page=2&q=xbox%20one";
-                }
-                else
-                {
-                    return "https://www.novastar.lt/search/?page="+(Convert.ToInt32(getcurrentpage(driver)) +1)+"&q=xbox%20one";
-                }
-            }
-            else
-            {
-                return "https://www.novastar.lt/";
-            }*/
-            return "https://www.novastar.lt/";
-        }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
-            //driver.FindElement(By.CssSelector("i.icon.icon--caret")).Click();
-            //driver.FindElement(By.CssSelector("div.dropdown-menu__item")).Click();
+            Thread.Sleep(3000);
             var list= driver.FindElements(By.ClassName("product__item"));
             if (list != null)
             {
@@ -75,7 +82,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
-            return true;
+            return true; //Vėl true?
         }
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
@@ -100,37 +107,6 @@ namespace Comparison_shopping_engine.Selenium
         {
         }
 
-        private string getcurrentpage(ChromeDriver driver)
-        {
-            return driver.FindElement(By.CssSelector("a.page-selector.number")).Text;
-        }
 
-        protected override void GroupItems(List<Product> products)
-        {
-            Parallel.ForEach(products, product =>
-            {
-                var chromeDriverService = ChromeDriverService.CreateDefaultService();
-                chromeDriverService.HideCommandPromptWindow = true;
-                var options = new ChromeOptions();
-                options.AddArguments("--headless", "--no-sandbox", "--disable-gpu", "--incognito", "--proxy-bypass-list=*", "--proxy-server='direct://'", "--log-level=3", "--hide-scrollbars");
-                var driver = new ChromeDriver(chromeDriverService, options);
-                driver.Navigate().GoToUrl(product.Link);
-                var tries = 0;
-                while (tries < 5)
-                {
-                    try
-                    {
-                        product.Group = GetProductGroup(driver);
-                        break;
-                    }
-                    catch
-                    {
-                        tries++;
-                    }
-                }
-                driver.Close();
-            }
-            );
-        }
     }
 }
