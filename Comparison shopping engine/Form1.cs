@@ -71,15 +71,22 @@ namespace Comparison_shopping_engine
                 {
                     Application.DoEvents();
                 }
+                if (backgroundWorker6.IsBusy)
+                    backgroundWorker6.CancelAsync();
+                while (this.backgroundWorker5.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
 
 
                 productListView.Items.Clear();
                 PopulateProductListView(); 
-                backgroundWorker1.RunWorkerAsync(argument: search.Text);
-                backgroundWorker2.RunWorkerAsync(argument: search.Text);
-                backgroundWorker3.RunWorkerAsync(argument: search.Text);
-                backgroundWorker4.RunWorkerAsync(argument: search.Text);
-                backgroundWorker5.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker1.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker2.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker3.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker4.RunWorkerAsync(argument: search.Text);
+                //backgroundWorker5.RunWorkerAsync(argument: search.Text);
+                backgroundWorker6.RunWorkerAsync(argument: search.Text);
             }
             else
             {
@@ -162,6 +169,13 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "ermitazas");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "ermitazas.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -203,6 +217,10 @@ namespace Comparison_shopping_engine
         {
             MessageBox.Show("Skytech scraping done");
         }
+        private void backgroundWorker6_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Ermitazas scraping done");
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -225,6 +243,10 @@ namespace Comparison_shopping_engine
             if (backgroundWorker5.IsBusy)
             {
                 backgroundWorker5.CancelAsync();
+            }
+            if (backgroundWorker6.IsBusy)
+            {
+                backgroundWorker6.CancelAsync();
             }
         }
 
@@ -353,6 +375,25 @@ namespace Comparison_shopping_engine
             foreach (var product in l)
             {
                 string[] row = { product.Name, product.Price, "Skytech.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
+
+
+        }
+        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new ErmitazasScaper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker6_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "ermitazas.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
             _productList.AddRange(l);

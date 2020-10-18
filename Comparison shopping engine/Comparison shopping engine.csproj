@@ -105,12 +105,13 @@
     <Compile Include="Scraper.cs" />
     <Compile Include="Scraper2.cs" />
     <Compile Include="Selenium\AbstractSeleniumScraper.cs" />
+    <Compile Include="Selenium\ErmitazasScaper.cs" />
     <Compile Include="Selenium\SenukaiScraper.cs" />
     <Compile Include="Selenium\NovastarScraper.cs" />
     <Compile Include="Selenium\PiguScraper.cs" />
     <Compile Include="Selenium\SkytechScraper.cs" />
     <Compile Include="Selenium\TopocentasScraper.cs" />
-    <Compile Include="VerySecretFile.cs" />
+    <Compile Include="VerySecretFile .cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

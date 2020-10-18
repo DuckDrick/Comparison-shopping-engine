@@ -53,7 +53,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor)
         {
-            return false;
+            return true;
         }
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
