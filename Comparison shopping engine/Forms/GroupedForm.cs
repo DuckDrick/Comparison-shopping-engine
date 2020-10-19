@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -15,10 +9,10 @@ namespace Comparison_shopping_engine.Forms
 
         #region WindowMove
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
+        public const int WmNclbuttondown = 0xA1;
+        public const int HtCaption = 0x2;
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         private void MoveWindow(object sender, MouseEventArgs e)
@@ -26,36 +20,33 @@ namespace Comparison_shopping_engine.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
             }
         }
 
         #endregion
 
-        private MainGroups group;
+        private readonly MainGroups _group;
     
         public GroupedForm(MainGroups group)
         {
             InitializeComponent();
-            this.group = group;
+            this._group = group;
         }
 
-        private void buttonBack_Click(object sender, EventArgs e)
+        private void GoBack(object sender, EventArgs e)
         {
-            // this.DialogResult = System.Windows.Forms.DialogResult.OK;
             var mainForm = (MainForm) Tag;
             mainForm.StartPosition = FormStartPosition.Manual;
             mainForm.Location = this.Location;
             mainForm.Size = this.Size;
             mainForm.Show();
             this.Close();
-
-            // gali buti problemu nes visad reikes is db pasiimti produktus
         }
 
         private void GroupedForm_Load(object sender, EventArgs e)
         {
-            foreach (var product in Product.productList.Where(product => product.Group.Contains(group.ToString())).ToList())
+            foreach (var product in Product.productList.Where(product => product.Group.Contains(_group.ToString())).ToList())
             {
                 string[] row = {product.Name, product.Price, product.Source};
                 productListView.Items.Add(new ListViewItem(row));

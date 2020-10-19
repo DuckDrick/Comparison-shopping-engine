@@ -96,7 +96,7 @@
             this.buttonBack.Size = new System.Drawing.Size(60, 40);
             this.buttonBack.TabIndex = 1;
             this.buttonBack.UseVisualStyleBackColor = true;
-            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            this.buttonBack.Click += new System.EventHandler(this.GoBack);
             // 
             // appName
             // 

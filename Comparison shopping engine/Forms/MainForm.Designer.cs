@@ -260,7 +260,7 @@ namespace Comparison_shopping_engine.Forms
             this.faqButton.TabIndex = 1;
             this.faqButton.Text = "D.U.K.";
             this.faqButton.UseVisualStyleBackColor = true;
-            this.faqButton.Click += new System.EventHandler(this.faqButton_Click);
+            this.faqButton.Click += new System.EventHandler(this.Faq);
             // 
             // aboutButton
             // 
@@ -275,7 +275,7 @@ namespace Comparison_shopping_engine.Forms
             this.aboutButton.TabIndex = 0;
             this.aboutButton.Text = "Apie";
             this.aboutButton.UseVisualStyleBackColor = true;
-            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
+            this.aboutButton.Click += new System.EventHandler(this.About);
             // 
             // titleBar
             // 
@@ -359,7 +359,7 @@ namespace Comparison_shopping_engine.Forms
             this.searchButton.TabIndex = 1;
             this.searchButton.Text = "Ieškoti";
             this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            this.searchButton.Click += new System.EventHandler(this.Search);
             // 
             // MainForm
             // 

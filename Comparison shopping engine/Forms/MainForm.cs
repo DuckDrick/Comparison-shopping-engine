@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -16,10 +10,10 @@ namespace Comparison_shopping_engine.Forms
 
         #region WindowMove
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
+        public const int WmNclbuttondown = 0xA1;
+        public const int HtCaption = 0x2;
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         private void MoveWindow(object sender, MouseEventArgs e)
@@ -27,7 +21,7 @@ namespace Comparison_shopping_engine.Forms
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
             }
         }
 
@@ -39,19 +33,18 @@ namespace Comparison_shopping_engine.Forms
             Application.Exit();
         }
 
-        private List<KeyValuePair<MainGroups, Image>> photos;
-        private int GroupPanelShowFirstIndex = 0;
-        private int GroupCount = Enum.GetNames(typeof(MainGroups)).Length;
+        private readonly List<KeyValuePair<MainGroups, Image>> _photos;
+        private int _groupPanelShowFirstIndex;
+        private readonly int _groupCount = Enum.GetNames(typeof(MainGroups)).Length;
 
         public MainForm()
         {
             InitializeComponent();
-            photos = new List<KeyValuePair<MainGroups, Image>>();
+            _photos = new List<KeyValuePair<MainGroups, Image>>();
             for (var group = MainGroups.Apranga; group <= MainGroups.Vaikai; group++)
             {
-                var k = System.AppDomain.CurrentDomain.BaseDirectory;
                 var img = Image.FromFile($"../../Resources/Icons/{group}.png");
-                photos.Add(new KeyValuePair<MainGroups, Image>(group, img));
+                _photos.Add(new KeyValuePair<MainGroups, Image>(group, img));
             }
             mainGroupPanelPicture1.SizeMode = PictureBoxSizeMode.StretchImage;
             mainGroupPanelPicture2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -70,37 +63,35 @@ namespace Comparison_shopping_engine.Forms
 
         private void MoveListToRight(object sender, EventArgs e)
         {
-            GroupPanelShowFirstIndex = (GroupPanelShowFirstIndex + 1) % GroupCount;
-            ChangePictures(GroupPanelShowFirstIndex);
+            _groupPanelShowFirstIndex = (_groupPanelShowFirstIndex + 1) % _groupCount;
+            ChangePictures(_groupPanelShowFirstIndex);
         }
         private void MoveListToLeft(object sender, EventArgs e)
         {
-            GroupPanelShowFirstIndex = (GroupCount + GroupPanelShowFirstIndex - 1) % GroupCount;
-            ChangePictures(GroupPanelShowFirstIndex);
+            _groupPanelShowFirstIndex = (_groupCount + _groupPanelShowFirstIndex - 1) % _groupCount;
+            ChangePictures(_groupPanelShowFirstIndex);
         }
 
         private void ChangePictures(int index)
         {
-            mainGroupPanelPicture1.Image = photos[index].Value;
-            mainGroupPanelPicture2.Image = photos[(index + 1) % GroupCount].Value;
-            mainGroupPanelPicture3.Image = photos[(index + 2) % GroupCount].Value;
-            mainGroupPanelPicture1.Tag = photos[index].Key;
-            mainGroupPanelPicture2.Tag = photos[(index + 1) % GroupCount].Key;
-            mainGroupPanelPicture3.Tag = photos[(index + 2) % GroupCount].Key;
-            mainGroupPanelLabel1.Text = photos[index].Key.ToString();
-            mainGroupPanelLabel2.Text = photos[(index + 1) % GroupCount].Key.ToString();
-            mainGroupPanelLabel3.Text = photos[(index + 2) % GroupCount].Key.ToString();
+            mainGroupPanelPicture1.Image = _photos[index].Value;
+            mainGroupPanelPicture2.Image = _photos[(index + 1) % _groupCount].Value;
+            mainGroupPanelPicture3.Image = _photos[(index + 2) % _groupCount].Value;
+            mainGroupPanelPicture1.Tag = _photos[index].Key;
+            mainGroupPanelPicture2.Tag = _photos[(index + 1) % _groupCount].Key;
+            mainGroupPanelPicture3.Tag = _photos[(index + 2) % _groupCount].Key;
+            mainGroupPanelLabel1.Text = _photos[index].Key.ToString();
+            mainGroupPanelLabel2.Text = _photos[(index + 1) % _groupCount].Key.ToString();
+            mainGroupPanelLabel3.Text = _photos[(index + 2) % _groupCount].Key.ToString();
         }
 
         private void GroupChosen(object sender, EventArgs e)
         {
-            // Console.WriteLine();
             var group = (MainGroups)((PictureBox) sender).Tag;
-            var form = new GroupedForm(group);
-            form.StartPosition = FormStartPosition.Manual;
-            form.Location = this.Location;
-            form.Size = this.Size;
-            form.Tag = this;
+            var form = new GroupedForm(group)
+            {
+                StartPosition = FormStartPosition.Manual, Location = this.Location, Tag = this
+            };
             form.Show();
             this.Hide();
 
@@ -122,37 +113,32 @@ namespace Comparison_shopping_engine.Forms
             if (searchField.Text == "")
             {
                 _placeHolderSet = true;
-                searchField.Text = "Įveskite ieškomą prekę";
+                searchField.Text = @"Įveskite ieškomą prekę";
                 searchField.ForeColor = Color.Gray;
             }
         }
 
-        private void faqButton_Click(object sender, EventArgs e) //340 550    800 450      460 -100      230 -50
+        private void Faq(object sender, EventArgs e) //340 550    800 450      460 -100      230 -50
         {
-            var form = new FaqForm();
-            form.StartPosition = FormStartPosition.Manual;
-            form.Location = this.Location;
+            var form = new FaqForm {StartPosition = FormStartPosition.Manual, Location = this.Location};
             form.Left += 230;
             form.Top += -50;
 
             form.ShowDialog();
         }
 
-        private void aboutButton_Click(object sender, EventArgs e)
+        private void About(object sender, EventArgs e)
         {
-            var form = new AboutForm();
-            form.StartPosition = FormStartPosition.Manual;
-            form.Location = this.Location;
+            var form = new AboutForm {StartPosition = FormStartPosition.Manual, Location = this.Location};
             form.ShowDialog();
         }
 
-        private void searchButton_Click(object sender, EventArgs e)
+        private void Search(object sender, EventArgs e)
         {
-            var form = new SearchForm(_placeHolderSet ? "" : searchField.Text);
-            form.StartPosition = FormStartPosition.Manual;
-            form.Location = this.Location;
-            form.Size = this.Size;
-            form.Tag = this;
+            var form = new SearchForm(_placeHolderSet ? "" : searchField.Text)
+            {
+                StartPosition = FormStartPosition.Manual, Location = this.Location, Tag = this
+            };
             form.Show();
             this.Hide();
         }
