@@ -37,6 +37,7 @@
             this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filterPanel = new System.Windows.Forms.Panel();
+            this.filter = new System.Windows.Forms.Button();
             this.sourcePanel = new System.Windows.Forms.Panel();
             this.sources = new System.Windows.Forms.CheckedListBox();
             this.source = new System.Windows.Forms.Button();
@@ -49,7 +50,6 @@
             this.from = new System.Windows.Forms.TextBox();
             this.fromLabel = new System.Windows.Forms.Label();
             this.price = new System.Windows.Forms.Button();
-            this.filter = new System.Windows.Forms.Button();
             this.titleBar.SuspendLayout();
             this.filterPanel.SuspendLayout();
             this.sourcePanel.SuspendLayout();
@@ -81,7 +81,7 @@
             this.buttonBack.Size = new System.Drawing.Size(60, 40);
             this.buttonBack.TabIndex = 1;
             this.buttonBack.UseVisualStyleBackColor = true;
-            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            this.buttonBack.Click += new System.EventHandler(this.ButtonBack_Click);
             // 
             // appName
             // 
@@ -142,6 +142,17 @@
             this.filterPanel.Size = new System.Drawing.Size(185, 390);
             this.filterPanel.TabIndex = 7;
             // 
+            // filter
+            // 
+            this.filter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.filter.Location = new System.Drawing.Point(0, 367);
+            this.filter.Name = "filter";
+            this.filter.Size = new System.Drawing.Size(185, 23);
+            this.filter.TabIndex = 6;
+            this.filter.Text = "Filtruoti";
+            this.filter.UseVisualStyleBackColor = true;
+            this.filter.Click += new System.EventHandler(this.Filter_Click);
+            // 
             // sourcePanel
             // 
             this.sourcePanel.Controls.Add(this.sources);
@@ -171,7 +182,7 @@
             this.source.TabIndex = 4;
             this.source.Text = "Šaltinis";
             this.source.UseVisualStyleBackColor = true;
-            this.source.Click += new System.EventHandler(this.button3_Click);
+            this.source.Click += new System.EventHandler(this.ToggleSourcePanel);
             // 
             // groupPanel
             // 
@@ -201,7 +212,7 @@
             this.group.TabIndex = 2;
             this.group.Text = "Grupė";
             this.group.UseVisualStyleBackColor = true;
-            this.group.Click += new System.EventHandler(this.button2_Click);
+            this.group.Click += new System.EventHandler(this.ToggleGroupPanel);
             // 
             // pricePanel
             // 
@@ -228,16 +239,22 @@
             // to
             // 
             this.to.Location = new System.Drawing.Point(94, 19);
+            this.to.MaxLength = 13;
             this.to.Name = "to";
+            this.to.ShortcutsEnabled = false;
             this.to.Size = new System.Drawing.Size(88, 20);
             this.to.TabIndex = 2;
+            this.to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
             // 
             // from
             // 
             this.from.Location = new System.Drawing.Point(3, 19);
+            this.from.MaxLength = 13;
             this.from.Name = "from";
+            this.from.ShortcutsEnabled = false;
             this.from.Size = new System.Drawing.Size(85, 20);
             this.from.TabIndex = 1;
+            this.from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
             // 
             // fromLabel
             // 
@@ -257,17 +274,7 @@
             this.price.TabIndex = 0;
             this.price.Text = "Kaina";
             this.price.UseVisualStyleBackColor = true;
-            this.price.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // filter
-            // 
-            this.filter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.filter.Location = new System.Drawing.Point(0, 367);
-            this.filter.Name = "filter";
-            this.filter.Size = new System.Drawing.Size(185, 23);
-            this.filter.TabIndex = 6;
-            this.filter.Text = "Filtruoti";
-            this.filter.UseVisualStyleBackColor = true;
+            this.price.Click += new System.EventHandler(this.TogglePricePanel);
             // 
             // SearchForm
             // 
@@ -282,6 +289,7 @@
             this.Name = "SearchForm";
             this.Text = "SearchForm";
             this.Load += new System.EventHandler(this.SearchForm_Load);
+            this.Shown += new System.EventHandler(this.SearchForm_Shown);
             this.titleBar.ResumeLayout(false);
             this.filterPanel.ResumeLayout(false);
             this.sourcePanel.ResumeLayout(false);

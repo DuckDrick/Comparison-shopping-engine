@@ -148,7 +148,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            var form = new SearchForm();
+            var form = new SearchForm(_placeHolderSet ? "" : searchField.Text);
             form.StartPosition = FormStartPosition.Manual;
             form.Location = this.Location;
             form.Size = this.Size;
