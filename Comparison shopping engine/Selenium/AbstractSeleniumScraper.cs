@@ -54,7 +54,7 @@ namespace Comparison_shopping_engine.Selenium
 
                     if (any)
                     {
-                        //var db = new Database();
+                        var db = new Database();
                         var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", "");
                         do
                         {
@@ -69,11 +69,11 @@ namespace Comparison_shopping_engine.Selenium
                                     if (ShouldScrapeIf(product))
                                     {
                                         var (price, name, productUrl, photoUrl) = GetInfo(product);
-                                        //if (!Database.Search(name.Replace("'", "''"), site))
-                                            //products.Add(new Product(name.Replace("'", "''"), price, productUrl,
-                                                //photoUrl,
-                                                //"None",
-                                                //site + ".lt"));
+                                        if (!Database.Search(name.Replace("'", "''"), site))
+                                            products.Add(new Product(name.Replace("'", "''"), price, productUrl,
+                                                photoUrl,
+                                                "None",
+                                                site + ".lt"));
                                     }
 
                                     if (!_bw.CancellationPending) continue;
@@ -117,8 +117,8 @@ namespace Comparison_shopping_engine.Selenium
                                                     try
                                                     {
                                                         (product.Group, product.ImageUrl) = GetProductGroupAndMaybePhotoLink(driverp, product.ImageUrl);
-                                                        //db.AddOrUpdate(site, product.Name, product.Group, product.Link,
-                                                            //product.ImageUrl, product.Price.Replace("€", "").Trim());
+                                                        db.AddOrUpdate(site, product.Name, product.Group, product.Link,
+                                                            product.ImageUrl, product.Price.Replace("€", "").Trim());
 
 
                                                         break;

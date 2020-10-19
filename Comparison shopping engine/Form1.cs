@@ -73,7 +73,7 @@ namespace Comparison_shopping_engine
                 }
                 if (backgroundWorker6.IsBusy)
                     backgroundWorker6.CancelAsync();
-                while (this.backgroundWorker5.CancellationPending)
+                while (this.backgroundWorker6.CancellationPending)
                 {
                     Application.DoEvents();
                 }
@@ -123,6 +123,7 @@ namespace Comparison_shopping_engine
             _productList.AddRange(await Database.Get("", "novastar"));
             _productList.AddRange(await Database.Get("", "topocentras"));
             _productList.AddRange(await Database.Get("", "skytech"));
+            _productList.AddRange(await Database.Get("", "ermitazas"));
         }
 
         private async void PopulateProductListView()
