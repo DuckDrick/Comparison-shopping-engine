@@ -27,7 +27,6 @@ namespace Comparison_shopping_engine.Forms
 
         #endregion
 
-
         private void ExitApplicationClick(object sender, EventArgs e)
         {
             Application.Exit();

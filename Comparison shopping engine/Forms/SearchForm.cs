@@ -201,5 +201,21 @@ namespace Comparison_shopping_engine.Forms
                 e.Handled = true;
             }
         }
+
+        private ProductInformationForm _pif;
+        private void ShowMoreInfoAboutProduct(object sender, EventArgs e)
+        {
+            if (_pif == null || _pif.IsDisposed)
+            {
+                _pif = new ProductInformationForm();
+                _pif.Show();
+            }
+
+            var lv = (ListView) sender;
+            var row = lv.SelectedItems[0].SubItems;
+            var chosenProduct =
+                Product.productList.Where(product => product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)).ToList();
+            _pif.SetInformation(chosenProduct[0]);
+        }
     }
 }

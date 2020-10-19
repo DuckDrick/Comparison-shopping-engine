@@ -15,7 +15,7 @@ namespace Comparison_shopping_engine
         {
 
         }
-
+        public static bool DoneWithDatabase = false;
         public static Initializer Instance
         {
             get
@@ -41,10 +41,12 @@ namespace Comparison_shopping_engine
         {
             Product.productList = new List<Product>();
             var count = Enum.GetNames(typeof(ScrapedSites)).Length;
-            for (var site = ScrapedSites.rde; site < (ScrapedSites) count; site++)
+            for (var site = (ScrapedSites)0; site < (ScrapedSites)count; site++)
             {
                 Product.productList.AddRange(await Database.Get("", site.ToString()));
             }
+
+            DoneWithDatabase = true;
         }
     }
 }

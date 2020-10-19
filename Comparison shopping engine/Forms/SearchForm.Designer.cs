@@ -66,7 +66,7 @@
             this.titleBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(14)))), ((int)(((byte)(59)))));
             this.titleBar.Location = new System.Drawing.Point(0, 0);
             this.titleBar.Name = "titleBar";
-            this.titleBar.Size = new System.Drawing.Size(800, 48);
+            this.titleBar.Size = new System.Drawing.Size(800, 52);
             this.titleBar.TabIndex = 5;
             this.titleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
@@ -76,9 +76,9 @@
             this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonBack.FlatAppearance.BorderSize = 0;
             this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonBack.Location = new System.Drawing.Point(4, 4);
+            this.buttonBack.Location = new System.Drawing.Point(5, 4);
             this.buttonBack.Name = "buttonBack";
-            this.buttonBack.Size = new System.Drawing.Size(60, 40);
+            this.buttonBack.Size = new System.Drawing.Size(70, 43);
             this.buttonBack.TabIndex = 1;
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.ButtonBack_Click);
@@ -87,9 +87,9 @@
             // 
             this.appName.Dock = System.Windows.Forms.DockStyle.Right;
             this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.appName.Location = new System.Drawing.Point(544, 0);
+            this.appName.Location = new System.Drawing.Point(501, 0);
             this.appName.Name = "appName";
-            this.appName.Size = new System.Drawing.Size(256, 48);
+            this.appName.Size = new System.Drawing.Size(299, 52);
             this.appName.TabIndex = 0;
             this.appName.Text = "CheapShop";
             this.appName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -105,18 +105,19 @@
             this.productPrice,
             this.productSource});
             this.productListView.HideSelection = false;
-            this.productListView.Location = new System.Drawing.Point(195, 54);
+            this.productListView.Location = new System.Drawing.Point(223, 58);
             this.productListView.MultiSelect = false;
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(600, 390);
+            this.productListView.Size = new System.Drawing.Size(570, 385);
             this.productListView.TabIndex = 6;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
+            this.productListView.DoubleClick += new System.EventHandler(this.ShowMoreInfoAboutProduct);
             // 
             // productName
             // 
             this.productName.Text = "Name";
-            this.productName.Width = 449;
+            this.productName.Width = 421;
             // 
             // productPrice
             // 
@@ -137,17 +138,17 @@
             this.filterPanel.Controls.Add(this.group);
             this.filterPanel.Controls.Add(this.pricePanel);
             this.filterPanel.Controls.Add(this.price);
-            this.filterPanel.Location = new System.Drawing.Point(4, 54);
+            this.filterPanel.Location = new System.Drawing.Point(5, 58);
             this.filterPanel.Name = "filterPanel";
-            this.filterPanel.Size = new System.Drawing.Size(185, 390);
+            this.filterPanel.Size = new System.Drawing.Size(216, 385);
             this.filterPanel.TabIndex = 7;
             // 
             // filter
             // 
             this.filter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.filter.Location = new System.Drawing.Point(0, 367);
+            this.filter.Location = new System.Drawing.Point(0, 360);
             this.filter.Name = "filter";
-            this.filter.Size = new System.Drawing.Size(185, 23);
+            this.filter.Size = new System.Drawing.Size(216, 25);
             this.filter.TabIndex = 6;
             this.filter.Text = "Filtruoti";
             this.filter.UseVisualStyleBackColor = true;
@@ -158,9 +159,9 @@
             this.sourcePanel.Controls.Add(this.sources);
             this.sourcePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.sourcePanel.Enabled = false;
-            this.sourcePanel.Location = new System.Drawing.Point(0, 69);
+            this.sourcePanel.Location = new System.Drawing.Point(0, 75);
             this.sourcePanel.Name = "sourcePanel";
-            this.sourcePanel.Size = new System.Drawing.Size(185, 0);
+            this.sourcePanel.Size = new System.Drawing.Size(216, 0);
             this.sourcePanel.TabIndex = 5;
             // 
             // sources
@@ -170,15 +171,15 @@
             this.sources.FormattingEnabled = true;
             this.sources.Location = new System.Drawing.Point(0, 0);
             this.sources.Name = "sources";
-            this.sources.Size = new System.Drawing.Size(185, 94);
+            this.sources.Size = new System.Drawing.Size(216, 94);
             this.sources.TabIndex = 0;
             // 
             // source
             // 
             this.source.Dock = System.Windows.Forms.DockStyle.Top;
-            this.source.Location = new System.Drawing.Point(0, 46);
+            this.source.Location = new System.Drawing.Point(0, 50);
             this.source.Name = "source";
-            this.source.Size = new System.Drawing.Size(185, 23);
+            this.source.Size = new System.Drawing.Size(216, 25);
             this.source.TabIndex = 4;
             this.source.Text = "Šaltinis";
             this.source.UseVisualStyleBackColor = true;
@@ -188,9 +189,9 @@
             // 
             this.groupPanel.Controls.Add(this.groups);
             this.groupPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupPanel.Location = new System.Drawing.Point(0, 46);
+            this.groupPanel.Location = new System.Drawing.Point(0, 50);
             this.groupPanel.Name = "groupPanel";
-            this.groupPanel.Size = new System.Drawing.Size(185, 0);
+            this.groupPanel.Size = new System.Drawing.Size(216, 0);
             this.groupPanel.TabIndex = 3;
             // 
             // groups
@@ -200,15 +201,15 @@
             this.groups.FormattingEnabled = true;
             this.groups.Location = new System.Drawing.Point(0, 0);
             this.groups.Name = "groups";
-            this.groups.Size = new System.Drawing.Size(185, 94);
+            this.groups.Size = new System.Drawing.Size(216, 94);
             this.groups.TabIndex = 0;
             // 
             // group
             // 
             this.group.Dock = System.Windows.Forms.DockStyle.Top;
-            this.group.Location = new System.Drawing.Point(0, 23);
+            this.group.Location = new System.Drawing.Point(0, 25);
             this.group.Name = "group";
-            this.group.Size = new System.Drawing.Size(185, 23);
+            this.group.Size = new System.Drawing.Size(216, 25);
             this.group.TabIndex = 2;
             this.group.Text = "Grupė";
             this.group.UseVisualStyleBackColor = true;
@@ -222,37 +223,37 @@
             this.pricePanel.Controls.Add(this.fromLabel);
             this.pricePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pricePanel.Enabled = false;
-            this.pricePanel.Location = new System.Drawing.Point(0, 23);
+            this.pricePanel.Location = new System.Drawing.Point(0, 25);
             this.pricePanel.Name = "pricePanel";
-            this.pricePanel.Size = new System.Drawing.Size(185, 0);
+            this.pricePanel.Size = new System.Drawing.Size(216, 0);
             this.pricePanel.TabIndex = 1;
             // 
             // toLabel
             // 
             this.toLabel.AutoSize = true;
-            this.toLabel.Location = new System.Drawing.Point(91, 3);
+            this.toLabel.Location = new System.Drawing.Point(106, 3);
             this.toLabel.Name = "toLabel";
-            this.toLabel.Size = new System.Drawing.Size(18, 13);
+            this.toLabel.Size = new System.Drawing.Size(28, 14);
             this.toLabel.TabIndex = 3;
             this.toLabel.Text = "Iki";
             // 
             // to
             // 
-            this.to.Location = new System.Drawing.Point(94, 19);
+            this.to.Location = new System.Drawing.Point(110, 20);
             this.to.MaxLength = 13;
             this.to.Name = "to";
             this.to.ShortcutsEnabled = false;
-            this.to.Size = new System.Drawing.Size(88, 20);
+            this.to.Size = new System.Drawing.Size(102, 20);
             this.to.TabIndex = 2;
             this.to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
             // 
             // from
             // 
-            this.from.Location = new System.Drawing.Point(3, 19);
+            this.from.Location = new System.Drawing.Point(3, 20);
             this.from.MaxLength = 13;
             this.from.Name = "from";
             this.from.ShortcutsEnabled = false;
-            this.from.Size = new System.Drawing.Size(85, 20);
+            this.from.Size = new System.Drawing.Size(98, 20);
             this.from.TabIndex = 1;
             this.from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
             // 
@@ -261,7 +262,7 @@
             this.fromLabel.AutoSize = true;
             this.fromLabel.Location = new System.Drawing.Point(3, 3);
             this.fromLabel.Name = "fromLabel";
-            this.fromLabel.Size = new System.Drawing.Size(27, 13);
+            this.fromLabel.Size = new System.Drawing.Size(28, 14);
             this.fromLabel.TabIndex = 0;
             this.fromLabel.Text = "Nuo";
             // 
@@ -270,7 +271,7 @@
             this.price.Dock = System.Windows.Forms.DockStyle.Top;
             this.price.Location = new System.Drawing.Point(0, 0);
             this.price.Name = "price";
-            this.price.Size = new System.Drawing.Size(185, 23);
+            this.price.Size = new System.Drawing.Size(216, 25);
             this.price.TabIndex = 0;
             this.price.Text = "Kaina";
             this.price.UseVisualStyleBackColor = true;
@@ -278,13 +279,15 @@
             // 
             // SearchForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.filterPanel);
             this.Controls.Add(this.productListView);
             this.Controls.Add(this.titleBar);
+            this.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold);
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(106)))), ((int)(((byte)(109)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SearchForm";
             this.Text = "SearchForm";
