@@ -145,5 +145,16 @@ namespace Comparison_shopping_engine.Forms
             form.Location = this.Location;
             form.ShowDialog();
         }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            var form = new SearchForm();
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = this.Location;
+            form.Size = this.Size;
+            form.Tag = this;
+            form.Show();
+            this.Hide();
+        }
     }
 }

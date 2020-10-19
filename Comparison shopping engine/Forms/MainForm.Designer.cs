@@ -359,6 +359,7 @@ namespace Comparison_shopping_engine.Forms
             this.searchButton.TabIndex = 1;
             this.searchButton.Text = "Ieškoti";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // MainForm
             // 

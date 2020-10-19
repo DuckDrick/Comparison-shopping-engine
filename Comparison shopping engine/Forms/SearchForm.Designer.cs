@@ -1,0 +1,319 @@
+﻿namespace Comparison_shopping_engine.Forms
+{
+    partial class SearchForm
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchForm));
+            this.titleBar = new System.Windows.Forms.Panel();
+            this.buttonBack = new System.Windows.Forms.Button();
+            this.appName = new System.Windows.Forms.Label();
+            this.productListView = new System.Windows.Forms.ListView();
+            this.productName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.filterPanel = new System.Windows.Forms.Panel();
+            this.sourcePanel = new System.Windows.Forms.Panel();
+            this.sources = new System.Windows.Forms.CheckedListBox();
+            this.source = new System.Windows.Forms.Button();
+            this.groupPanel = new System.Windows.Forms.Panel();
+            this.groups = new System.Windows.Forms.CheckedListBox();
+            this.group = new System.Windows.Forms.Button();
+            this.pricePanel = new System.Windows.Forms.Panel();
+            this.toLabel = new System.Windows.Forms.Label();
+            this.to = new System.Windows.Forms.TextBox();
+            this.from = new System.Windows.Forms.TextBox();
+            this.fromLabel = new System.Windows.Forms.Label();
+            this.price = new System.Windows.Forms.Button();
+            this.filter = new System.Windows.Forms.Button();
+            this.titleBar.SuspendLayout();
+            this.filterPanel.SuspendLayout();
+            this.sourcePanel.SuspendLayout();
+            this.groupPanel.SuspendLayout();
+            this.pricePanel.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // titleBar
+            // 
+            this.titleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(79)))), ((int)(((byte)(91)))));
+            this.titleBar.Controls.Add(this.buttonBack);
+            this.titleBar.Controls.Add(this.appName);
+            this.titleBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.titleBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(14)))), ((int)(((byte)(59)))));
+            this.titleBar.Location = new System.Drawing.Point(0, 0);
+            this.titleBar.Name = "titleBar";
+            this.titleBar.Size = new System.Drawing.Size(800, 48);
+            this.titleBar.TabIndex = 5;
+            this.titleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
+            // 
+            // buttonBack
+            // 
+            this.buttonBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonBack.BackgroundImage")));
+            this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonBack.FlatAppearance.BorderSize = 0;
+            this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBack.Location = new System.Drawing.Point(4, 4);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(60, 40);
+            this.buttonBack.TabIndex = 1;
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
+            // 
+            // appName
+            // 
+            this.appName.Dock = System.Windows.Forms.DockStyle.Right;
+            this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appName.Location = new System.Drawing.Point(544, 0);
+            this.appName.Name = "appName";
+            this.appName.Size = new System.Drawing.Size(256, 48);
+            this.appName.TabIndex = 0;
+            this.appName.Text = "CheapShop";
+            this.appName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.appName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
+            // 
+            // productListView
+            // 
+            this.productListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.productListView.BackColor = System.Drawing.SystemColors.Window;
+            this.productListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.productName,
+            this.productPrice,
+            this.productSource});
+            this.productListView.HideSelection = false;
+            this.productListView.Location = new System.Drawing.Point(195, 54);
+            this.productListView.MultiSelect = false;
+            this.productListView.Name = "productListView";
+            this.productListView.Size = new System.Drawing.Size(600, 390);
+            this.productListView.TabIndex = 6;
+            this.productListView.UseCompatibleStateImageBehavior = false;
+            this.productListView.View = System.Windows.Forms.View.Details;
+            // 
+            // productName
+            // 
+            this.productName.Text = "Name";
+            this.productName.Width = 449;
+            // 
+            // productPrice
+            // 
+            this.productPrice.Text = "Price";
+            this.productPrice.Width = 79;
+            // 
+            // productSource
+            // 
+            this.productSource.Text = "Source";
+            this.productSource.Width = 63;
+            // 
+            // filterPanel
+            // 
+            this.filterPanel.Controls.Add(this.filter);
+            this.filterPanel.Controls.Add(this.sourcePanel);
+            this.filterPanel.Controls.Add(this.source);
+            this.filterPanel.Controls.Add(this.groupPanel);
+            this.filterPanel.Controls.Add(this.group);
+            this.filterPanel.Controls.Add(this.pricePanel);
+            this.filterPanel.Controls.Add(this.price);
+            this.filterPanel.Location = new System.Drawing.Point(4, 54);
+            this.filterPanel.Name = "filterPanel";
+            this.filterPanel.Size = new System.Drawing.Size(185, 390);
+            this.filterPanel.TabIndex = 7;
+            // 
+            // sourcePanel
+            // 
+            this.sourcePanel.Controls.Add(this.sources);
+            this.sourcePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.sourcePanel.Enabled = false;
+            this.sourcePanel.Location = new System.Drawing.Point(0, 69);
+            this.sourcePanel.Name = "sourcePanel";
+            this.sourcePanel.Size = new System.Drawing.Size(185, 0);
+            this.sourcePanel.TabIndex = 5;
+            // 
+            // sources
+            // 
+            this.sources.CheckOnClick = true;
+            this.sources.Dock = System.Windows.Forms.DockStyle.Top;
+            this.sources.FormattingEnabled = true;
+            this.sources.Location = new System.Drawing.Point(0, 0);
+            this.sources.Name = "sources";
+            this.sources.Size = new System.Drawing.Size(185, 94);
+            this.sources.TabIndex = 0;
+            // 
+            // source
+            // 
+            this.source.Dock = System.Windows.Forms.DockStyle.Top;
+            this.source.Location = new System.Drawing.Point(0, 46);
+            this.source.Name = "source";
+            this.source.Size = new System.Drawing.Size(185, 23);
+            this.source.TabIndex = 4;
+            this.source.Text = "Šaltinis";
+            this.source.UseVisualStyleBackColor = true;
+            this.source.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // groupPanel
+            // 
+            this.groupPanel.Controls.Add(this.groups);
+            this.groupPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupPanel.Location = new System.Drawing.Point(0, 46);
+            this.groupPanel.Name = "groupPanel";
+            this.groupPanel.Size = new System.Drawing.Size(185, 0);
+            this.groupPanel.TabIndex = 3;
+            // 
+            // groups
+            // 
+            this.groups.CheckOnClick = true;
+            this.groups.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groups.FormattingEnabled = true;
+            this.groups.Location = new System.Drawing.Point(0, 0);
+            this.groups.Name = "groups";
+            this.groups.Size = new System.Drawing.Size(185, 94);
+            this.groups.TabIndex = 0;
+            // 
+            // group
+            // 
+            this.group.Dock = System.Windows.Forms.DockStyle.Top;
+            this.group.Location = new System.Drawing.Point(0, 23);
+            this.group.Name = "group";
+            this.group.Size = new System.Drawing.Size(185, 23);
+            this.group.TabIndex = 2;
+            this.group.Text = "Grupė";
+            this.group.UseVisualStyleBackColor = true;
+            this.group.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // pricePanel
+            // 
+            this.pricePanel.Controls.Add(this.toLabel);
+            this.pricePanel.Controls.Add(this.to);
+            this.pricePanel.Controls.Add(this.from);
+            this.pricePanel.Controls.Add(this.fromLabel);
+            this.pricePanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pricePanel.Enabled = false;
+            this.pricePanel.Location = new System.Drawing.Point(0, 23);
+            this.pricePanel.Name = "pricePanel";
+            this.pricePanel.Size = new System.Drawing.Size(185, 0);
+            this.pricePanel.TabIndex = 1;
+            // 
+            // toLabel
+            // 
+            this.toLabel.AutoSize = true;
+            this.toLabel.Location = new System.Drawing.Point(91, 3);
+            this.toLabel.Name = "toLabel";
+            this.toLabel.Size = new System.Drawing.Size(18, 13);
+            this.toLabel.TabIndex = 3;
+            this.toLabel.Text = "Iki";
+            // 
+            // to
+            // 
+            this.to.Location = new System.Drawing.Point(94, 19);
+            this.to.Name = "to";
+            this.to.Size = new System.Drawing.Size(88, 20);
+            this.to.TabIndex = 2;
+            // 
+            // from
+            // 
+            this.from.Location = new System.Drawing.Point(3, 19);
+            this.from.Name = "from";
+            this.from.Size = new System.Drawing.Size(85, 20);
+            this.from.TabIndex = 1;
+            // 
+            // fromLabel
+            // 
+            this.fromLabel.AutoSize = true;
+            this.fromLabel.Location = new System.Drawing.Point(3, 3);
+            this.fromLabel.Name = "fromLabel";
+            this.fromLabel.Size = new System.Drawing.Size(27, 13);
+            this.fromLabel.TabIndex = 0;
+            this.fromLabel.Text = "Nuo";
+            // 
+            // price
+            // 
+            this.price.Dock = System.Windows.Forms.DockStyle.Top;
+            this.price.Location = new System.Drawing.Point(0, 0);
+            this.price.Name = "price";
+            this.price.Size = new System.Drawing.Size(185, 23);
+            this.price.TabIndex = 0;
+            this.price.Text = "Kaina";
+            this.price.UseVisualStyleBackColor = true;
+            this.price.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // filter
+            // 
+            this.filter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.filter.Location = new System.Drawing.Point(0, 367);
+            this.filter.Name = "filter";
+            this.filter.Size = new System.Drawing.Size(185, 23);
+            this.filter.TabIndex = 6;
+            this.filter.Text = "Filtruoti";
+            this.filter.UseVisualStyleBackColor = true;
+            // 
+            // SearchForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.filterPanel);
+            this.Controls.Add(this.productListView);
+            this.Controls.Add(this.titleBar);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "SearchForm";
+            this.Text = "SearchForm";
+            this.Load += new System.EventHandler(this.SearchForm_Load);
+            this.titleBar.ResumeLayout(false);
+            this.filterPanel.ResumeLayout(false);
+            this.sourcePanel.ResumeLayout(false);
+            this.groupPanel.ResumeLayout(false);
+            this.pricePanel.ResumeLayout(false);
+            this.pricePanel.PerformLayout();
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel titleBar;
+        private System.Windows.Forms.Button buttonBack;
+        private System.Windows.Forms.Label appName;
+        private System.Windows.Forms.ListView productListView;
+        private System.Windows.Forms.ColumnHeader productName;
+        private System.Windows.Forms.ColumnHeader productPrice;
+        private System.Windows.Forms.ColumnHeader productSource;
+        private System.Windows.Forms.Panel filterPanel;
+        private System.Windows.Forms.Button group;
+        private System.Windows.Forms.Panel pricePanel;
+        private System.Windows.Forms.Label fromLabel;
+        private System.Windows.Forms.Button price;
+        private System.Windows.Forms.Panel sourcePanel;
+        private System.Windows.Forms.CheckedListBox sources;
+        private System.Windows.Forms.Button source;
+        private System.Windows.Forms.Panel groupPanel;
+        private System.Windows.Forms.CheckedListBox groups;
+        private System.Windows.Forms.Label toLabel;
+        private System.Windows.Forms.TextBox to;
+        private System.Windows.Forms.TextBox from;
+        private System.Windows.Forms.Button filter;
+    }
+}
