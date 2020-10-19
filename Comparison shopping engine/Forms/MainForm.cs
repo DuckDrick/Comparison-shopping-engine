@@ -137,5 +137,13 @@ namespace Comparison_shopping_engine.Forms
 
             form.ShowDialog();
         }
+
+        private void aboutButton_Click(object sender, EventArgs e)
+        {
+            var form = new AboutForm();
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = this.Location;
+            form.ShowDialog();
+        }
     }
 }

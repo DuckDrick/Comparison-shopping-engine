@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
 {
-    public partial class FaqForm : Form
+    public partial class AboutForm : Form
     {
-        public FaqForm()
+        public AboutForm()
         {
             InitializeComponent();
-            richTextBox1.LoadFile("../../Resources/Rtfs/FAQ.rtf");
+            richTextBox1.LoadFile("../../Resources/Rtfs/About.rtf");
         }
 
         private void exitButton_Click(object sender, EventArgs e)

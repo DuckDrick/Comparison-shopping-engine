@@ -275,6 +275,7 @@ namespace Comparison_shopping_engine.Forms
             this.aboutButton.TabIndex = 0;
             this.aboutButton.Text = "Apie";
             this.aboutButton.UseVisualStyleBackColor = true;
+            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
             // 
             // titleBar
             // 
