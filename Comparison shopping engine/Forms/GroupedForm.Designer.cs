@@ -34,9 +34,12 @@
             this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.titleBar = new System.Windows.Forms.Panel();
-            this.appName = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.appName = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.titleBar.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // productListView
@@ -46,10 +49,10 @@
             this.productPrice,
             this.productSource});
             this.productListView.HideSelection = false;
-            this.productListView.Location = new System.Drawing.Point(12, 111);
+            this.productListView.Location = new System.Drawing.Point(12, 150);
             this.productListView.MultiSelect = false;
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(760, 288);
+            this.productListView.Size = new System.Drawing.Size(776, 288);
             this.productListView.TabIndex = 3;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
@@ -57,7 +60,7 @@
             // productName
             // 
             this.productName.Text = "Name";
-            this.productName.Width = 461;
+            this.productName.Width = 631;
             // 
             // productPrice
             // 
@@ -67,7 +70,7 @@
             // productSource
             // 
             this.productSource.Text = "Source";
-            this.productSource.Width = 121;
+            this.productSource.Width = 62;
             // 
             // titleBar
             // 
@@ -82,18 +85,6 @@
             this.titleBar.TabIndex = 4;
             this.titleBar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
-            // appName
-            // 
-            this.appName.Dock = System.Windows.Forms.DockStyle.Right;
-            this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.appName.Location = new System.Drawing.Point(544, 0);
-            this.appName.Name = "appName";
-            this.appName.Size = new System.Drawing.Size(256, 48);
-            this.appName.TabIndex = 0;
-            this.appName.Text = "CheapShop";
-            this.appName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.appName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
-            // 
             // button1
             // 
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
@@ -107,15 +98,47 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.buttonBack_Click);
             // 
+            // appName
+            // 
+            this.appName.Dock = System.Windows.Forms.DockStyle.Right;
+            this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appName.Location = new System.Drawing.Point(544, 0);
+            this.appName.Name = "appName";
+            this.appName.Size = new System.Drawing.Size(256, 48);
+            this.appName.TabIndex = 0;
+            this.appName.Text = "CheapShop";
+            this.appName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.appName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(12, 55);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(776, 89);
+            this.panel1.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(776, 89);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "VIETA GRUPIŲ POGRUPIAMS";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GroupedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.titleBar);
             this.Controls.Add(this.productListView);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(106)))), ((int)(((byte)(109)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -123,6 +146,7 @@
             this.Text = "testCategory";
             this.Load += new System.EventHandler(this.GroupedForm_Load);
             this.titleBar.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -135,5 +159,7 @@
         private System.Windows.Forms.Panel titleBar;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label appName;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -260,6 +260,7 @@ namespace Comparison_shopping_engine.Forms
             this.faqButton.TabIndex = 1;
             this.faqButton.Text = "D.U.K.";
             this.faqButton.UseVisualStyleBackColor = true;
+            this.faqButton.Click += new System.EventHandler(this.faqButton_Click);
             // 
             // aboutButton
             // 
@@ -290,6 +291,7 @@ namespace Comparison_shopping_engine.Forms
             // 
             // exitButton
             // 
+            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.exitButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("exitButton.BackgroundImage")));
             this.exitButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.exitButton.FlatAppearance.BorderSize = 0;
@@ -336,7 +338,7 @@ namespace Comparison_shopping_engine.Forms
             this.searchField.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.searchField.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.searchField.ForeColor = System.Drawing.Color.Gray;
-            this.searchField.Location = new System.Drawing.Point(3, 10);
+            this.searchField.Location = new System.Drawing.Point(3, 7);
             this.searchField.Name = "searchField";
             this.searchField.Size = new System.Drawing.Size(394, 26);
             this.searchField.TabIndex = 0;

@@ -126,5 +126,16 @@ namespace Comparison_shopping_engine.Forms
                 searchField.ForeColor = Color.Gray;
             }
         }
+
+        private void faqButton_Click(object sender, EventArgs e) //340 550    800 450      460 -100      230 -50
+        {
+            var form = new FaqForm();
+            form.StartPosition = FormStartPosition.Manual;
+            form.Location = this.Location;
+            form.Left += 230;
+            form.Top += -50;
+
+            form.ShowDialog();
+        }
     }
 }
