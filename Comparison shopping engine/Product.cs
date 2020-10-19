@@ -1,7 +1,10 @@
-﻿namespace Comparison_shopping_engine
+﻿using System.Collections.Generic;
+
+namespace Comparison_shopping_engine
 {
     public class Product
     {
+        public static List<Product> productList;
         public string Name { get; set; }
         public string Link { get; set; }
         public string Price { get; set; }

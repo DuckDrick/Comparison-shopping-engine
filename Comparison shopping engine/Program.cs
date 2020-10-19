@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Forms;
 
 namespace Comparison_shopping_engine
 {
@@ -17,7 +18,9 @@ namespace Comparison_shopping_engine
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Form formMain = new Form1();
+            var initializer = Initializer.Instance;
+            initializer.Init();
+            Form formMain = new MainForm();
             Application.Run(formMain);
         }
     }
