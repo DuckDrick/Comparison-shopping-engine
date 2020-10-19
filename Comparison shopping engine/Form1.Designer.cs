@@ -54,6 +54,7 @@
             this.backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
             this.productCategory.SuspendLayout();
             this.SuspendLayout();
@@ -310,6 +311,14 @@
             this.backgroundWorker6.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker6_ProgressChanged);
             this.backgroundWorker6.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker6_RunWorkerCompleted);
             // 
+            // backgroundWorker7
+            // 
+            this.backgroundWorker7.WorkerReportsProgress = true;
+            this.backgroundWorker7.WorkerSupportsCancellation = true;
+            this.backgroundWorker7.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker7_DoWork);
+            this.backgroundWorker7.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker7_ProgressChanged);
+            this.backgroundWorker7.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker7_RunWorkerCompleted);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -368,6 +377,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
         private System.ComponentModel.BackgroundWorker backgroundWorker5;
         private System.ComponentModel.BackgroundWorker backgroundWorker6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker7;
     }
 }
 

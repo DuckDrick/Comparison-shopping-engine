@@ -77,6 +77,12 @@ namespace Comparison_shopping_engine
                 {
                     Application.DoEvents();
                 }
+                if (backgroundWorker7.IsBusy)
+                    backgroundWorker7.CancelAsync();
+                while (this.backgroundWorker7.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
 
 
                 productListView.Items.Clear();
@@ -87,6 +93,7 @@ namespace Comparison_shopping_engine
                 //backgroundWorker4.RunWorkerAsync(argument: search.Text);
                 //backgroundWorker5.RunWorkerAsync(argument: search.Text);
                 backgroundWorker6.RunWorkerAsync(argument: search.Text);
+                backgroundWorker7.RunWorkerAsync(argument: search.Text);
             }
             else
             {
@@ -124,6 +131,7 @@ namespace Comparison_shopping_engine
             _productList.AddRange(await Database.Get("", "topocentras"));
             _productList.AddRange(await Database.Get("", "skytech"));
             _productList.AddRange(await Database.Get("", "ermitazas"));
+            _productList.AddRange(await Database.Get("", "autoaibe"));
         }
 
         private async void PopulateProductListView()
@@ -177,6 +185,13 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "autoaibe");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "autoaibe.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -222,6 +237,10 @@ namespace Comparison_shopping_engine
         {
             MessageBox.Show("Ermitazas scraping done");
         }
+        private void backgroundWorker7_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Autoaibe scraping done");
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -248,6 +267,10 @@ namespace Comparison_shopping_engine
             if (backgroundWorker6.IsBusy)
             {
                 backgroundWorker6.CancelAsync();
+            }
+            if (backgroundWorker7.IsBusy)
+            {
+                backgroundWorker7.CancelAsync();
             }
         }
 
@@ -398,8 +421,23 @@ namespace Comparison_shopping_engine
                 productListView.Items.Add(new ListViewItem(row));
             }
             _productList.AddRange(l);
+        }
+        private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new AutoaibeScaper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        }
 
-
+        private void backgroundWorker7_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "autoaibe.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
         }
     }
 

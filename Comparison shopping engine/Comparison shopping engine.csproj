@@ -105,6 +105,7 @@
     <Compile Include="Scraper.cs" />
     <Compile Include="Scraper2.cs" />
     <Compile Include="Selenium\AbstractSeleniumScraper.cs" />
+    <Compile Include="Selenium\AutoaibeScaper.cs" />
     <Compile Include="Selenium\ErmitazasScaper.cs" />
     <Compile Include="Selenium\SenukaiScraper.cs" />
     <Compile Include="Selenium\NovastarScraper.cs" />
