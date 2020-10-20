@@ -15,6 +15,8 @@ namespace Comparison_shopping_engine.Selenium
         public SkytechScraper(BackgroundWorker bw, string scrape) : base(bw, "http://skytech.lt/search.php?keywords=" + scrape + "&x=0&y=0&search_in_description=0&pagesize=500")
         {
         }
+        public SkytechScraper() : base() {}
+
 
 
         private string GetProductImage(ChromeDriver driver)

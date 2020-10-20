@@ -11,7 +11,9 @@ namespace Comparison_shopping_engine.Selenium
     {
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
-            driver.Navigate().GoToUrl(driver.FindElementByXPath("//*[@id=\"next\"]/div[1]/a[2]").GetAttribute("href"));
+            var ll = driver.Url.Split('=');
+            var psl = ll[ll.Length - 1];
+            driver.Navigate().GoToUrl("senukai.lt/paieska/dsadsaŲq=" + (int.Parse(psl) + 48));
         }
 
 
@@ -60,6 +62,11 @@ namespace Comparison_shopping_engine.Selenium
 
         public SenukaiScraper(BackgroundWorker bw, string source) : base(bw, "https://senukai.lt/paieska/?q=" + source)
         {
+        }
+
+        public SenukaiScraper() : base()
+        {
+
         }
     }
 }

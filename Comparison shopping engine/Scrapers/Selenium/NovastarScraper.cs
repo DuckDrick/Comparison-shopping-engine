@@ -67,8 +67,17 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
-            Thread.Sleep(3000);
-            var list= driver.FindElements(By.ClassName("product__item"));
+            ReadOnlyCollection<IWebElement> list;
+            //Thread.Sleep(3000);
+            try
+            {
+                list = driver.FindElements(By.ClassName("product__item"));
+            }
+            catch
+            {
+                return null;
+            }
+
             if (list != null)
             {
                 return list;
@@ -107,6 +116,10 @@ namespace Comparison_shopping_engine.Selenium
         {
         }
 
+        public NovastarScraper() : base()
+        {
+
+        }
 
     }
 }

@@ -25,7 +25,13 @@ namespace Comparison_shopping_engine
                 var check = await CheckIfExists(source, name, connection);
                 if (!check)
                 {
-                    await Add(name, group, link, pLink, price, source, connection);
+                    try
+                    {
+                        await Add(name, group, link, pLink, price, source, connection);
+                    }
+                    catch
+                    {
+                    }
                 }
                 else
                 {
@@ -110,8 +116,9 @@ namespace Comparison_shopping_engine
                         pl.Add(new Product(dr[0].ToString(), dr[4] + "€", dr[2].ToString(), dr[3].ToString(), dr[1].ToString(), table));
                     }
                     await dr.CloseAsync();
-                    return pl;
+                    
                 }
+                return pl;
             }
             catch (Exception e)
             {

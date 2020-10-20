@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Comparison_shopping_engine
 {
     public class Product
     {
-        public static List<Product> productList;
+        public static BindingList<Product> productList;
         public string Name { get; set; }
         public string Link { get; set; }
         public string Price { get; set; }

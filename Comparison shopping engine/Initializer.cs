@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,18 +33,18 @@ namespace Comparison_shopping_engine
             }
         }
 
-        public void Init()
+        public static async void GetProductListFromDatabase()
         {
-            GetProductListFromDatabase();
-        }
-
-        private async void GetProductListFromDatabase()
-        {
-            Product.productList = new List<Product>();
+            Product.productList = new BindingList<Product>();
             var count = Enum.GetNames(typeof(ScrapedSites)).Length;
             for (var site = (ScrapedSites)0; site < (ScrapedSites)count; site++)
             {
-                Product.productList.AddRange(await Database.Get("", site.ToString()));
+                var l = await Database.Get("", site.ToString());
+                foreach (var ll in l)
+                {
+                    Product.productList.Add(ll);
+                }
+                
             }
 
             DoneWithDatabase = true;

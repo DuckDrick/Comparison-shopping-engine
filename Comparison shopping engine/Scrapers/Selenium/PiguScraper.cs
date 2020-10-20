@@ -66,5 +66,8 @@ namespace Comparison_shopping_engine.Selenium
         public PiguScraper(BackgroundWorker bw, string source) : base(bw, "https://pigu.lt/lt/search?q=" + source)
         {
         }
+        public PiguScraper() : base()
+        {
+        }
     }
 }

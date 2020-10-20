@@ -12,16 +12,16 @@ using System.Windows.Forms;
 
 namespace Comparison_shopping_engine
 {
-    class Scraper2
+    class BigboxScraper
     {
         private readonly ListView results;
         private Database db;
 
-        public Scraper2()
+        public BigboxScraper()
         {
         }
 
-        public Scraper2(ListView results, Database db)
+        public BigboxScraper(ListView results, Database db)
         {
             this.results = results;
             this.db = db;

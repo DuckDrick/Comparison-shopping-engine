@@ -11,9 +11,13 @@ using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class TopocentasScraper : AbstractSeleniumScraper
+    class TopocentrasScraper : AbstractSeleniumScraper
     {
-        public TopocentasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://topocentras.lt/catalogsearch/result/?q="+scrape)
+        public TopocentrasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://topocentras.lt/catalogsearch/result/?q="+scrape)
+        {
+        }
+
+        public TopocentrasScraper() : base()
         {
         }
 
@@ -23,6 +27,7 @@ namespace Comparison_shopping_engine.Selenium
             if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
             {
                  var nuoroda = driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
+
                  driver.Navigate().GoToUrl(nuoroda);
             }
 
@@ -41,7 +46,6 @@ namespace Comparison_shopping_engine.Selenium
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl)
         {
             var group = driver.FindElements(By.ClassName("breadcrumbs-breadcrumbLink-2NB"));
-            List<String> list;
             foreach (var productgroup in group)
             {
                 if (!productgroup.Text.Equals("Topocentras"))

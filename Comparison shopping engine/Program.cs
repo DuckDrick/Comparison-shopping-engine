@@ -18,8 +18,7 @@ namespace Comparison_shopping_engine
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var initializer = Initializer.Instance;
-            initializer.Init();
+            Initializer.GetProductListFromDatabase();
             Form formMain = new MainForm();
             Application.Run(formMain);
         }

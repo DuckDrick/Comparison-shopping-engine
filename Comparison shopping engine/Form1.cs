@@ -77,9 +77,9 @@ namespace Comparison_shopping_engine
                 PopulateProductListView(); 
                 backgroundWorker1.RunWorkerAsync(argument: search.Text);
                 backgroundWorker2.RunWorkerAsync(argument: search.Text);
-                backgroundWorker3.RunWorkerAsync(argument: search.Text);
-                backgroundWorker4.RunWorkerAsync(argument: search.Text);
-                backgroundWorker5.RunWorkerAsync(argument: search.Text);
+                // backgroundWorker3.RunWorkerAsync(argument: search.Text);
+                 backgroundWorker4.RunWorkerAsync(argument: search.Text);
+                 backgroundWorker5.RunWorkerAsync(argument: search.Text);
             }
             else
             {
@@ -97,7 +97,15 @@ namespace Comparison_shopping_engine
             foreach (var product in _productList.Where(product => itemName.Equals(product.Name) && itemPrice.Equals(product.Price)))
             {
                 productN.Text = product.Name;
-                productPicture.Load(product.ImageUrl);
+                try
+                {
+                    productPicture.Load(product.ImageUrl);
+                }
+                catch
+                {
+
+                }
+
                 productGroup.Text = product.Group;
                 productLink.Text = product.Link;
             }
@@ -110,12 +118,7 @@ namespace Comparison_shopping_engine
 
         private async void PopulateProductList()
         {
-            _productList = await Database.Get("", "rde");
-            _productList.AddRange(await Database.Get("", "bigbox"));
-            _productList.AddRange(await Database.Get("", "pigu"));
-            _productList.AddRange(await Database.Get("", "novastar"));
-            _productList.AddRange(await Database.Get("", "topocentras"));
-            _productList.AddRange(await Database.Get("", "skytech"));
+            
         }
 
         private async void PopulateProductListView()
@@ -164,12 +167,12 @@ namespace Comparison_shopping_engine
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker bw = sender as BackgroundWorker;
-            var paieska = (string)e.Argument;
-            new PiguScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
-        }
+        // private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        // {
+        //     BackgroundWorker bw = sender as BackgroundWorker;
+        //     var paieska = (string)e.Argument;
+        //     new PiguScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        // }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -228,12 +231,12 @@ namespace Comparison_shopping_engine
             }
         }
 
-        private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker bw = sender as BackgroundWorker;
-            var paieska = (string)e.Argument;
-            new SenukaiScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
-        }
+        // private void backgroundWorker3_DoWork(object sender, DoWorkEventArgs e)
+        // {
+        //     BackgroundWorker bw = sender as BackgroundWorker;
+        //     var paieska = (string)e.Argument;
+        //     new SenukaiScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        // }
 
         private void backgroundWorker3_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -246,12 +249,12 @@ namespace Comparison_shopping_engine
             _productList.AddRange(l);
 
         }
-        private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker bw = sender as BackgroundWorker;
-            var paieska = (string)e.Argument;
-            new NovastarScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
-        }
+        // private void backgroundWorker2_DoWork(object sender, DoWorkEventArgs e)
+        // {
+        //     BackgroundWorker bw = sender as BackgroundWorker;
+        //     var paieska = (string)e.Argument;
+        //     new NovastarScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        // }
 
         private void backgroundWorker2_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -321,12 +324,12 @@ namespace Comparison_shopping_engine
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
 
-        private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker bw = sender as BackgroundWorker;
-            var paieska = (string)e.Argument;
-            new TopocentasScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
-        }
+        // private void backgroundWorker4_DoWork(object sender, DoWorkEventArgs e)
+        // {
+        //     BackgroundWorker bw = sender as BackgroundWorker;
+        //     var paieska = (string)e.Argument;
+        //     new TopocentrasScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        // }
 
         private void backgroundWorker4_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -340,12 +343,12 @@ namespace Comparison_shopping_engine
 
 
         }
-        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker bw = sender as BackgroundWorker;
-            var paieska = (string)e.Argument;
-            new SkytechScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
-        }
+        // private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        // {
+        //     BackgroundWorker bw = sender as BackgroundWorker;
+        //     var paieska = (string)e.Argument;
+        //     new SkytechScraper(bw, paieska.Replace(" ", "+")).ScrapeWithSelenium();
+        // }
 
         private void backgroundWorker5_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {

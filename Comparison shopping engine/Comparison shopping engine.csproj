@@ -87,12 +87,56 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
-    <Compile Include="Forms\FormDefault.cs">
+    <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FormDefault.Designer.cs">
-      <DependentUpon>FormDefault.cs</DependentUpon>
+    <Compile Include="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FaqForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FaqForm.Designer.cs">
+      <DependentUpon>FaqForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GroupedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GroupedForm.Designer.cs">
+      <DependentUpon>GroupedForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProductInformationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProductInformationForm.Designer.cs">
+      <DependentUpon>ProductInformationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ScraperInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ScraperInfo.Designer.cs">
+      <DependentUpon>ScraperInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ScraperSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ScraperSettings.Designer.cs">
+      <DependentUpon>ScraperSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Initializer.cs" />
+    <Compile Include="Values\MainGroups.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -102,20 +146,44 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scraper.cs" />
-    <Compile Include="Scraper2.cs" />
-    <Compile Include="Selenium\AbstractSeleniumScraper.cs" />
-    <Compile Include="Selenium\SenukaiScraper.cs" />
-    <Compile Include="Selenium\NovastarScraper.cs" />
-    <Compile Include="Selenium\PiguScraper.cs" />
-    <Compile Include="Selenium\SkytechScraper.cs" />
-    <Compile Include="Selenium\TopocentasScraper.cs" />
+    <Compile Include="Values\ScrapedSites.cs" />
+    <Compile Include="Scrapers\RdeScraper.cs" />
+    <Compile Include="Scrapers\BigboxScraper.cs" />
+    <Compile Include="Scrapers\ScraperController.cs" />
+    <Compile Include="Scrapers\Selenium\AbstractSeleniumScraper.cs" />
+    <Compile Include="Scrapers\Selenium\SenukaiScraper.cs" />
+    <Compile Include="Scrapers\Selenium\NovastarScraper.cs" />
+    <Compile Include="Scrapers\Selenium\PiguScraper.cs" />
+    <Compile Include="Scrapers\Selenium\SkytechScraper.cs" />
+    <Compile Include="Scrapers\Selenium\TopocentrasScraper.cs" />
+    <Compile Include="Values\Values.cs" />
     <Compile Include="VerySecretFile.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormDefault.resx">
-      <DependentUpon>FormDefault.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FaqForm.resx">
+      <DependentUpon>FaqForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GroupedForm.resx">
+      <DependentUpon>GroupedForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProductInformationForm.resx">
+      <DependentUpon>ProductInformationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ScraperInfo.resx">
+      <DependentUpon>ScraperInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ScraperSettings.resx">
+      <DependentUpon>ScraperSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -136,11 +204,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\FAQ.rtf">
+      <SubType>Form</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Icons\Apranga.png" />
+    <Content Include="Resources\Icons\Automobilis.png" />
+    <Content Include="Resources\Icons\Baldai.png" />
+    <Content Include="Resources\Icons\Buitinė.png" />
+    <Content Include="Resources\Icons\Garsas.png" />
+    <Content Include="Resources\Icons\Grožis.png" />
+    <Content Include="Resources\Icons\Gyvūnai.png" />
+    <Content Include="Resources\Icons\Kamera.png" />
+    <Content Include="Resources\Icons\Kanceliarinės.png" />
+    <Content Include="Resources\Icons\Knyga.png" />
+    <Content Include="Resources\Icons\Kompiuteris.png" />
+    <Content Include="Resources\Icons\Laisvalaikis.png" />
+    <Content Include="Resources\Icons\Maistas.png" />
+    <Content Include="Resources\Icons\Sodas.png" />
+    <Content Include="Resources\Icons\Telefonas.png" />
+    <Content Include="Resources\Icons\Vaikai.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

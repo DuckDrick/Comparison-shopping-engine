@@ -35,16 +35,16 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.productPicture = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.productName = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.productSource = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.productLink = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.productGroup = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.productPrice = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.productSource = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.productName = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.titleBar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
@@ -135,56 +135,6 @@
             this.panel1.Size = new System.Drawing.Size(525, 153);
             this.panel1.TabIndex = 1;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 14);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Pavadinimas";
-            // 
-            // productName
-            // 
-            this.productName.AutoSize = true;
-            this.productName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productName.Location = new System.Drawing.Point(0, 14);
-            this.productName.Name = "productName";
-            this.productName.Size = new System.Drawing.Size(49, 14);
-            this.productName.TabIndex = 1;
-            this.productName.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Location = new System.Drawing.Point(0, 28);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 14);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Šaltinis";
-            // 
-            // productSource
-            // 
-            this.productSource.AutoSize = true;
-            this.productSource.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productSource.Location = new System.Drawing.Point(0, 42);
-            this.productSource.Name = "productSource";
-            this.productSource.Size = new System.Drawing.Size(49, 14);
-            this.productSource.TabIndex = 3;
-            this.productSource.Text = "label4";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(0, 56);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(42, 14);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Kaina";
-            // 
             // productLink
             // 
             this.productLink.AutoSize = true;
@@ -234,6 +184,56 @@
             this.productPrice.Size = new System.Drawing.Size(56, 14);
             this.productPrice.TabIndex = 5;
             this.productPrice.Text = "label10";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label5.Location = new System.Drawing.Point(0, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 14);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Kaina";
+            // 
+            // productSource
+            // 
+            this.productSource.AutoSize = true;
+            this.productSource.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productSource.Location = new System.Drawing.Point(0, 42);
+            this.productSource.Name = "productSource";
+            this.productSource.Size = new System.Drawing.Size(49, 14);
+            this.productSource.TabIndex = 3;
+            this.productSource.Text = "label4";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label3.Location = new System.Drawing.Point(0, 28);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 14);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Šaltinis";
+            // 
+            // productName
+            // 
+            this.productName.AutoSize = true;
+            this.productName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productName.Location = new System.Drawing.Point(0, 14);
+            this.productName.Name = "productName";
+            this.productName.Size = new System.Drawing.Size(49, 14);
+            this.productName.TabIndex = 1;
+            this.productName.Text = "label2";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 14);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Pavadinimas";
             // 
             // ProductInformationForm
             // 

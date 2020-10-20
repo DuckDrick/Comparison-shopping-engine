@@ -7,6 +7,8 @@
         pigu,
         novastar,
         topocentras,
-        skytech
+        skytech,
+        senukai
     }
+
 }

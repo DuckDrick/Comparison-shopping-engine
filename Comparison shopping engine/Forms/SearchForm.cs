@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Scrapers;
 
 namespace Comparison_shopping_engine.Forms
 {
@@ -119,6 +121,23 @@ namespace Comparison_shopping_engine.Forms
                     product.Name.ToLower().Contains(query.ToLower()))).ToList();
             var rows = GetRows(_items);
             productListView.Items.AddRange(rows);
+            Product.productList.ListChanged += addToListView;
+        }
+
+        private void addToListView(object sender, ListChangedEventArgs e)
+        {
+            var p = Product.productList[e.NewIndex];
+            string[] row = {p.Name, p.Price, p.Source};
+            if (productListView.InvokeRequired)
+            {
+                productListView.Invoke((MethodInvoker)delegate ()
+                {
+                    ListViewItem item = new ListViewItem(row);
+                    productListView.Items.Add(item);
+                    productListView.EnsureVisible(productListView.Items.Count - 1);
+                });
+            }
+           
         }
 
         private static void LoadToCheckedList<T>(CheckedListBox clb) where T : Enum
@@ -217,5 +236,34 @@ namespace Comparison_shopping_engine.Forms
                 Product.productList.Where(product => product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)).ToList();
             _pif.SetInformation(chosenProduct[0]);
         }
+
+        private ScraperController scraperController = null;
+        private void StartScraping(object sender, EventArgs e)
+        {
+            if (scraperController == null)
+            {
+                scraperController = new ScraperController(sources.CheckedItems.OfType<ScrapedSites>().ToArray());
+                scraperController.Begin(String.Join(" ", _searchQuery));
+            }
+            else
+            {
+                scraperController.Kill();
+            }
+        }
+
+        private void scrapingInfo_Click(object sender, EventArgs e)
+        {
+            Form form = new ScraperInfo();
+            form.ShowDialog();
+        }
+
+        private void scrapingSettings_Click(object sender, EventArgs e)
+        {
+            Form form = new ScraperSettings();
+            form.ShowDialog();
+        }
+
+        
+
     }
 }
