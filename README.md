@@ -9,6 +9,6 @@ Done Extension method usage.
      Generic type usage.
 DONE Regex.
      Widening and narrowing type conversions.
-     Putting data to collection, iterating through it the right way.
+         Putting data to collection, iterating through it the right way.
      LINQ to Objects usage (methods and queries), including groupJoin.
 Done Implementing some of the standard .NET interfaces (IEnumerable, IComparable, IComparer, IEquatable, IEnumerator, etc.)
