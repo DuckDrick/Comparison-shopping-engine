@@ -70,10 +70,13 @@ namespace Comparison_shopping_engine.Selenium
                                     {
                                         var (price, name, productUrl, photoUrl) = GetInfo(product);
                                         if (!Database.Search(name.Replace("'", "''"), site))
+                                        {
                                             products.Add(new Product(name.Replace("'", "''"), price, productUrl,
                                                 photoUrl,
                                                 "None",
                                                 site + ".lt"));
+                                        }
+                                            
                                     }
 
                                     if (!_bw.CancellationPending) continue;
@@ -102,7 +105,7 @@ namespace Comparison_shopping_engine.Selenium
                                         var chromeDriverServicep = ChromeDriverService.CreateDefaultService();
                                         chromeDriverServicep.HideCommandPromptWindow = true;
                                         var op = new ChromeOptions();
-                                        op.AddArguments("--window-size=1920,1080" , "--no-sandbox", "--headless");
+                                        op.AddArguments("--window-size=1920,1080", "--no-sandbox", "--headless");
                                         try
                                         {
                                             using (var driverp = new ChromeDriver(chromeDriverServicep, op))

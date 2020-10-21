@@ -46,7 +46,7 @@ namespace Comparison_shopping_engine.Selenium
             {
                 if (!productgroup.Text.Equals("Topocentras"))
                 {
-                    var img = driver.FindElementByClassName("carousel-activeImageContainer-2O-").FindElement(By.TagName("img")).GetAttribute("src");
+                    var img = driver.FindElement(By.ClassName("carousel-mainImage-2gm")).GetAttribute("src");
                     return (productgroup.Text, img);
                 }
             }
