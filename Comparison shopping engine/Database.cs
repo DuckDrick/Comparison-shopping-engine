@@ -25,7 +25,14 @@ namespace Comparison_shopping_engine
                 var check = await CheckIfExists(source, name, connection);
                 if (!check)
                 {
-                    await Add(name, group, link, pLink, price, source, connection);
+                    try
+                    {
+                        await Add(name, group, link, pLink, price, source, connection);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Already exists :( " + name);
+                    }
                 }
                 else
                 {

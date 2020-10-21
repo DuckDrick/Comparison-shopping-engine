@@ -56,6 +56,7 @@
             this.productListView.TabIndex = 3;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
+            this.productListView.DoubleClick += new System.EventHandler(this.ShowMoreInfoAboutProduct);
             // 
             // productName
             // 

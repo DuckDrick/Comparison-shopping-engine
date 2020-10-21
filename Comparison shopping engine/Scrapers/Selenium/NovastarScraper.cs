@@ -103,7 +103,6 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            ReadOnlyCollection<IWebElement> kazkas;
             string price;
             if (product.FindElements(By.CssSelector("span.price__value.price__value--discounted")).Count == 1)
             {
