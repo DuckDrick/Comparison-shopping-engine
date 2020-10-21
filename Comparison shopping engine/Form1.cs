@@ -83,17 +83,26 @@ namespace Comparison_shopping_engine
                 {
                     Application.DoEvents();
                 }
+                if (backgroundWorker8.IsBusy)
+                    backgroundWorker8.CancelAsync();
+                while (this.backgroundWorker8.CancellationPending)
+                {
+                    Application.DoEvents();
+                }
 
 
                 productListView.Items.Clear();
                 PopulateProductListView(); 
-                backgroundWorker1.RunWorkerAsync(argument: search.Text); //pigu veikia
-                backgroundWorker2.RunWorkerAsync(argument: search.Text); //novastar
-                backgroundWorker3.RunWorkerAsync(argument: search.Text); //senukai
-                backgroundWorker4.RunWorkerAsync(argument: search.Text); //topocentras veikia
-                backgroundWorker5.RunWorkerAsync(argument: search.Text); //skytech veikia
-                backgroundWorker6.RunWorkerAsync(argument: search.Text); //ermitazas veikia
-                backgroundWorker7.RunWorkerAsync(argument: search.Text); //autoaibe veikia
+                //backgroundWorker1.RunWorkerAsync(argument: search.Text); //pigu veikia
+                //backgroundWorker2.RunWorkerAsync(argument: search.Text); //novastar
+                //backgroundWorker3.RunWorkerAsync(argument: search.Text); //senukai
+                //backgroundWorker4.RunWorkerAsync(argument: search.Text); //topocentras veikia
+                //backgroundWorker5.RunWorkerAsync(argument: search.Text); //skytech veikia
+                //backgroundWorker6.RunWorkerAsync(argument: search.Text); //ermitazas veikia
+                //backgroundWorker7.RunWorkerAsync(argument: search.Text); //autoaibe veikia
+                backgroundWorker8.RunWorkerAsync(argument: search.Text); //eoltas
+
+                    //varle neveikia
             }
             else
             {
@@ -132,6 +141,7 @@ namespace Comparison_shopping_engine
             _productList.AddRange(await Database.Get("", "skytech"));
             _productList.AddRange(await Database.Get("", "ermitazas"));
             _productList.AddRange(await Database.Get("", "autoaibe"));
+            _productList.AddRange(await Database.Get("", "eoltas"));
         }
 
         private async void PopulateProductListView()
@@ -192,6 +202,13 @@ namespace Comparison_shopping_engine
                 var item = new ListViewItem(row);
                 productListView.Items.Add(item);
             }
+            list = await Database.Get(search.Text.Replace(" ", "%"), "eoltas");
+            foreach (var product in list)
+            {
+                string[] row = { product.Name, product.Price, "eoltas.lt" };
+                var item = new ListViewItem(row);
+                productListView.Items.Add(item);
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -241,6 +258,10 @@ namespace Comparison_shopping_engine
         {
             MessageBox.Show("Autoaibe scraping done");
         }
+        private void backgroundWorker8_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Eoltas scraping done");
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -271,6 +292,10 @@ namespace Comparison_shopping_engine
             if (backgroundWorker7.IsBusy)
             {
                 backgroundWorker7.CancelAsync();
+            }
+            if (backgroundWorker8.IsBusy)
+            {
+                backgroundWorker8.CancelAsync();
             }
         }
 
@@ -435,6 +460,23 @@ namespace Comparison_shopping_engine
             foreach (var product in l)
             {
                 string[] row = { product.Name, product.Price, "autoaibe.lt" };
+                productListView.Items.Add(new ListViewItem(row));
+            }
+            _productList.AddRange(l);
+        }
+        private void backgroundWorker8_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            var paieska = (string)e.Argument;
+            new EoltasScraper(bw, paieska.Replace(" ", "%20")).ScrapeWithSelenium();
+        }
+
+        private void backgroundWorker8_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            var l = (List<Product>)e.UserState;
+            foreach (var product in l)
+            {
+                string[] row = { product.Name, product.Price, "eoltas.lt" };
                 productListView.Items.Add(new ListViewItem(row));
             }
             _productList.AddRange(l);
