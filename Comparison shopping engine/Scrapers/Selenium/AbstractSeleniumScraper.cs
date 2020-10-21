@@ -19,14 +19,7 @@ namespace Comparison_shopping_engine.Selenium
         private string _scrape;
         private readonly BackgroundWorker _bw;
 
-        protected AbstractSeleniumScraper(BackgroundWorker bw, string scrape)
-        {
-            this._scrape = scrape;
-            this._bw = bw;
-        }
-        protected AbstractSeleniumScraper()
-        {
-        }
+      
 
         private IEnumerable<ChromeDriver> FillWithDrivers(int amount, ChromeOptions o, ChromeDriverService cds, int timeout)
         {
@@ -48,7 +41,7 @@ namespace Comparison_shopping_engine.Selenium
                 var options = new ChromeOptions();
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
                 chromeDriverService.HideCommandPromptWindow = true;
-                options.AddArguments("--window-size=1920,1080", "--no-sandbox", "--headless");
+                options.AddArguments("--window-size=1920,1080", "--no-sandbox");
                 drivers = FillWithDrivers(amount, options, chromeDriverService, Values.scraperTimeout).ToList();
                 try
                 {

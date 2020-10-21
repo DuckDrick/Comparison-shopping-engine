@@ -12,11 +12,8 @@ namespace Comparison_shopping_engine.Selenium
 {
     class EoltasScraper : AbstractSeleniumScraper
     {
-        public EoltasScraper(BackgroundWorker bw, string scrape) : base(bw,
-            "https://eoltas.lt/lt_LT/search/" + scrape + "/2")
-        {
-        }
 
+       
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
             if (driver.FindElements(By.CssSelector("a.btn.btn-pager")).Count > 0)

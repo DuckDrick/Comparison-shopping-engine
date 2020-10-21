@@ -10,9 +10,6 @@ namespace Comparison_shopping_engine.Selenium
 {
     class VarleScraper :AbstractSeleniumScraper
     {
-        public VarleScraper(BackgroundWorker bw, string scrape) : base(bw, "https://varle.lt/search/?q=" +scrape)
-        {
-        }
 
         protected override void NavigateToNextPage(ChromeDriver driver)
         {

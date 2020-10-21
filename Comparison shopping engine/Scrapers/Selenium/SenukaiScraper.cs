@@ -60,13 +60,6 @@ namespace Comparison_shopping_engine.Selenium
 
      
 
-        public SenukaiScraper(BackgroundWorker bw, string source) : base(bw, "https://senukai.lt/paieska/?q=" + source)
-        {
-        }
-
-        public SenukaiScraper() : base()
-        {
-
-        }
+    
     }
 }

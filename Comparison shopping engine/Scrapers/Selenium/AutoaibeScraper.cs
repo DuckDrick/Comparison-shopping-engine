@@ -11,10 +11,11 @@ using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class AutoaibeScaper : AbstractSeleniumScraper
+    class AutoaibeScraper : AbstractSeleniumScraper
     {
-        public AutoaibeScaper(BackgroundWorker bw, string scrape) : base(bw, "https://autoaibe.lt/search/?q=" +scrape)
+        public AutoaibeScraper()
         {
+
         }
 
         protected override void NavigateToNextPage(ChromeDriver driver)

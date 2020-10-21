@@ -140,7 +140,6 @@
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-<<<<<<< HEAD
     <Compile Include="Values\ScrapedSites.cs" />
     <Compile Include="Scrapers\RdeScraper.cs" />
     <Compile Include="Scrapers\BigboxScraper.cs" />
@@ -152,20 +151,10 @@
     <Compile Include="Scrapers\Selenium\SkytechScraper.cs" />
     <Compile Include="Scrapers\Selenium\TopocentrasScraper.cs" />
     <Compile Include="Values\Values.cs" />
-=======
-    <Compile Include="Scraper.cs" />
-    <Compile Include="Scraper2.cs" />
-    <Compile Include="Selenium\AbstractSeleniumScraper.cs" />
-    <Compile Include="Selenium\AutoaibeScaper.cs" />
-    <Compile Include="Selenium\EoltasScraper.cs" />
-    <Compile Include="Selenium\ErmitazasScaper.cs" />
-    <Compile Include="Selenium\SenukaiScraper.cs" />
-    <Compile Include="Selenium\NovastarScraper.cs" />
-    <Compile Include="Selenium\PiguScraper.cs" />
-    <Compile Include="Selenium\SkytechScraper.cs" />
-    <Compile Include="Selenium\TopocentasScraper.cs" />
-    <Compile Include="Selenium\VarleScraper.cs" />
->>>>>>> master
+    <Compile Include="Scrapers\Selenium\AutoaibeScraper.cs" />
+    <Compile Include="Scrapers\Selenium\EoltasScraper.cs" />
+    <Compile Include="Scrapers\Selenium\ErmitazasScaper.cs" />
+    <Compile Include="Scrapers\Selenium\VarleScraper.cs" />
     <Compile Include="VerySecretFile.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

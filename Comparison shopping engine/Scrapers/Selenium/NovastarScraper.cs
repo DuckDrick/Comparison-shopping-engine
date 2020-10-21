@@ -124,14 +124,7 @@ namespace Comparison_shopping_engine.Selenium
             return (price, name, productUrl, photoUrl);
         }
 
-        public NovastarScraper(BackgroundWorker bw, string scrape) : base(bw, "https://novastar.lt/search/?q=" + scrape)
-        {
-        }
-
-        public NovastarScraper() : base()
-        {
-
-        }
+     
 
     }
 }

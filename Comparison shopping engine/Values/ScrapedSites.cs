@@ -8,7 +8,11 @@
         novastar,
         topocentras,
         skytech,
-        senukai
+        senukai,
+        autoaibe,
+        eoltas,
+        ermitazas,
+        varle
     }
 
 }

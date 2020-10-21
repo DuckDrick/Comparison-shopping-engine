@@ -38,10 +38,14 @@ namespace Comparison_shopping_engine.Scrapers
             foreach (var scraper in scrapers)
             {
                 var url = Values.Urls[(int) scraper.Key];
-
-                scraper.Value.Start(new object[] {
-                    url + query.Replace(" ", "+")
-                });
+                var urlSplit = url.Split('☼');
+                var ending = "";
+                if (urlSplit.Length > 1)
+                {
+                    url = urlSplit[0];
+                    ending = urlSplit[1];
+                }
+                scraper.Value.Start(new object[] {url + query.Replace(" ", "+") + ending});
             }
         }
 

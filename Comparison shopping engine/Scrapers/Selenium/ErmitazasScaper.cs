@@ -12,9 +12,7 @@ namespace Comparison_shopping_engine.Selenium
 {
     class ErmitazasScaper : AbstractSeleniumScraper
     {
-        public ErmitazasScaper(BackgroundWorker bw, string scrape) : base(bw, "https://ermitazas.lt/index.php?lang=2&cl=search&searchparam="+scrape+"&_artperpage=90")
-        {
-        }
+      
 
         protected override void NavigateToNextPage(ChromeDriver driver)
         {

@@ -13,14 +13,7 @@ namespace Comparison_shopping_engine.Selenium
 {
     class TopocentrasScraper : AbstractSeleniumScraper
     {
-        public TopocentrasScraper(BackgroundWorker bw, string scrape) : base(bw, "https://topocentras.lt/catalogsearch/result/?q="+scrape)
-        {
-        }
-
-        public TopocentrasScraper() : base()
-        {
-        }
-
+      
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
 
