@@ -12,6 +12,7 @@ namespace Comparison_shopping_engine
         public string Group { get; set; }
         public string ImageUrl { get; set; }
         public string Source { get; set; }
+
         public Product(string name, string price, string link, string imageUrl, string group, string source)
         {
             this.Name = name;

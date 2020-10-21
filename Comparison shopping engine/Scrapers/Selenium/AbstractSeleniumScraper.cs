@@ -33,7 +33,6 @@ namespace Comparison_shopping_engine.Selenium
             for (var i = 0; i < amount; i++)
             {
                 var driver = new ChromeDriver(cds, o);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(timeout);
                 yield return driver;
             }
         }
@@ -49,13 +48,14 @@ namespace Comparison_shopping_engine.Selenium
                 var options = new ChromeOptions();
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
                 chromeDriverService.HideCommandPromptWindow = true;
-                options.AddArguments("--window-size=1920,1080", "--no-sandbox");
-               drivers = FillWithDrivers(amount, options, chromeDriverService, Values.scraperTimeout).ToList();
+                options.AddArguments("--window-size=1920,1080", "--no-sandbox", "--headless");
+                drivers = FillWithDrivers(amount, options, chromeDriverService, Values.scraperTimeout).ToList();
                 try
                 {
                     using (var driver = new ChromeDriver(chromeDriverService, options))
                     {
-                        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
+                        
+                        //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
                         driver.Navigate().GoToUrl(_scrape);
 
 
@@ -119,8 +119,11 @@ namespace Comparison_shopping_engine.Selenium
                                             : products.Count - 1 - start;
                                         Parallel.ForEach(products.GetRange(start, count), (product, state, index) =>
                                         {
-                                            var productDriver = drivers[(int) index];
+                                           var productDriver = drivers[(int) index];
+                                            productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
                                             productDriver.Navigate().GoToUrl(product.Link);
+                                            productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+
                                             var tries = 0;
                                             while (tries < 5)
                                             {

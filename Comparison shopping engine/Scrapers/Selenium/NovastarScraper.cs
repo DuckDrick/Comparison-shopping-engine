@@ -27,12 +27,14 @@ namespace Comparison_shopping_engine.Selenium
                     .ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
                 Actions action = new Actions(driver);
                 action.MoveToElement(n);
-                var ad = driver.FindElementByXPath("//*[@id=\"soundest-forms-container\"]")
-                    .FindElements(By.TagName("div")).Count;
-                if (ad > 80)
+                var ad = driver.FindElementsByXPath("//*[@id=\"soundest-forms-container\"]");
+                if (ad.Count > 0)
                 {
-                    driver.FindElementByClassName("soundest-form-background-image-close").Click();
+                    ((IJavaScriptExecutor)driver)
+                        .ExecuteScript("document.getElementById(\"soundest-forms-container\").remove();");
+
                 }
+
                 action.Click().Build().Perform();
                 Thread.Sleep(3000);
             }
@@ -68,7 +70,7 @@ namespace Comparison_shopping_engine.Selenium
         protected override ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver)
         {
             ReadOnlyCollection<IWebElement> list;
-            //Thread.Sleep(3000);
+            Thread.Sleep(3000);
             try
             {
                 list = driver.FindElements(By.ClassName("product__item"));
@@ -96,8 +98,22 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
+            ReadOnlyCollection<IWebElement> kazkas;
+            int c = 0;
             string price;
-            if (product.FindElements(By.ClassName("price__standard")).Count != 0)
+            var inner = product.GetProperty("innerHTML");
+            try
+            {
+                kazkas = product.FindElements(By.CssSelector(".price__standard"));
+                c = kazkas.Count;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+
+            if (c != 0)
             {
                 price = product.FindElement(By.ClassName("price__standard")).Text;
             }

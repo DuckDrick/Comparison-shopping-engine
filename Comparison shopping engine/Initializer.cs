@@ -9,29 +9,7 @@ namespace Comparison_shopping_engine
 {
     sealed class Initializer
     {
-        private static Initializer instance = null;
-        private static readonly object padlock = new object();
-
-        Initializer()
-        {
-
-        }
         public static bool DoneWithDatabase = false;
-        public static Initializer Instance
-        {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Initializer();
-                    }
-
-                    return instance;
-                }
-            }
-        }
 
         public static async void GetProductListFromDatabase()
         {
