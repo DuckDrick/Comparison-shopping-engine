@@ -1,0 +1,269 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Forms;
+using Comparison_shopping_engine.Scrapers;
+
+namespace Comparison_shopping_engine.Forms
+{
+    public partial class SearchForm : Form
+    {
+
+
+        #region WindowMove
+
+        public const int WmNclbuttondown = 0xA1;
+        public const int HtCaption = 0x2;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+        private void MoveWindow(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+            }
+        }
+
+        #endregion
+
+        private readonly string[] _searchQuery;
+        public SearchForm(string searchQuery)
+        {
+            InitializeComponent();
+            this._searchQuery = searchQuery.Split(' ');
+        }
+
+        private void ButtonBack_Click(object sender, EventArgs e)
+        {
+            var mainForm = (MainForm)Tag;
+            mainForm.StartPosition = FormStartPosition.Manual;
+            mainForm.Location = this.Location;
+            mainForm.Size = this.Size;
+            mainForm.Show();
+            this.Close();
+
+        }
+        private bool _expanded1;
+        private bool _expanded2;
+        private bool _expanded3;
+        private void TogglePricePanel(object sender, EventArgs e)
+        {
+            if (_expanded1)
+            {
+                pricePanel.AutoSize = false;
+                pricePanel.Height = 0;
+                pricePanel.Enabled = false;
+            }
+            else
+            {
+                pricePanel.AutoSize = true;
+                pricePanel.Enabled = true;
+            }
+            _expanded1 = !_expanded1;
+        }
+
+        private void ToggleGroupPanel(object sender, EventArgs e)
+        {
+            if (_expanded2)
+            {
+                groupPanel.AutoSize = false;
+                groupPanel.Height = 0;
+                groupPanel.Enabled = false;
+            }
+            else
+            {
+                groupPanel.AutoSize = true;
+                groupPanel.Enabled = true;
+            }
+            _expanded2 = !_expanded2;
+        }
+
+        private void ToggleSourcePanel(object sender, EventArgs e)
+        {
+            if (_expanded3)
+            {
+                sourcePanel.AutoSize = false;
+                sourcePanel.Height = 0;
+                sourcePanel.Enabled = false;
+            }
+            else
+            {
+                sourcePanel.AutoSize = true;
+                sourcePanel.Enabled = true;
+            }
+            _expanded3 = !_expanded3;
+        }
+
+        private void SearchForm_Load(object sender, EventArgs e)
+        {
+            LoadToCheckedList<MainGroups>(groups);
+            LoadToCheckedList<ScrapedSites>(sources);
+        }
+
+        private void WaitForProducts()
+        {
+            while (!Initializer.DoneWithDatabase)
+            {
+                Application.DoEvents();
+            }
+        }
+
+        private List<Product> _items;
+        private void LoadListViewItems()
+        {
+            WaitForProducts();
+            _items = Product.productList.Where(product => 
+                _searchQuery.All(query => 
+                    product.Name.ToLower().Contains(query.ToLower()))).ToList();
+            var rows = GetRows(_items);
+            productListView.Items.AddRange(rows);
+            Product.productList.ListChanged += addToListView;
+        }
+
+        private void addToListView(object sender, ListChangedEventArgs e)
+        {
+            var p = Product.productList[e.NewIndex];
+            string[] row = {p.Name, p.Price, p.Source};
+            if (productListView.InvokeRequired)
+            {
+                productListView.Invoke((MethodInvoker)delegate ()
+                {
+                    ListViewItem item = new ListViewItem(row);
+                    productListView.Items.Add(item);
+                    productListView.EnsureVisible(productListView.Items.Count - 1);
+                });
+            }
+           
+        }
+
+        private static void LoadToCheckedList<T>(CheckedListBox clb) where T : Enum
+        {
+            var values = Enum.GetValues(typeof(T));
+            foreach (var value in values)
+            {
+                clb.Items.Add(value);
+            }
+        }
+
+        private void SearchForm_Shown(object sender, EventArgs e)
+        {
+            LoadListViewItems();
+        }
+
+        private void Filter_Click(object sender, EventArgs e)
+        {
+            productListView.Items.Clear();
+            var selectedGroups = groups.CheckedItems.OfType<MainGroups>();
+            var selectedSources = sources.CheckedItems.OfType<ScrapedSites>();
+            var priceFrom = from.Text;
+            var priceTo = to.Text;
+
+            var filteredList = FilterListByPrice(priceFrom, priceTo);
+            filteredList = FilterListByChoice(selectedGroups, filteredList);
+            filteredList = FilterListByChoice(selectedSources, filteredList);
+
+            var rows = GetRows(filteredList);
+            productListView.Items.AddRange(rows);
+        }
+
+        private ListViewItem[] GetRows(IEnumerable<Product> products)
+        {
+            return products.Select(product =>
+            {
+                string[] row = { product.Name, product.Price, product.Source };
+                return new ListViewItem(row);
+            }).ToArray();
+        }
+        private List<Product> FilterListByChoice<T>(IEnumerable<T> selection, List<Product> list)
+        {
+            var enumerable = selection.ToList();
+            if (enumerable.Any())
+            {
+                list = list.Where(product => enumerable.Any(s => product.Group.Contains(s.ToString()))).ToList();
+            }
+
+            return list;
+        }
+        private List<Product> FilterListByPrice(string priceFrom, string priceTo)
+        {
+            var priceF = priceFrom == "" ? -1f : float.Parse(priceFrom);
+            var priceT = priceTo == "" ? 999999f : float.Parse(priceTo);
+
+            return _items.Where(product =>
+            {
+                var priceString = product.Price.Replace('€', ' ').Trim();
+                var pPrice = float.Parse(priceString);
+                return priceF <= pPrice && pPrice <= priceT;
+            }).ToList();
+        }
+
+
+        private void From_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != ','))
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == (char) 8) return;
+            var textBox = ((TextBox) sender);
+            var text = textBox.Text;
+            var dotCount = text.Count(c => c == ',');
+            if (dotCount != 1) return;
+            var dec = text.Split(',')[1].Length;
+            if (dec == 2 || e.KeyChar == ',')
+            {
+                e.Handled = true;
+            }
+        }
+
+        private ProductInformationForm _pif;
+        private void ShowMoreInfoAboutProduct(object sender, EventArgs e)
+        {
+            if (_pif == null || _pif.IsDisposed)
+            {
+                _pif = new ProductInformationForm();
+                _pif.Show();
+            }
+
+            var lv = (ListView) sender;
+            var row = lv.SelectedItems[0].SubItems;
+            var chosenProduct =
+                Product.productList.Where(product => product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)).ToList();
+            _pif.SetInformation(chosenProduct[0]);
+        }
+
+        private ScraperController scraperController = null;
+        private void StartScraping(object sender, EventArgs e)
+        {
+            if (scraperController == null)
+            {
+                scraperController = new ScraperController(sources.CheckedItems.OfType<ScrapedSites>().ToArray());
+                scraperController.Begin(String.Join(" ", _searchQuery));
+            }
+            else
+            {
+                scraperController.Kill();
+            }
+        }
+
+        private void scrapingInfo_Click(object sender, EventArgs e)
+        {
+            Form form = new ScraperInfo();
+            form.ShowDialog();
+        }
+
+        private void scrapingSettings_Click(object sender, EventArgs e)
+        {
+            Form form = new ScraperSettings();
+            form.ShowDialog();
+        }
+
+        
+
+    }
+}
