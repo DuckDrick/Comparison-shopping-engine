@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -42,7 +43,11 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool AnyElements(ChromeDriver driver)
         {
-            return true; //Kodėl įhardcodintas true?
+            if (driver.FindElements(By.CssSelector("div.novanaut.novanaut--head.face-less")).Count == 1)
+            {
+                return false;
+            }
+            return true;
         }
 
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl)
@@ -93,27 +98,18 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
-            return true; //Vėl true?
+            return true; //Vėl true? - true, nes jie nededa itemu kuriu nera, bent kiek radau
         }
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
             ReadOnlyCollection<IWebElement> kazkas;
-            int c = 0;
             string price;
-            var inner = product.GetProperty("innerHTML");
-            try
+            if (product.FindElements(By.CssSelector("span.price__value.price__value--discounted")).Count == 1)
             {
-                kazkas = product.FindElements(By.CssSelector(".price__standard"));
-                c = kazkas.Count;
-
+                price = product.FindElement(By.CssSelector("span.price__value.price__value--discounted")).Text;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-
-            if (c != 0)
+            else if (product.FindElements(By.ClassName("price__standard")).Count == 1)
             {
                 price = product.FindElement(By.ClassName("price__standard")).Text;
             }
@@ -122,7 +118,7 @@ namespace Comparison_shopping_engine.Selenium
                 price = product.FindElement(By.ClassName("price__value")).Text;
             }
             var name = product.FindElement(By.ClassName("link--dark")).Text;
-            var productUrl = product.FindElement(By.ClassName("link--dark")).GetAttribute("href");
+            var productUrl = product.FindElement(By.CssSelector("a.link--dark")).GetAttribute("href");
             var photoUrl = product.FindElement(By.TagName("img"))
                 .GetAttribute("src");
             return (price, name, productUrl, photoUrl);
