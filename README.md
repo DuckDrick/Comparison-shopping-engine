@@ -3,7 +3,7 @@ Requirements:
 
 - [x] Creating and using your own class, struct and enum (with flag(s), preferably). (product class, abstract selenium scraper class)
      
-- [ ] Property (standard, indexed, auto-implemented) usage in struct and class.
+- [X] Property (standard, indexed, auto-implemented) usage in struct and class.
      
 - [ ] Named and optional argument usage.
      
