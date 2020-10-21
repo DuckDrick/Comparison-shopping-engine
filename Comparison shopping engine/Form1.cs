@@ -87,13 +87,13 @@ namespace Comparison_shopping_engine
 
                 productListView.Items.Clear();
                 PopulateProductListView(); 
-                backgroundWorker1.RunWorkerAsync(argument: search.Text);
-                backgroundWorker2.RunWorkerAsync(argument: search.Text);
-                backgroundWorker3.RunWorkerAsync(argument: search.Text);
-                backgroundWorker4.RunWorkerAsync(argument: search.Text);
-                backgroundWorker5.RunWorkerAsync(argument: search.Text);
-                backgroundWorker6.RunWorkerAsync(argument: search.Text);
-                backgroundWorker7.RunWorkerAsync(argument: search.Text);
+                backgroundWorker1.RunWorkerAsync(argument: search.Text); //pigu veikia
+                backgroundWorker2.RunWorkerAsync(argument: search.Text); //novastar
+                backgroundWorker3.RunWorkerAsync(argument: search.Text); //senukai
+                backgroundWorker4.RunWorkerAsync(argument: search.Text); //topocentras veikia
+                backgroundWorker5.RunWorkerAsync(argument: search.Text); //skytech veikia
+                backgroundWorker6.RunWorkerAsync(argument: search.Text); //ermitazas veikia
+                backgroundWorker7.RunWorkerAsync(argument: search.Text); //autoaibe veikia
             }
             else
             {
