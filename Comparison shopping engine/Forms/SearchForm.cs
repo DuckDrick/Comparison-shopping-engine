@@ -253,7 +253,7 @@ namespace Comparison_shopping_engine.Forms
         {
             if (scraperController == null)
             {
-                scraperController = new ScraperController(sources.CheckedItems.OfType<ScrapedSites>().ToArray());
+                scraperController = new ScraperController(sources.CheckedItems.OfType<CheckBoxItem>().Select(item=>(ScrapedSites)item.e).ToArray());
                 scraperController.Begin(String.Join(" ", _searchQuery));
             }
             else
