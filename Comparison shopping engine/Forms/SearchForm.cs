@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Comparison_shopping_engine.Scrapers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using Comparison_shopping_engine.Scrapers;
 
 namespace Comparison_shopping_engine.Forms
 {
@@ -100,6 +100,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
+            WaitForProducts();
             LoadToCheckedList<MainGroups>(groups);
             LoadToCheckedList<ScrapedSites>(sources);
         }
@@ -140,15 +141,25 @@ namespace Comparison_shopping_engine.Forms
            
         }
 
-        private static void LoadToCheckedList<T>(CheckedListBox clb) where T : Enum
+        private void LoadToCheckedList<T>(CheckedListBox clb) where T : Enum
         {
             var values = Enum.GetValues(typeof(T));
             foreach (var value in values)
             {
-                clb.Items.Add(value);
+                clb.Items.Add(new CheckBoxItem(value, CountHowMany((T)value)));
             }
         }
 
+        private int CountHowMany<T>(T value)
+        {
+            if (value.GetType() == typeof(MainGroups))
+            {
+                return Product.productList.Count(product => product.Group.Contains(value.ToString()));
+            }
+
+            return Product.productList.Count(product => product.Source.Contains(value.ToString()));
+
+        }
         private void SearchForm_Shown(object sender, EventArgs e)
         {
             LoadListViewItems();
@@ -157,8 +168,8 @@ namespace Comparison_shopping_engine.Forms
         private void Filter_Click(object sender, EventArgs e)
         {
             productListView.Items.Clear();
-            var selectedGroups = groups.CheckedItems.OfType<MainGroups>();
-            var selectedSources = sources.CheckedItems.OfType<ScrapedSites>();
+            var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.e);
+            var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.e);
             var priceFrom = from.Text;
             var priceTo = to.Text;
 
@@ -178,12 +189,12 @@ namespace Comparison_shopping_engine.Forms
                 return new ListViewItem(row);
             }).ToArray();
         }
-        private List<Product> FilterListByChoice<T>(IEnumerable<T> selection, List<Product> list)
+        private List<Product> FilterListByChoice<T>(IEnumerable<T> selection, List<Product> list) where T : Enum
         {
             var enumerable = selection.ToList();
             if (enumerable.Any())
             {
-                list = list.Where(product => enumerable.Any(s => product.Group.Contains(s.ToString()))).ToList();
+                list = list.Where(product => product[selection.Select(s => (Enum)Enum.Parse(typeof(T), s.ToString())).ToArray()]).ToList();
             }
 
             return list;
@@ -248,6 +259,7 @@ namespace Comparison_shopping_engine.Forms
             else
             {
                 scraperController.Kill();
+                scraperController = null;
             }
         }
 
@@ -265,5 +277,22 @@ namespace Comparison_shopping_engine.Forms
 
         
 
+    }
+
+    public class CheckBoxItem
+    {
+        public object e { get; set; }
+        private int count;
+
+        public CheckBoxItem(object e, int count)
+        {
+            this.e = e;
+            this.count = count;
+        }
+
+        public override string ToString()
+        {
+            return $"{e} ({count})";
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Comparison_shopping_engine.Forms
+﻿using System.Windows.Forms;
+
+namespace Comparison_shopping_engine.Forms
 {
     partial class ProductInformationForm
     {
@@ -35,7 +37,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.productPicture = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.productLink = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.productGroup = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.productName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.productLink = new System.Windows.Forms.LinkLabel();
             this.titleBar.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.productPicture)).BeginInit();
@@ -116,6 +118,7 @@
             this.productPicture.Size = new System.Drawing.Size(215, 153);
             this.productPicture.TabIndex = 0;
             this.productPicture.TabStop = false;
+            this.productPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             // 
             // panel1
             // 
@@ -134,16 +137,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(525, 153);
             this.panel1.TabIndex = 1;
-            // 
-            // productLink
-            // 
-            this.productLink.AutoSize = true;
-            this.productLink.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productLink.Location = new System.Drawing.Point(0, 126);
-            this.productLink.Name = "productLink";
-            this.productLink.Size = new System.Drawing.Size(49, 14);
-            this.productLink.TabIndex = 9;
-            this.productLink.Text = "label6";
             // 
             // label7
             // 
@@ -235,6 +228,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Pavadinimas";
             // 
+            // productLink
+            // 
+            this.productLink.AutoSize = true;
+            this.productLink.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productLink.Location = new System.Drawing.Point(0, 126);
+            this.productLink.Name = "productLink";
+            this.productLink.Size = new System.Drawing.Size(77, 14);
+            this.productLink.TabIndex = 10;
+            this.productLink.TabStop = true;
+            this.productLink.Text = "linkLabel1";
+            this.productLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.productLink_LinkClicked);
+            // 
             // ProductInformationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -265,7 +270,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.PictureBox productPicture;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label productLink;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label productGroup;
         private System.Windows.Forms.Label label9;
@@ -275,5 +279,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label productName;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel productLink;
     }
 }

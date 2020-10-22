@@ -17,9 +17,6 @@ namespace Comparison_shopping_engine.Selenium
     abstract class AbstractSeleniumScraper
     {
         private string _scrape;
-        private readonly BackgroundWorker _bw;
-
-      
 
         private IEnumerable<ChromeDriver> FillWithDrivers(int amount, ChromeOptions o, ChromeDriverService cds, int timeout)
         {
@@ -89,11 +86,6 @@ namespace Comparison_shopping_engine.Selenium
                                                     "None",
                                                     site + ".lt"));
                                         }
-
-                                        if (true) continue;
-                                        driver.Close();
-                                        driver.Quit();
-                                        return;
                                     }
                                 }
                                 catch (NoSuchElementException e)
@@ -186,8 +178,6 @@ namespace Comparison_shopping_engine.Selenium
                                     }
                                 }
 
-                                //_bw.ReportProgress(1, products.Where(e => !e.Group.Equals("None")).ToList());
-
                                 urlBefore = driver.Url;
                                 NavigateToNextPage(driver);
 
@@ -214,7 +204,7 @@ namespace Comparison_shopping_engine.Selenium
                     CloseDriverList(drivers);
                 }
             }
-            catch (ThreadAbortException abortException)
+            catch (ThreadAbortException)
             {
                 Console.WriteLine("Thread aborted");
             }

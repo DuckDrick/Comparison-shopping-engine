@@ -46,6 +46,7 @@ namespace Comparison_shopping_engine.Forms
             productPrice.Text = product.Price;
             productGroup.Text = product.Group;
             productLink.Text = product.Link;
+        
             try
             {
                 productPicture.Load(product.ImageUrl);
@@ -54,6 +55,11 @@ namespace Comparison_shopping_engine.Forms
             {
                 Console.WriteLine(product);
             }
+        }
+
+        private void productLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(productLink.Text);
         }
     }
 }

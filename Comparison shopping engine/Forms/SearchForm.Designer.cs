@@ -37,6 +37,9 @@
             this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filterPanel = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.scrapingInfo = new System.Windows.Forms.Button();
+            this.scrapingSettings = new System.Windows.Forms.Button();
             this.startScraping = new System.Windows.Forms.Button();
             this.filter = new System.Windows.Forms.Button();
             this.sourcePanel = new System.Windows.Forms.Panel();
@@ -51,15 +54,12 @@
             this.from = new System.Windows.Forms.TextBox();
             this.fromLabel = new System.Windows.Forms.Label();
             this.price = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.scrapingSettings = new System.Windows.Forms.Button();
-            this.scrapingInfo = new System.Windows.Forms.Button();
             this.titleBar.SuspendLayout();
             this.filterPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.sourcePanel.SuspendLayout();
             this.groupPanel.SuspendLayout();
             this.pricePanel.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // titleBar
@@ -148,6 +148,42 @@
             this.filterPanel.Name = "filterPanel";
             this.filterPanel.Size = new System.Drawing.Size(216, 385);
             this.filterPanel.TabIndex = 7;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.scrapingInfo);
+            this.panel1.Controls.Add(this.scrapingSettings);
+            this.panel1.Controls.Add(this.startScraping);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 353);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(216, 32);
+            this.panel1.TabIndex = 7;
+            // 
+            // scrapingInfo
+            // 
+            this.scrapingInfo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.scrapingInfo.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrapingInfo.Location = new System.Drawing.Point(191, 0);
+            this.scrapingInfo.Name = "scrapingInfo";
+            this.scrapingInfo.Size = new System.Drawing.Size(25, 32);
+            this.scrapingInfo.TabIndex = 6;
+            this.scrapingInfo.Text = "?";
+            this.scrapingInfo.UseVisualStyleBackColor = true;
+            this.scrapingInfo.Click += new System.EventHandler(this.scrapingInfo_Click);
+            // 
+            // scrapingSettings
+            // 
+            this.scrapingSettings.Dock = System.Windows.Forms.DockStyle.Left;
+            this.scrapingSettings.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrapingSettings.Location = new System.Drawing.Point(0, 0);
+            this.scrapingSettings.Name = "scrapingSettings";
+            this.scrapingSettings.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.scrapingSettings.Size = new System.Drawing.Size(31, 32);
+            this.scrapingSettings.TabIndex = 5;
+            this.scrapingSettings.Text = "⚙";
+            this.scrapingSettings.UseVisualStyleBackColor = true;
+            this.scrapingSettings.Click += new System.EventHandler(this.scrapingSettings_Click);
             // 
             // startScraping
             // 
@@ -294,42 +330,6 @@
             this.price.UseVisualStyleBackColor = true;
             this.price.Click += new System.EventHandler(this.TogglePricePanel);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.scrapingInfo);
-            this.panel1.Controls.Add(this.scrapingSettings);
-            this.panel1.Controls.Add(this.startScraping);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 353);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(216, 32);
-            this.panel1.TabIndex = 7;
-            // 
-            // scrapingSettings
-            // 
-            this.scrapingSettings.Dock = System.Windows.Forms.DockStyle.Left;
-            this.scrapingSettings.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrapingSettings.Location = new System.Drawing.Point(0, 0);
-            this.scrapingSettings.Name = "scrapingSettings";
-            this.scrapingSettings.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.scrapingSettings.Size = new System.Drawing.Size(31, 32);
-            this.scrapingSettings.TabIndex = 5;
-            this.scrapingSettings.Text = "⚙";
-            this.scrapingSettings.UseVisualStyleBackColor = true;
-            this.scrapingSettings.Click += new System.EventHandler(this.scrapingSettings_Click);
-            // 
-            // scrapingInfo
-            // 
-            this.scrapingInfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.scrapingInfo.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scrapingInfo.Location = new System.Drawing.Point(191, 0);
-            this.scrapingInfo.Name = "scrapingInfo";
-            this.scrapingInfo.Size = new System.Drawing.Size(25, 32);
-            this.scrapingInfo.TabIndex = 6;
-            this.scrapingInfo.Text = "?";
-            this.scrapingInfo.UseVisualStyleBackColor = true;
-            this.scrapingInfo.Click += new System.EventHandler(this.scrapingInfo_Click);
-            // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -348,11 +348,11 @@
             this.Shown += new System.EventHandler(this.SearchForm_Shown);
             this.titleBar.ResumeLayout(false);
             this.filterPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.sourcePanel.ResumeLayout(false);
             this.groupPanel.ResumeLayout(false);
             this.pricePanel.ResumeLayout(false);
             this.pricePanel.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

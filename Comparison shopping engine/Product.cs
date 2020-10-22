@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Comparison_shopping_engine
 {
@@ -21,6 +23,20 @@ namespace Comparison_shopping_engine
             this.ImageUrl = imageUrl;
             this.Group = group;
             this.Source = source;
+        }
+
+        public bool this[Enum[] e]
+        {
+            get
+            {
+                if (e.First().GetType() == typeof(MainGroups))
+                {
+                    return e.Any(group => Group.Contains(group.ToString()));
+                }
+
+                return e.Any(source => Source.Equals(source.ToString()));
+            }
+
         }
     }
 }
