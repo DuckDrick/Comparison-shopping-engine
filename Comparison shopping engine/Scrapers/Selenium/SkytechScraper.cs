@@ -66,11 +66,10 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            string price;
-            price = product.FindElement(By.CssSelector("strong")).Text;
+            var price = product.FindElement(By.CssSelector("strong")).Text;
             var name = product.FindElement(By.ClassName("name")).Text;
             var productUrl = product.FindElement(By.CssSelector("a")).GetAttribute("href");
-            string photoUrl = "";
+            var photoUrl = "";
 
             return (price, name, productUrl, photoUrl);
         }

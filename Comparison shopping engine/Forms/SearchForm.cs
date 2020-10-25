@@ -100,9 +100,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
-            WaitForProducts();
-            LoadToCheckedList<MainGroups>(groups);
-            LoadToCheckedList<ScrapedSites>(sources);
+
         }
 
         private void WaitForProducts()
@@ -154,15 +152,18 @@ namespace Comparison_shopping_engine.Forms
         {
             if (value.GetType() == typeof(MainGroups))
             {
-                return Product.productList.Count(product => product.Group.Contains(value.ToString()));
+                return _items.Count(product => product.Group.Contains(value.ToString()));
             }
 
-            return Product.productList.Count(product => product.Source.Contains(value.ToString()));
+            return _items.Count(product => product.Source.Contains(value.ToString()));
 
         }
         private void SearchForm_Shown(object sender, EventArgs e)
         {
+            WaitForProducts();
             LoadListViewItems();
+            LoadToCheckedList<MainGroups>(groups);
+            LoadToCheckedList<ScrapedSites>(sources);
         }
 
         private void Filter_Click(object sender, EventArgs e)

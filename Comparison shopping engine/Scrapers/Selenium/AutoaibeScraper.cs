@@ -79,8 +79,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            string price;
-            price = product.FindElement(By.ClassName("user-price")).Text;
+            var price = product.FindElement(By.ClassName("user-price")).Text;
             var name = product.FindElement(By.ClassName("name")).Text;
             var productUrl = product.FindElement(By.ClassName("name")).GetAttribute("href");
             string photoUrl = product.FindElement(By.TagName("img")).GetAttribute("src");

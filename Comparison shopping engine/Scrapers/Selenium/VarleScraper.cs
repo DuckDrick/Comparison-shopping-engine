@@ -70,15 +70,10 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            string price;
-            price = product.FindElement(By.CssSelector("span.price")).Text;
+            var price = product.FindElement(By.CssSelector("span.price")).Text;
             var name = product.FindElement(By.CssSelector("a.title")).Text;
             var productUrl = product.FindElement(By.CssSelector("a.title")).GetAttribute("href");
-            string photoUrl = " ";//product.FindElement(By.ClassName("img-container")).GetAttribute("src");
-            //if (photoUrl.Contains("svg"))
-            //{
-            //    photoUrl = "https://upload.wikimedia.org/wikipedia/commons/0/0a/No-image-available.png";
-            //}
+            string photoUrl = " ";
             return (price, name, productUrl, photoUrl);
         }
     }

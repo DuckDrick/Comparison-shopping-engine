@@ -6,7 +6,7 @@ namespace Comparison_shopping_engine
     {
         public static List<string> Urls = new List<string>{
             /*rde,          */ "none",
-            /*bigbox,       */ "none",
+            /*bigbox,       */ "https://bigbox.lt/paieska?controller=search&orderby=position&orderway=desc&ssa_submit=&search_query=",
             /*pigu,         */ "https://pigu.lt/lt/search?q=",
             /*novastar,     */ "https://novastar.lt/search/?q=",
             /*topocentras,  */ "https://topocentras.lt/catalogsearch/result/?q=",

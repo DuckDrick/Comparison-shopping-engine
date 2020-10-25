@@ -21,7 +21,7 @@ namespace Comparison_shopping_engine.Scrapers
             scrapers = new List<KeyValuePair<ScrapedSites, Thread>>();
             if (sources.Length == 0)
             {
-                sources = Enum.GetNames(typeof(ScrapedSites)).Where(name => name != "rde" && name != "bigbox").ToArray();
+                sources = Enum.GetNames(typeof(ScrapedSites)).Where(name => name != "rde").ToArray();
             }
             foreach(var source in sources)
             {
