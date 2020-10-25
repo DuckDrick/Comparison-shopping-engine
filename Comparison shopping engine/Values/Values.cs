@@ -5,7 +5,7 @@ namespace Comparison_shopping_engine
     public class Values
     {
         public static List<string> Urls = new List<string>{
-            /*rde,          */ "none",
+            /*rde,          */ "https://rde.lt/search_result/lt/word/☼/page/1",
             /*bigbox,       */ "https://bigbox.lt/paieska?controller=search&orderby=position&orderway=desc&ssa_submit=&search_query=",
             /*pigu,         */ "https://pigu.lt/lt/search?q=",
             /*novastar,     */ "https://novastar.lt/search/?q=",
