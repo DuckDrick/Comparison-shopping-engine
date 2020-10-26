@@ -8,7 +8,7 @@ using Comparison_shopping_engine.Selenium;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace Comparison_shopping_engine.Scrapers.Selenium
+namespace Comparison_shopping_engine.Selenium
 {
     class BigboxScraper : AbstractSeleniumScraper
     {
@@ -17,7 +17,7 @@ namespace Comparison_shopping_engine.Scrapers.Selenium
             var next = driver.FindElements(By.CssSelector("li#pagination_next_bottom.pagination_next"));
             if (next.Count == 1)
             {
-                var url = driver.FindElement(By.CssSelector("li#pagination_next_bottom.pagination_next"))
+                var url = driver.FindElement(By.CssSelector("li#pagination_next_bottom.pagination_next")).FindElement(By.CssSelector("a"))
                     .GetAttribute("href");
                 driver.Navigate().GoToUrl(url);
             }

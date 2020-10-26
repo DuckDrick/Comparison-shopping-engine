@@ -8,7 +8,7 @@ using Comparison_shopping_engine.Selenium;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace Comparison_shopping_engine.Scrapers.Selenium
+namespace Comparison_shopping_engine.Selenium
 {
     class RdeScraper : AbstractSeleniumScraper
     {
@@ -16,8 +16,8 @@ namespace Comparison_shopping_engine.Scrapers.Selenium
         {
             string beforeUrl = driver.Url;
             string[] currentUrl = driver.Url.Split('/');
-            var url = "https://rde.lt/search/lt/word/" + currentUrl[4] + "/page/" +
-                      (Convert.ToInt32(currentUrl.Last() + 1));
+            var url = "https://rde.lt/search/lt/word/" + currentUrl[6] + "/page/" +
+                      (Convert.ToInt32(currentUrl.Last()) + 1);
             driver.Navigate().GoToUrl(url);
                 if (driver.FindElements(By.CssSelector("div.search_page_header")).Count == 1)
                 {
@@ -45,7 +45,7 @@ namespace Comparison_shopping_engine.Scrapers.Selenium
 
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string photoUrl)
         {
-            var list = driver.FindElement(By.CssSelector("div.bix_box_header")).FindElements(By.CssSelector("span"));
+            var list = driver.FindElement(By.CssSelector("div.big_box_header")).FindElements(By.CssSelector("span"));
             if (list.Count > 1)
             {
                 return (list[1].Text, photoUrl);
@@ -72,9 +72,9 @@ namespace Comparison_shopping_engine.Scrapers.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            var price = product.FindElement(By.CssSelector("div.product_price_wo_discount_listing")).Text;
+            var price = product.FindElement(By.CssSelector("div.product_price_wo_discount_listing")).Text.Split(':').Last();
             var name = product.FindElement(By.ClassName("product_name")).Text;
-            var productUrl = product.FindElement(By.ClassName("product_name")).GetAttribute("href");
+            var productUrl = product.FindElement(By.ClassName("product_name")).FindElement(By.CssSelector("a")).GetAttribute("href");
             var photoUrl = product.FindElement(By.CssSelector("img.product_photo_grid")).GetAttribute("src"); ;
 
             return (price, name, productUrl, photoUrl);
