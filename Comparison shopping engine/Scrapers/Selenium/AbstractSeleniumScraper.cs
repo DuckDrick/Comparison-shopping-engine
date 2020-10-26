@@ -38,7 +38,7 @@ namespace Comparison_shopping_engine.Selenium
                 var options = new ChromeOptions();
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
                 chromeDriverService.HideCommandPromptWindow = true;
-                options.AddArguments("--window-size=1920,1080", "--no-sandbox");
+                options.AddArguments("--window-size=1920,1080", "--no-sandbox", "--headless");
                 drivers = FillWithDrivers(amount, options, chromeDriverService, Values.scraperTimeout).ToList();
                 try
                 {
