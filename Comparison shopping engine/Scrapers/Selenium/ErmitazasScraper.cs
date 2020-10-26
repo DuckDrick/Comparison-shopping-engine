@@ -10,7 +10,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class ErmitazasScaper : AbstractSeleniumScraper
+    class ErmitazasScraper : AbstractSeleniumScraper
     {
       
 

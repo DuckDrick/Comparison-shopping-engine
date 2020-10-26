@@ -345,7 +345,6 @@
             this.Name = "SearchForm";
             this.Text = "SearchForm";
             this.Load += new System.EventHandler(this.SearchForm_Load);
-            this.Shown += new System.EventHandler(this.SearchForm_Shown);
             this.titleBar.ResumeLayout(false);
             this.filterPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

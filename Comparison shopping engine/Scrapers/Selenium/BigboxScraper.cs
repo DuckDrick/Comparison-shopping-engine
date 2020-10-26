@@ -34,13 +34,7 @@ namespace Comparison_shopping_engine.Selenium
                 .FindElements(By.CssSelector("a"));
             if (spanList.Count > 3)
             {
-                foreach (var span in spanList)
-                {
-                    if (!span.Text.Equals("Pradžia") && !span.Text.Equals("BIGBOX"))
-                    {
-                        return (span.Text,photoUrl);
-                    }
-                }
+                return (spanList[2].Text, photoUrl);
             }
 
             return ("None", photoUrl);

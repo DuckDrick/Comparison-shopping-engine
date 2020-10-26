@@ -100,7 +100,10 @@ namespace Comparison_shopping_engine.Forms
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
-
+            WaitForProducts();
+            LoadListViewItems();
+            LoadToCheckedList<MainGroups>(groups);
+            LoadToCheckedList<ScrapedSites>(sources);
         }
 
         private void WaitForProducts()
@@ -157,13 +160,6 @@ namespace Comparison_shopping_engine.Forms
 
             return _items.Count(product => product.Source.Contains(value.ToString()));
 
-        }
-        private void SearchForm_Shown(object sender, EventArgs e)
-        {
-            WaitForProducts();
-            LoadListViewItems();
-            LoadToCheckedList<MainGroups>(groups);
-            LoadToCheckedList<ScrapedSites>(sources);
         }
 
         private void Filter_Click(object sender, EventArgs e)
