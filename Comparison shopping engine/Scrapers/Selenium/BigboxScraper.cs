@@ -32,6 +32,10 @@ namespace Comparison_shopping_engine.Selenium
         {
             var spanList = driver.FindElement(By.CssSelector("div.breadcrumb.clearfix"))
                 .FindElements(By.CssSelector("a"));
+            if (photoUrl.Contains("data:image"))
+            {
+                photoUrl = driver.FindElement(By.Id("thumb_2884634")).GetAttribute("src");
+            }
             if (spanList.Count > 3)
             {
                 return (spanList[2].Text, photoUrl);
@@ -53,15 +57,12 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
-            if (product.FindElements(
-                    By.CssSelector(
-                        "span.category-item-buttons.button.ajax_add_to_cart_button.disabled.btn.btn_default"))
-                .Count == 1)
+            if (product.FindElement(By.CssSelector("a.category-item-buttons.button.ajax_add_to_cart_button.btn.btn-default")).Text == "PIRKTI")
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
