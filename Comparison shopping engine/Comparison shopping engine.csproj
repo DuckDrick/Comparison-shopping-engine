@@ -221,6 +221,7 @@
     <Content Include="Resources\Icons\Kompiuteris.png" />
     <Content Include="Resources\Icons\Laisvalaikis.png" />
     <Content Include="Resources\Icons\Maistas.png" />
+    <Content Include="Resources\Icons\scrapingloading.gif" />
     <Content Include="Resources\Icons\Sodas.png" />
     <Content Include="Resources\Icons\Telefonas.png" />
     <Content Include="Resources\Icons\Vaikai.png" />

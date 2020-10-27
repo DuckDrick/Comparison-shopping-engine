@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Tracing;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Comparison_shopping_engine.Properties;
 
 namespace Comparison_shopping_engine.Forms
 {
@@ -117,7 +120,7 @@ namespace Comparison_shopping_engine.Forms
         private List<Product> _items;
         private void LoadListViewItems()
         {
-            WaitForProducts();
+            searchKeywords.Text = String.Join(" ", _searchQuery);
             _items = Product.productList.Where(product => 
                 _searchQuery.All(query => 
                     product.Name.ToLower().Contains(query.ToLower()))).ToList();
@@ -252,10 +255,13 @@ namespace Comparison_shopping_engine.Forms
             {
                 scraperController = new ScraperController(sources.CheckedItems.OfType<CheckBoxItem>().Select(item=>(ScrapedSites)item.e).ToArray());
                 scraperController.Begin(String.Join(" ", _searchQuery));
+                scrapingPictureBox.Image= Image.FromFile($"../../Resources/Icons/scrapingloading.gif");
+                scrapingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             }
             else
             {
                 scraperController.Kill();
+                scrapingPictureBox.Image = null;
                 scraperController = null;
             }
         }
