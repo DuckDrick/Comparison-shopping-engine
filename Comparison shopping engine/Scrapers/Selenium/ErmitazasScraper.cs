@@ -35,9 +35,9 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string imageUrl)
         {
-            var group = driver.FindElement(By.CssSelector("li.active.end")).Text;
+            var group = driver.FindElement(By.CssSelector("li.active.end")).Text.Split('(');
             //imageUrl = driver.FindElement(By.TagName("a")).GetAttribute("href");
-            return (group, imageUrl);
+            return (group[0], imageUrl);
         }
 
         protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor)

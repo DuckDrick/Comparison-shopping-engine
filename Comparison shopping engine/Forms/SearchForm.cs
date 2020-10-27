@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Comparison_shopping_engine.Properties;
 
@@ -168,14 +169,16 @@ namespace Comparison_shopping_engine.Forms
         private void Filter_Click(object sender, EventArgs e)
         {
             productListView.Items.Clear();
+
             var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.e);
             var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.e);
             var priceFrom = from.Text;
             var priceTo = to.Text;
 
             var filteredList = FilterListByPrice(priceFrom, priceTo);
-            filteredList = FilterListByChoice(selectedGroups, filteredList);
+            //filteredList = FilterListByChoice(selectedGroups, filteredList);
             filteredList = FilterListByChoice(selectedSources, filteredList);
+            filteredList = FilterListBySmallerGroups(filteredList, selectedGroups.ToList());
 
             var rows = GetRows(filteredList);
             productListView.Items.AddRange(rows);
@@ -197,6 +200,26 @@ namespace Comparison_shopping_engine.Forms
                 list = list.Where(product => product[selection.Select(s => (Enum)Enum.Parse(typeof(T), s.ToString())).ToArray()]).ToList();
             }
 
+            return list;
+        }
+
+        private List<Product> FilterListBySmallerGroups(List<Product> list, List<MainGroups> groups)
+        {
+            SmallerGroups smallerGroups = new SmallerGroups();
+            foreach (var group in groups)
+            {
+                var groupsearch = group + "Group";
+                MethodInfo method = typeof(SmallerGroups).GetMethod(groupsearch);
+                List<string> smallerGroupList = (List<string>)method.Invoke(smallerGroups, null);
+                foreach (var product in list.ToArray())
+                {
+                    if (!smallerGroups.Check(product.Group, smallerGroupList))
+                    {
+                        list.Remove(product);
+                    }
+
+                }
+            }
             return list;
         }
         private List<Product> FilterListByPrice(string priceFrom, string priceTo)

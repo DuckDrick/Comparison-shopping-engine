@@ -150,6 +150,7 @@
     <Compile Include="Scrapers\Selenium\PiguScraper.cs" />
     <Compile Include="Scrapers\Selenium\SkytechScraper.cs" />
     <Compile Include="Scrapers\Selenium\TopocentrasScraper.cs" />
+    <Compile Include="Values\SmallerGroups.cs" />
     <Compile Include="Values\Values.cs" />
     <Compile Include="Scrapers\Selenium\AutoaibeScraper.cs" />
     <Compile Include="Scrapers\Selenium\EoltasScraper.cs" />
