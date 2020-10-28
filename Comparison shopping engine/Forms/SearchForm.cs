@@ -337,11 +337,6 @@ namespace Comparison_shopping_engine.Forms
         private void FilterBox_TextChanged(object sender, EventArgs e)
         {
             productListView.Items.Clear();
-            IEnumerable<Product> names = from item in items
-                where item.Name.Any()
-                select item;
-            string[] searchString = FilterBox.Text.Split(' ');
-            //foreach (var item in items)
             foreach (var item in items)
             {
                 if (string.IsNullOrEmpty(FilterBox.Text) || FilterBox.Text.ToLower().Split(' ').All(p => item.Name.ToLower().Contains(p)))
