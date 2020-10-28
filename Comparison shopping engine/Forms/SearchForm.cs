@@ -203,8 +203,8 @@ namespace Comparison_shopping_engine.Forms
             productListView.Items.Clear();
             FilterBox.Clear();
 
-            var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.e);
-            var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.e);
+            var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.name);
+            var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.name);
             var priceFrom = from.Text;
             var priceTo = to.Text;
 
@@ -307,7 +307,7 @@ namespace Comparison_shopping_engine.Forms
         {
             if (scraperController == null)
             {
-                scraperController = new ScraperController(sources.CheckedItems.OfType<CheckBoxItem>().Select(item=>(ScrapedSites)item.e).ToArray());
+                scraperController = new ScraperController(sources.CheckedItems.OfType<CheckBoxItem>().Select(item=>(ScrapedSites)item.name).ToArray(), scrapingPictureBox);
                 scraperController.Begin(String.Join(" ", _searchQuery));
                 scrapingPictureBox.Image= Image.FromFile($"../../Resources/Icons/scrapingloading.gif");
                 scrapingPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -319,7 +319,6 @@ namespace Comparison_shopping_engine.Forms
                 scraperController = null;
             }
         }
-
         private void scrapingInfo_Click(object sender, EventArgs e)
         {
             Form form = new ScraperInfo();
@@ -371,21 +370,21 @@ namespace Comparison_shopping_engine.Forms
             }
         }
     }
-
-    public class CheckBoxItem
+    
+    public struct CheckBoxItem
     {
-        public object e { get; set; }
+        public object name { get; set; }
         private int count;
 
-        public CheckBoxItem(object e, int count)
+        public CheckBoxItem(object name, int count)
         {
-            this.e = e;
+            this.name = name;
             this.count = count;
         }
 
         public override string ToString()
         {
-            return $"{e} ({count})";
+            return $"{name} ({count})";
         }
     }
 }

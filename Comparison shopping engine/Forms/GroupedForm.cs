@@ -91,6 +91,7 @@ namespace Comparison_shopping_engine.Forms
                                                          || item.Price.ToLower().Contains(FilterBox.Text.ToLower())
                                                          || item.Source.ToLower().Contains(FilterBox.Text.ToLower()))
                 {
+                    
                     string[] row = { item.Name, item.Price, item.Source };
                     productListView.Items.Add(new ListViewItem(row));
                 }

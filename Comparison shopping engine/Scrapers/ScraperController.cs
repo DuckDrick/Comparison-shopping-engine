@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Comparison_shopping_engine.Selenium;
 
 namespace Comparison_shopping_engine.Scrapers
@@ -12,9 +13,12 @@ namespace Comparison_shopping_engine.Scrapers
     class ScraperController
     {
         private List<KeyValuePair<ScrapedSites, Thread>> scrapers;
-        public ScraperController(ScrapedSites[] sources)
+        private static PictureBox load;
+        public static int running = 0;
+        public ScraperController(ScrapedSites[] sources, PictureBox load)
         {
             CreateSelectedScrapers(sources.Select(g => g.ToString()).ToArray());
+            ScraperController.load = load;
         }
 
         private void CreateSelectedScrapers(string[] sources)
@@ -49,6 +53,7 @@ namespace Comparison_shopping_engine.Scrapers
 
                 var scrapeSite = url + query.Replace(" ", "+") + ending;
                 scraper.Value.Start(scrapeSite);
+                running++;
             }
         }
 
@@ -57,6 +62,15 @@ namespace Comparison_shopping_engine.Scrapers
             foreach (var scraper in scrapers)
             {
                 scraper.Value.Abort();
+            }
+        }
+
+        public static void Finished()
+        {
+            running--;
+            if (running == 0)
+            {
+                load.Image = null;
             }
         }
 

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Comparison_shopping_engine.Scrapers;
 
 namespace Comparison_shopping_engine.Selenium
 {
@@ -31,8 +32,7 @@ namespace Comparison_shopping_engine.Selenium
             List<ChromeDriver> drivers = new List<ChromeDriver>();
             try
             {
-                var args = (Array) s;
-                _scrape = (string) args.GetValue(0);
+                _scrape = (string) s;
                 int amount = Values.scraperAmount;
 
                 var options = new ChromeOptions();
@@ -44,7 +44,7 @@ namespace Comparison_shopping_engine.Selenium
                 {
                     using (var driver = new ChromeDriver(chromeDriverService, options))
                     {
-                        
+
                         //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
                         driver.Navigate().GoToUrl(_scrape);
 
@@ -104,8 +104,9 @@ namespace Comparison_shopping_engine.Selenium
                                             : products.Count - 1 - start;
                                         Parallel.ForEach(products.GetRange(start, count), (product, state, index) =>
                                         {
-                                           var productDriver = drivers[(int) index];
-                                            productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
+                                            var productDriver = drivers[(int) index];
+                                            productDriver.Manage().Timeouts().ImplicitWait =
+                                                TimeSpan.FromSeconds(Values.scraperTimeout);
                                             productDriver.Navigate().GoToUrl(product.Link);
                                             productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
 
@@ -193,10 +194,12 @@ namespace Comparison_shopping_engine.Selenium
                 }
                 catch (WebDriverException e)
                 {
+                    ScraperController.Finished();
                     Trace.WriteLine(e.ToString());
                 }
                 catch (Exception e)
                 {
+                    ScraperController.Finished();
                     Trace.WriteLine(e.ToString());
                 }
                 finally
@@ -208,6 +211,7 @@ namespace Comparison_shopping_engine.Selenium
             {
                 Console.WriteLine("Thread aborted");
             }
+            ScraperController.Finished();
         }
 
         private void CloseDriverList(List<ChromeDriver> drivers)
