@@ -12,7 +12,6 @@ namespace Comparison_shopping_engine
         public Database()
         {
             this._conString = VerySecretFile.connectionString;
-
         }
 
 
@@ -31,7 +30,7 @@ namespace Comparison_shopping_engine
                     }
                     catch
                     {
-                        Console.WriteLine("Already exists :( " + name);
+                        await Update(name, price, source, connection);
                     }
                 }
                 else
@@ -100,7 +99,7 @@ namespace Comparison_shopping_engine
             }
         }
 
-        public static async Task<List<Product>> Get(string s, string table)
+        public static async Task<List<Product>> Get(string table, string searchQuery = "")
         {
             var pl = new List<Product>();
             try
@@ -109,7 +108,7 @@ namespace Comparison_shopping_engine
                 {
                     conn.Open();
 
-                    var cmd = new NpgsqlCommand("SELECT * FROM " + table + " where upper(name) like upper('%" + s + "%')", conn);
+                    var cmd = new NpgsqlCommand("SELECT * FROM " + table + " where upper(name) like upper('%" + searchQuery + "%')", conn);
                     var dr = await cmd.ExecuteReaderAsync();
 
                     while (dr.Read())

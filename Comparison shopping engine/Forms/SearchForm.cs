@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Comparison_shopping_engine.Properties;
+using ExtensionMethods;
 
 namespace Comparison_shopping_engine.Forms
 {
@@ -219,11 +220,7 @@ namespace Comparison_shopping_engine.Forms
 
         private ListViewItem[] GetRows(IEnumerable<Product> products)
         {
-            return products.Select(product =>
-            {
-                string[] row = { product.Name, product.Price, product.Source };
-                return new ListViewItem(row);
-            }).ToArray();
+            return products.Select(product => new ListViewItem(product.getListViewItemRow())).ToArray();
         }
         private List<Product> FilterListByChoice<T>(IEnumerable<T> selection, List<Product> list) where T : Enum
         {
@@ -299,9 +296,10 @@ namespace Comparison_shopping_engine.Forms
 
             var lv = (ListView) sender;
             var row = lv.SelectedItems[0].SubItems;
-            var chosenProduct =
-                Product.productList.Where(product => product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)).ToList();
-            _pif.SetInformation(chosenProduct[0]);
+            var chosenProduct = (from product in Product.productList
+                where product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)
+                select product).ToList();
+             _pif.SetInformation(chosenProduct[0]);
         }
 
         private ScraperController scraperController = null;
@@ -333,7 +331,6 @@ namespace Comparison_shopping_engine.Forms
             Form form = new ScraperSettings();
             form.ShowDialog();
         }
-
         private List<Product> items = new List<Product>();
         private void FilterBox_TextChanged(object sender, EventArgs e)
         {
