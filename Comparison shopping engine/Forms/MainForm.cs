@@ -150,7 +150,7 @@ namespace Comparison_shopping_engine.Forms
             var count = Enum.GetNames(typeof(ScrapedSites)).Length;
             for (var site = (ScrapedSites)0; site < (ScrapedSites)count; site++)
             {
-                var l = await Database.Get(site.ToString(), searchField.Text.Trim().Replace(' ', '%'));
+                var l = await Database.Get(searchQuery: searchField.Text.Trim().Replace(' ', '%'), table: site.ToString());
                 foreach (var ll in l)
                 {
                     if (!Product.productList.Any(product => product.Equals(ll)))
