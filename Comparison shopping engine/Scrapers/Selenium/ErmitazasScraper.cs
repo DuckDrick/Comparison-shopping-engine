@@ -10,7 +10,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class ErmitazasScaper : AbstractSeleniumScraper
+    class ErmitazasScraper : AbstractSeleniumScraper
     {
       
 
@@ -35,9 +35,9 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string imageUrl)
         {
-            var group = driver.FindElement(By.CssSelector("li.active.end")).Text;
+            var group = driver.FindElement(By.CssSelector("li.active.end")).Text.Split('(');
             //imageUrl = driver.FindElement(By.TagName("a")).GetAttribute("href");
-            return (group, imageUrl);
+            return (group[0], imageUrl);
         }
 
         protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor)
@@ -73,7 +73,7 @@ namespace Comparison_shopping_engine.Selenium
             }
             var name = product.FindElement(By.CssSelector("span.media-title.lh17.inline-block.hover-underline")).Text;
             var productUrl = product.FindElement(By.CssSelector("a")).GetAttribute("href");
-            string photoUrl = product.FindElement(By.CssSelector("img.minh300.maxh255.center-img.lazy")).GetAttribute("src");
+            var photoUrl = product.FindElement(By.CssSelector("img.minh300.maxh255.center-img.lazy")).GetAttribute("src");
             return (price, name, productUrl, photoUrl);
         }
     }

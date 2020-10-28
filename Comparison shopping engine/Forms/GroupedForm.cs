@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -46,10 +48,17 @@ namespace Comparison_shopping_engine.Forms
 
         private void GroupedForm_Load(object sender, EventArgs e)
         {
-            foreach (var product in Product.productList.Where(product => product.Group.Contains(_group.ToString())).ToList())
+            SmallerGroups smallerGroups = new SmallerGroups();
+            var groupsearch = _group + "Group";
+            MethodInfo method = typeof(SmallerGroups).GetMethod(groupsearch);
+            List<string> smallerGroupList = (List<string>) method.Invoke(smallerGroups, null);
+            foreach (var product in Product.productList)
             {
-                string[] row = {product.Name, product.Price, product.Source};
-                productListView.Items.Add(new ListViewItem(row));
+                if (smallerGroups.Check(product.Group, smallerGroupList))
+                {
+                    string[] row = {product.Name, product.Price, product.Source};
+                    productListView.Items.Add(new ListViewItem(row));
+                }
             }
             
         }

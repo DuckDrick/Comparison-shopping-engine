@@ -77,7 +77,7 @@ namespace Comparison_shopping_engine.Selenium
             name = pav[0];
             var productUrl = product.FindElement(By.CssSelector("a.cont-product__cell.cell-title"))
                 .GetAttribute("href");
-            string photoUrl = product.FindElement(By.CssSelector("img.cont-product__cell.cell-img"))
+            var photoUrl = product.FindElement(By.CssSelector("img.cont-product__cell.cell-img"))
                 .GetAttribute("src");
             return (price[0].Replace(',', '.'), name, productUrl, photoUrl);
         }

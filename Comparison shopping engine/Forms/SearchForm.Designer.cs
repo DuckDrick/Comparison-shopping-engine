@@ -54,12 +54,16 @@
             this.from = new System.Windows.Forms.TextBox();
             this.fromLabel = new System.Windows.Forms.Label();
             this.price = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.searchKeywords = new System.Windows.Forms.Label();
+            this.scrapingPictureBox = new System.Windows.Forms.PictureBox();
             this.titleBar.SuspendLayout();
             this.filterPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.sourcePanel.SuspendLayout();
             this.groupPanel.SuspendLayout();
             this.pricePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scrapingPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // titleBar
@@ -113,7 +117,7 @@
             this.productListView.Location = new System.Drawing.Point(223, 58);
             this.productListView.MultiSelect = false;
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(570, 385);
+            this.productListView.Size = new System.Drawing.Size(570, 354);
             this.productListView.TabIndex = 6;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
@@ -330,12 +334,41 @@
             this.price.UseVisualStyleBackColor = true;
             this.price.Click += new System.EventHandler(this.TogglePricePanel);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(245, 421);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 14);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Ieškoma: ";
+            // 
+            // searchKeywords
+            // 
+            this.searchKeywords.AutoSize = true;
+            this.searchKeywords.Location = new System.Drawing.Point(304, 421);
+            this.searchKeywords.Name = "searchKeywords";
+            this.searchKeywords.Size = new System.Drawing.Size(49, 14);
+            this.searchKeywords.TabIndex = 9;
+            this.searchKeywords.Text = "label2";
+            // 
+            // scrapingPictureBox
+            // 
+            this.scrapingPictureBox.Location = new System.Drawing.Point(223, 420);
+            this.scrapingPictureBox.Name = "scrapingPictureBox";
+            this.scrapingPictureBox.Size = new System.Drawing.Size(16, 15);
+            this.scrapingPictureBox.TabIndex = 7;
+            this.scrapingPictureBox.TabStop = false;
+            // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.scrapingPictureBox);
+            this.Controls.Add(this.searchKeywords);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.filterPanel);
             this.Controls.Add(this.productListView);
             this.Controls.Add(this.titleBar);
@@ -345,7 +378,6 @@
             this.Name = "SearchForm";
             this.Text = "SearchForm";
             this.Load += new System.EventHandler(this.SearchForm_Load);
-            this.Shown += new System.EventHandler(this.SearchForm_Shown);
             this.titleBar.ResumeLayout(false);
             this.filterPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -353,7 +385,9 @@
             this.groupPanel.ResumeLayout(false);
             this.pricePanel.ResumeLayout(false);
             this.pricePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scrapingPictureBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -384,5 +418,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button scrapingInfo;
         private System.Windows.Forms.Button scrapingSettings;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label searchKeywords;
+        private System.Windows.Forms.PictureBox scrapingPictureBox;
     }
 }

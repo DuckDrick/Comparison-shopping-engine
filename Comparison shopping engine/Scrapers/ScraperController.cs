@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace Comparison_shopping_engine.Scrapers
             scrapers = new List<KeyValuePair<ScrapedSites, Thread>>();
             if (sources.Length == 0)
             {
-                sources = Enum.GetNames(typeof(ScrapedSites)).Where(name => name != "rde" && name != "bigbox").ToArray();
+                sources = Enum.GetNames(typeof(ScrapedSites)).ToArray();
             }
             foreach(var source in sources)
             {
@@ -56,5 +57,6 @@ namespace Comparison_shopping_engine.Scrapers
                 scraper.Value.Abort();
             }
         }
+
     }
 }

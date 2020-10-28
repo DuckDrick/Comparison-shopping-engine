@@ -84,7 +84,7 @@ namespace Comparison_shopping_engine.Selenium
                                                 products.Add(new Product(name.Replace("'", "''"), price, productUrl,
                                                     photoUrl,
                                                     "None",
-                                                    site + ".lt"));
+                                                    site)); // + ".lt"
                                         }
                                     }
                                 }
