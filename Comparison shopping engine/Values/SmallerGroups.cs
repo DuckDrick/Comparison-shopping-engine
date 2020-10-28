@@ -8,7 +8,7 @@ namespace Comparison_shopping_engine
         {
             foreach (var group in smallergroup)
             {
-                if (productgroup.Equals(group))
+                if (productgroup.Contains(group))
                 {
                     return true;
                 }
@@ -19,70 +19,70 @@ namespace Comparison_shopping_engine
 
         public List<string> VaikaiGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Žaislai, prekės vaikams");
-            group.Add("Gimtadienio atributika");
-            group.Add("Kūdikių higienos prekės");
-            group.Add("Vaikams ir kūdikiams");
-            group.Add("DOVANOS, ŠVENTINĖ ATRIBUTIKA");
-            group.Add("VAIKUI IR MAMAI, ŽAISLAI");
-            return group;
+            string[] group =
+            {
+                "Žaislai, prekės vaikams"
+                ,"Gimtadienio atributika"
+                ,"Kūdikių higienos prekės"
+                ,"Vaikams ir kūdikiams"
+                ,"DOVANOS, ŠVENTINĖ ATRIBUTIKA"
+                ,"VAIKUI IR MAMAI, ŽAISLAI"
+            };
+        return new List<string>(@group);
         }
 
         public List<string> AprangaGroup()
         {  
-            List<String> group = new List<string>();
-            group.Add("Apranga, avalynė, aksesuarai");
-            return @group;
+            string[] group ={"Apranga, avalynė, aksesuarai"};
+        return new List<string>(@group);
         }
         public List<String> AutomobilisGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Ratų varžtai");
-            group.Add("Kėbulo apsaugos, deflektoriai");
-            group.Add("Stabilizatoriaus traukės, stabilizatoriai");
-            group.Add("Diržai juostiniai");
-            group.Add("Pedalų gumos, pedalų laikikliai");
-            group.Add("Variklio dangtelio elementai");
-            group.Add("Glaistymo ir gruntavimo medžiagos");
-            group.Add("Uždegimo žvakės");
-            group.Add("Juostinių diržų įtempikliai, įtempimo skriemuliai");
-            group.Add("Variklio galvos tarpinės");
-            group.Add("Vairaračio užvalkalai ir priedai");
-            group.Add("Išorės priežiūros priemonės");
-            group.Add("Priemonės nuo uodų ir erkių");
-            group.Add("Purvasaugiai, įkrovos nuėmėjai");
-            group.Add("Langų,žibintų plovimo varikliukai");
-            group.Add("Veidrodžiai");
-            group.Add("Variklio įsiurbimo/išmetimo kolektorių tarpikliai");
-            group.Add("Variklio skriemuliai, krumpliaračiai");
-            group.Add("Stiklų valikliai ir poliroliai");
-            group.Add("Kempinės ir servetėlės");
-            group.Add("Variklio alyvos siurblys, siurblio priedai");
-            group.Add("Paskirstymo diržų montavimo komplektai");
-            group.Add("Pusašiai, lankstai");
-            group.Add("Pavarų svirties rankenos");
-            group.Add("Bagažinės pertvaros ir grotelės");
-            group.Add("Laikikliai ir fiksatoriai");
-            group.Add("Motociklų ir motorolerių dalys");
-            group.Add("Stabilizatoriaus įvorės");
-            group.Add("Įvairūs riebokšliai");
-            group.Add("Ratlankiai");
-            group.Add("Pakabos montavimo elementai, suvedimo varžtai");
-            group.Add("Ratų guoliai");
-            group.Add("Sankabos išminamieji guoliai");
-            group.Add("Pakabos-važiuoklės įvorės");
-            group.Add("Buksyravimo kilpos, kabliai");
-            group.Add("Kilimėliai");
-            group.Add("Autom.transmisijos filtrai");
-            group.Add("Pavarų svirties užvalkalai");
-            group.Add("Bagažinės kilimėliai");
-            group.Add("Diržai trapeciniai");
-            group.Add("Automobiliu_prekes");
-            group.Add("Kiti automobilių aksesuarai, priedai");
-            group.Add("Autoprekės");
-            group.Add("AUTOMOBILIŲ PREKĖS");
-            return group;
+            string[] group = {"Ratų varžtai"
+            ,"Kėbulo apsaugos, deflektoriai"
+            ,"Stabilizatoriaus traukės, stabilizatoriai"
+            ,"Diržai juostiniai"
+            ,"Pedalų gumos, pedalų laikikliai"
+            ,"Variklio dangtelio elementai"
+            ,"Glaistymo ir gruntavimo medžiagos"
+            ,"Uždegimo žvakės"
+            ,"Juostinių diržų įtempikliai, įtempimo skriemuliai"
+            ,"Variklio galvos tarpinės"
+            ,"Vairaračio užvalkalai ir priedai"
+            ,"Išorės priežiūros priemonės"
+            ,"Priemonės nuo uodų ir erkių"
+            ,"Purvasaugiai, įkrovos nuėmėjai"
+            ,"Langų,žibintų plovimo varikliukai"
+            ,"Veidrodžiai"
+            ,"Variklio įsiurbimo/išmetimo kolektorių tarpikliai"
+            ,"Variklio skriemuliai, krumpliaračiai"
+            ,"Stiklų valikliai ir poliroliai"
+            ,"Kempinės ir servetėlės"
+            ,"Variklio alyvos siurblys, siurblio priedai"
+            ,"Paskirstymo diržų montavimo komplektai"
+            ,"Pusašiai, lankstai"
+            ,"Pavarų svirties rankenos"
+            ,"Bagažinės pertvaros ir grotelės"
+            ,"Laikikliai ir fiksatoriai"
+            ,"Motociklų ir motorolerių dalys"
+            ,"Stabilizatoriaus įvorės"
+            ,"Įvairūs riebokšliai"
+            ,"Ratlankiai"
+            ,"Pakabos montavimo elementai, suvedimo varžtai"
+            ,"Ratų guoliai"
+            ,"Sankabos išminamieji guoliai"
+            ,"Pakabos-važiuoklės įvorės"
+            ,"Buksyravimo kilpos, kabliai"
+            ,"Kilimėliai"
+            ,"Autom.transmisijos filtrai"
+            ,"Pavarų svirties užvalkalai"
+            ,"Bagažinės kilimėliai"
+            ,"Diržai trapeciniai"
+            ,"Automobiliu_prekes"
+            ,"Kiti automobilių aksesuarai, priedai"
+            ,"Autoprekės"
+            ,"AUTOMOBILIŲ PREKĖS"};
+            return new List<string>(@group);
         }
         public List<string> BaldaiGroup()
         {
@@ -93,162 +93,120 @@ namespace Comparison_shopping_engine
         
         public List<string> BuitinėGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Buities prekės");
-            group.Add("Smulki buitinė technika");
-            group.Add("Stambi buitinė technika");
-            group.Add("Stalo servetėlės, vienkartinės staltiesės");
-            group.Add("Kavavirės, kavamalės");
-            group.Add("Vonios kambario stiklinės");
-            group.Add("Vienkartinės servetėlės, nosinės, vatos gaminiai");
-            group.Add("Dušo užuolaidos");
-            group.Add("Kiti stalo serviravimo indai");
-            group.Add("Svetainės, miegamojo staliniai šviestuvai");
-            group.Add("Vienkartinės taurės, bokalai");
-            group.Add("Tekstilinės servetėlės, staltiesės");
-            group.Add("Šluostės");
-            group.Add("Kavos, arbatos puodeliai");
-            group.Add("Pramoniniai popieriaus gaminiai");
-            group.Add("Dekoratyviniai buities elementai");
-            group.Add("Reprodukcijos, paveikslai, sienų dekoracijos");
-            group.Add("Termosai, gertuvės");
-            group.Add("Kempinės, šluostės, grandikliai");
-            group.Add("Puodeliai su lėkštute");
-            group.Add("Pramoniniai laikikliai, dozatoriai");
-            group.Add("Konditerijos įrankiai");
-            @group.Add("Virtuvės technika");
-            group.Add("Virtuvės, buities, apyvokos prekės");
-            group.Add("Baldai ir namų interjeras");
-            group.Add("Santechnika, remontas, šildymas");
-            group.Add("Buitinė technika ir elektronika");
-            group.Add("Stambioji buitinė technika");
-            group.Add("Montuojamoji buitinė technika");
-            group.Add("Periferija, Biuro įranga");
-            group.Add("Namų elektronika");
-            group.Add("Buitinė technika. Kavos aparatai");
-            group.Add("SANTECHNIKA, ŠILDYMAS");
-            group.Add("BUITINĖ TECHNIKA IR ELEKTRONIKA");
-            group.Add("LEMPOS IR APŠVIETIMAS");
-            group.Add("BALDAI IR NAMŲ INTERJERAS");
-            group.Add("BUITIES, VIRTUVĖS, APYVOKOS PREKĖS");
-            return group;
+            string[] group =
+            {
+                "Buities prekės", "Smulki buitinė technika", "Stambi buitinė technika",
+                "Stalo servetėlės, vienkartinės staltiesės", "Kavavirės, kavamalės", "Vonios kambario stiklinės",
+                "Vienkartinės servetėlės, nosinės, vatos gaminiai", "Dušo užuolaidos", "Kiti stalo serviravimo indai",
+                "Svetainės, miegamojo staliniai šviestuvai", "Vienkartinės taurės, bokalai",
+                "Tekstilinės servetėlės, staltiesės", "Šluostės", "Kavos, arbatos puodeliai",
+                "Pramoniniai popieriaus gaminiai", "Dekoratyviniai buities elementai",
+                "Reprodukcijos, paveikslai, sienų dekoracijos", "Termosai, gertuvės", "Kempinės, šluostės, grandikliai",
+                "Puodeliai su lėkštute", "Pramoniniai laikikliai, dozatoriai", "Konditerijos įrankiai",
+                "Virtuvės technika", "Virtuvės, buities, apyvokos prekės", "Baldai ir namų interjeras",
+                "Santechnika, remontas, šildymas", "Buitinė technika ir elektronika", "Stambioji buitinė technika",
+                "Montuojamoji buitinė technika", "Periferija, Biuro įranga", "Namų elektronika",
+                "Buitinė technika. Kavos aparatai", "SANTECHNIKA, ŠILDYMAS", "BUITINĖ TECHNIKA IR ELEKTRONIKA",
+                "LEMPOS IR APŠVIETIMAS", "BALDAI IR NAMŲ INTERJERAS", "BUITIES, VIRTUVĖS, APYVOKOS PREKĖS"
+            };
+            return new List<string>(@group);
         }
 
         public List<string> GarsasGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Vaizdo ir garso technika");
-            group.Add("Garso ir vaizdo technika");
-            return group;
+            string[] group =
+            {
+                "Vaizdo ir garso technika", "Garso ir vaizdo technika"
+            };
+            return new List<string>(@group);
         }
-        public List<string> GyvunaiGroup()
+        public List<string> GyvūnaiGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Gyvūnų prekės");
-            group.Add("PREKĖS GYVŪNAMS");
-            return group;
+            string[] group =
+                {"Gyvūnų prekės", "PREKĖS GYVŪNAMS"};
+            return new List<string>(@group);
         }
 
         public List<string> GrožisGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Sveikata, grožis ir laisvalaikis");
-            group.Add("Kvepalai, kosmetika");
-            group.Add("Grožis ir sveikata");
-            group.Add("KVEPALAI, KOSMETIKA");
-            return group;
+            string[] group =
+            {
+                "Sveikata, grožis ir laisvalaikis", "Kvepalai, kosmetika", "Grožis ir sveikata", "KVEPALAI, KOSMETIKA"
+            };
+        return new List<string>(@group);
         }
 
         public List<string> KameraGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Vaizdo ir garso technika");
-            group.Add("Mobilieji telefonai, Foto ir Video");
-            return group;
+            string[] group = {"Vaizdo ir garso technika", "Mobilieji telefonai, Foto ir Video"};
+            return new List<string>(@group);
         }
-        public List<string> KancialiarinėsGroup()
+        public List<string> KanceliarinėsGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Dekupažo, tapybos ant šilko prekės");
-            return group;
+            string[] group =
+            {
+                "tapybos"
+            };
+            return new List<string>(@group);
         }
         public List<string> KnygaGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Knygos");
-            group.Add("KNYGOS, BIURO PREKĖS");
-            return group;
+            string[] group = {"Knygos", "KNYGOS, BIURO PREKĖS"};
+            return new List<string>(@group);
         }
 
         public List<string> KompiuterisGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Kompiuteriai ir jų komponentai");
-            group.Add("Vaizdo ir garso technika");
-            group.Add("Kompiuteriniai žaidimai");
-            group.Add("Nešiojami kompiuteriai");
-            group.Add("Kompiuterių krepšiai, kuprinės, dėklai");
-            group.Add("Kompiuterių priedai");
-            group.Add("Žaidimų kompiuteriai ir žaidimai");
-            group.Add("Kiti kompiuterių aksesuarai");
-            @group.Add("Kompiuteriai, telefonai, IT");
-            group.Add("Kompiuterinė technika");
-            group.Add("Televizoriai");
-            group.Add("Žaidimų kompiuteriai ir jų priedai");
-            group.Add("Kompiuteriai, Komponentai");
-            group.Add("Žaidimų įranga, žaidimai");
-            group.Add("Telefonai ir planšetiniai kompiuteriai");
-            group.Add("KOMPIUTERINĖ TECHNIKA");
-            return group;
+            string[] group =
+            {
+                "Kompiuteriai ir jų komponentai", "Vaizdo ir garso technika", "Kompiuteriniai žaidimai",
+                "Nešiojami kompiuteriai", "Kompiuterių krepšiai, kuprinės, dėklai", "Kompiuterių priedai",
+                "Žaidimų kompiuteriai ir žaidimai", "Kiti kompiuterių aksesuarai",
+                "Kompiuteriai, telefonai, IT", "Kompiuterinė technika", "Televizoriai",
+                "Žaidimų kompiuteriai ir jų priedai", "Kompiuteriai, Komponentai", "Žaidimų įranga, žaidimai",
+                "Telefonai ir planšetiniai kompiuteriai", "KOMPIUTERINĖ TECHNIKA" };
+            return new List<string>(@group);
         }
 
 
 
         public List<string> LaisvalaikisGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Laisvalaikio prekės");
-            group.Add("Gimtadienio atributika");
-            group.Add("Sportas, laisvalaikis, turizmas");
-            group.Add("Riedžiai ir paspirtukai");
-            group.Add("SPORTAS, LAISVALAIKIS, TURIZMAS");
-            return group;
+            string[] group =
+            {
+                "Laisvalaikio prekės", "Gimtadienio atributika", "Sportas, laisvalaikis, turizmas",
+                "Riedžiai ir paspirtukai", "SPORTAS, LAISVALAIKIS, TURIZMAS"
+            };
+            return new List<string>(@group);
         }
 
         public List<string> MaistasGroup()
         {
-            List<String> group = new List<string>();
-            return group;
+            string[] group = { };
+            return new List<string>(@group);
         }
 
         public List<string> SodasGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Kiti įrankiai");
-            group.Add("Apskaitos skydai, skydeliai");
-            group.Add("Šlifavimo diskai");
-            group.Add("Diskiniai pjūklai");
-            group.Add("Elektrinių įrankių dalys, priedai");
-            group.Add("Elektriniai atsuktuvai");
-            group.Add("Sodo prekės");
-            group.Add("Dovanos, šventinė atributika");
-            group.Add("Apsaugos, dezinfekcinės priemonės");
-            group.Add("SODO PREKĖS, ĮRANKIAI");
-            return group;
+            string[] group =
+            {
+                "Kiti įrankiai", "Apskaitos skydai, skydeliai", "Šlifavimo diskai", "Diskiniai pjūklai",
+                "Elektrinių įrankių dalys, priedai", "Elektriniai atsuktuvai", "Sodo prekės",
+                "Dovanos, šventinė atributika", "Apsaugos, dezinfekcinės priemonės", "SODO PREKĖS, ĮRANKIAI"
+            };
+            return new List<string>(@group);
         }
         public List<string> TelefonasGroup()
         {
-            List<String> group = new List<string>();
-            group.Add("Mobilūs telefonai");
-            group.Add("Mobilieji telefonai, Foto ir Video");
-            group.Add("Mobilieji telefonai ir jų aksesuarai");
-            group.Add("Komunikacinė ir ryšio įranga");
-            group.Add("Telefonai, Išmanieji pagalbininkai");
-            group.Add("Telefonai ir planšetiniai kompiuteriai");
-            group.Add("MOBILIEJI TELEFONAI, FOTO IR VIDEO");
-            return group;
+            string[] group =
+            {
+                "Mobilūs telefonai", "Mobilieji telefonai, Foto ir Video", "Mobilieji telefonai ir jų aksesuarai",
+                "Komunikacinė ir ryšio įranga", "Telefonai, Išmanieji pagalbininkai",
+                "Telefonai ir planšetiniai kompiuteriai", "MOBILIEJI TELEFONAI, FOTO IR VIDEO"
+            };
+            return new List<string>(@group);
         }
     }
 
 }
-//group.Add("None");
+//,"None"

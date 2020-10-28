@@ -107,6 +107,7 @@ namespace Comparison_shopping_engine.Forms
             WaitForProducts();
             LoadListViewItems();
             LoadToCheckedList<MainGroups>(groups);
+            //LoadToCheckedGroups(groups);
             LoadToCheckedList<ScrapedSites>(sources);
         }
 
@@ -149,11 +150,39 @@ namespace Comparison_shopping_engine.Forms
         private void LoadToCheckedList<T>(CheckedListBox clb) where T : Enum
         {
             var values = Enum.GetValues(typeof(T));
-            foreach (var value in values)
+            if (values.GetValue(0).GetType()==typeof(MainGroups))
             {
-                clb.Items.Add(new CheckBoxItem(value, CountHowMany((T)value)));
+                SmallerGroups smallerGroups = new SmallerGroups();
+                foreach (var group in values)
+                {
+                    var count=0;
+                    var groupsearch = group + "Group";
+                    MethodInfo method = typeof(SmallerGroups).GetMethod(groupsearch);
+                    List<string> smallerGroupList = (List<string>)method.Invoke(smallerGroups, null);
+                    foreach (var smallerGroup in smallerGroupList)
+                    {
+                        foreach (var item in _items)
+                        {
+                            if (item.Group.Contains(smallerGroup))
+                            {
+                                count++;
+                            }
+                        }
+                        
+                    }
+                    clb.Items.Add(new CheckBoxItem(group, count));
+                }
             }
+            else
+            {
+                foreach (var value in values)
+                {
+                    clb.Items.Add(new CheckBoxItem(value, CountHowMany((T)value)));
+                }
+            }
+
         }
+
 
         private int CountHowMany<T>(T value)
         {
