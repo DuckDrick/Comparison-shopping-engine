@@ -1,5 +1,6 @@
 ﻿using Comparison_shopping_engine.Scrapers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Tracing;
@@ -110,6 +111,7 @@ namespace Comparison_shopping_engine.Forms
             LoadToCheckedList<MainGroups>(groups);
             //LoadToCheckedGroups(groups);
             LoadToCheckedList<ScrapedSites>(sources);
+            SaveListViewItems();
         }
 
         private void WaitForProducts()
@@ -199,6 +201,7 @@ namespace Comparison_shopping_engine.Forms
         private void Filter_Click(object sender, EventArgs e)
         {
             productListView.Items.Clear();
+            FilterBox.Clear();
 
             var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.e);
             var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.e);
@@ -212,6 +215,7 @@ namespace Comparison_shopping_engine.Forms
 
             var rows = GetRows(filteredList);
             productListView.Items.AddRange(rows);
+            SaveListViewItems();
         }
 
         private ListViewItem[] GetRows(IEnumerable<Product> products)
@@ -326,6 +330,45 @@ namespace Comparison_shopping_engine.Forms
         {
             Form form = new ScraperSettings();
             form.ShowDialog();
+        }
+        private List<Product> items = new List<Product>();
+        private void FilterBox_TextChanged(object sender, EventArgs e)
+        {
+            productListView.Items.Clear();
+            foreach (var item in items)
+            {
+                if (string.IsNullOrEmpty(FilterBox.Text) || item.Name.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Price.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Source.ToLower().Contains(FilterBox.Text.ToLower()))
+                {
+                    string[] row = { item.Name, item.Price, item.Source };
+                    productListView.Items.Add(new ListViewItem(row));
+                }
+            }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            FilterBox.Clear();
+            productListView.Items.Clear();
+            foreach (var item in items)
+            {
+                string[] row = {item.Name, item.Price, item.Source};
+                productListView.Items.Add(new ListViewItem(row));
+
+            }
+        }
+
+        private void SaveListViewItems()
+        {
+            items.Clear();
+            foreach (var product in productListView.Items)
+            {
+                var collumns = ((ListViewItem)product).SubItems;
+                items.Add(new Product(collumns[0].ToString().Split('{', '}')[1],
+                    collumns[1].ToString().Split('{', '}')[1], null, null, null,
+                    collumns[2].ToString().Split('{', '}')[1]));
+            }
         }
     }
 

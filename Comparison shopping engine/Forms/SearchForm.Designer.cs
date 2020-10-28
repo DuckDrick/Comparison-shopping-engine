@@ -57,6 +57,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.searchKeywords = new System.Windows.Forms.Label();
             this.scrapingPictureBox = new System.Windows.Forms.PictureBox();
+            this.FilterBox = new System.Windows.Forms.TextBox();
+            this.clearButton = new System.Windows.Forms.Button();
             this.titleBar.SuspendLayout();
             this.filterPanel.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -113,7 +115,7 @@
             this.productListView.Location = new System.Drawing.Point(223, 58);
             this.productListView.MultiSelect = false;
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(570, 354);
+            this.productListView.Size = new System.Drawing.Size(570, 335);
             this.productListView.TabIndex = 6;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
@@ -356,12 +358,33 @@
             this.scrapingPictureBox.TabIndex = 7;
             this.scrapingPictureBox.TabStop = false;
             // 
+            // FilterBox
+            // 
+            this.FilterBox.Location = new System.Drawing.Point(223, 394);
+            this.FilterBox.Name = "FilterBox";
+            this.FilterBox.Size = new System.Drawing.Size(496, 20);
+            this.FilterBox.TabIndex = 10;
+            this.FilterBox.TextChanged += new System.EventHandler(this.FilterBox_TextChanged);
+            // 
+            // clearButton
+            // 
+            this.clearButton.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearButton.Location = new System.Drawing.Point(725, 394);
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Size = new System.Drawing.Size(70, 21);
+            this.clearButton.TabIndex = 11;
+            this.clearButton.Text = "Ištrinti";
+            this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+            // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (201)))), ((int) (((byte) (173)))), ((int) (((byte) (161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.clearButton);
+            this.Controls.Add(this.FilterBox);
             this.Controls.Add(this.scrapingPictureBox);
             this.Controls.Add(this.searchKeywords);
             this.Controls.Add(this.label1);
@@ -416,5 +439,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label searchKeywords;
         private System.Windows.Forms.PictureBox scrapingPictureBox;
+        private System.Windows.Forms.TextBox FilterBox;
+        private System.Windows.Forms.Button clearButton;
     }
 }
