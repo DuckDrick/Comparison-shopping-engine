@@ -31,8 +31,7 @@ namespace Comparison_shopping_engine.Selenium
             List<ChromeDriver> drivers = new List<ChromeDriver>();
             try
             {
-                var args = (Array) s;
-                _scrape = (string) args.GetValue(0);
+                _scrape = (string) s;
                 int amount = Values.scraperAmount;
 
                 var options = new ChromeOptions();

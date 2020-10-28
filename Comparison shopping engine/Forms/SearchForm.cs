@@ -7,9 +7,11 @@ using System.Diagnostics.Tracing;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Windows.Forms;
 using Comparison_shopping_engine.Properties;
 using ExtensionMethods;
+using NpgsqlTypes;
 
 namespace Comparison_shopping_engine.Forms
 {
@@ -335,14 +337,17 @@ namespace Comparison_shopping_engine.Forms
         private void FilterBox_TextChanged(object sender, EventArgs e)
         {
             productListView.Items.Clear();
+            IEnumerable<Product> names = from item in items
+                where item.Name.Any()
+                select item;
+            string[] searchString = FilterBox.Text.Split(' ');
+            //foreach (var item in items)
             foreach (var item in items)
             {
-                if (string.IsNullOrEmpty(FilterBox.Text) || item.Name.ToLower().Contains(FilterBox.Text.ToLower())
-                                                         || item.Price.ToLower().Contains(FilterBox.Text.ToLower())
-                                                         || item.Source.ToLower().Contains(FilterBox.Text.ToLower()))
+                if (string.IsNullOrEmpty(FilterBox.Text) || FilterBox.Text.ToLower().Split(' ').All(p => item.Name.ToLower().Contains(p)))
                 {
-                    string[] row = { item.Name, item.Price, item.Source };
-                    productListView.Items.Add(new ListViewItem(row));
+                    string[] row = item.getListViewItemRow();
+                        productListView.Items.Add(new ListViewItem(row));
                 }
             }
         }
@@ -353,7 +358,7 @@ namespace Comparison_shopping_engine.Forms
             productListView.Items.Clear();
             foreach (var item in items)
             {
-                string[] row = {item.Name, item.Price, item.Source};
+                string[] row = item.getListViewItemRow();
                 productListView.Items.Add(new ListViewItem(row));
 
             }
