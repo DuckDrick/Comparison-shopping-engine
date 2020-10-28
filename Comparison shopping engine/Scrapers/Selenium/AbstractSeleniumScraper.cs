@@ -1,24 +1,22 @@
 ﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    abstract class AbstractSeleniumScraper
+    internal abstract class AbstractSeleniumScraper
     {
         private string _scrape;
 
-        private IEnumerable<ChromeDriver> FillWithDrivers(int amount, ChromeOptions o, ChromeDriverService cds, int timeout)
+        private IEnumerable<ChromeDriver> FillWithDrivers(int amount, ChromeOptions o, ChromeDriverService cds,
+            int timeout)
         {
             for (var i = 0; i < amount; i++)
             {
@@ -26,13 +24,14 @@ namespace Comparison_shopping_engine.Selenium
                 yield return driver;
             }
         }
+
         public void ScrapeWithSelenium(object s)
         {
-            List<ChromeDriver> drivers = new List<ChromeDriver>();
+            var drivers = new List<ChromeDriver>();
             try
             {
                 _scrape = (string) s;
-                int amount = Values.scraperAmount;
+                var amount = Values.scraperAmount;
 
                 var options = new ChromeOptions();
                 var chromeDriverService = ChromeDriverService.CreateDefaultService();
@@ -43,12 +42,11 @@ namespace Comparison_shopping_engine.Selenium
                 {
                     using (var driver = new ChromeDriver(chromeDriverService, options))
                     {
-                        
                         //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
                         driver.Navigate().GoToUrl(_scrape);
 
 
-                        Regex rgx = new Regex("\\/[^.]*\\.");
+                        var rgx = new Regex("\\/[^.]*\\.");
                         string urlBefore;
                         bool any;
                         try
@@ -68,14 +66,11 @@ namespace Comparison_shopping_engine.Selenium
                             var site = rgx.Match(_scrape).Value.Substring(2).Replace(".", ""); // nuoroda.parduotuves.lt
                             do
                             {
-
-
                                 var products = new List<Product>();
                                 try
                                 {
                                     var productList = GetProductList(driver);
                                     foreach (var product in productList)
-                                    {
                                         if (ShouldScrapeIf(product))
                                         {
                                             var (price, name, productUrl, photoUrl) = GetInfo(product);
@@ -85,12 +80,10 @@ namespace Comparison_shopping_engine.Selenium
                                                     "None",
                                                     site)); // + ".lt"
                                         }
-                                    }
                                 }
                                 catch (NoSuchElementException e)
                                 {
                                     Trace.WriteLine(e.ToString());
-
                                 }
 
                                 for (var take = 0;; take++)
@@ -103,15 +96,14 @@ namespace Comparison_shopping_engine.Selenium
                                             : products.Count - 1 - start;
                                         Parallel.ForEach(products.GetRange(start, count), (product, state, index) =>
                                         {
-                                           var productDriver = drivers[(int) index];
-                                            productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(Values.scraperTimeout);
+                                            var productDriver = drivers[(int) index];
+                                            productDriver.Manage().Timeouts().ImplicitWait =
+                                                TimeSpan.FromSeconds(Values.scraperTimeout);
                                             productDriver.Navigate().GoToUrl(product.Link);
                                             productDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
 
                                             var tries = 0;
                                             while (tries < 5)
-                                            {
-
                                                 try
                                                 {
                                                     (product.Group, product.ImageUrl) =
@@ -125,12 +117,8 @@ namespace Comparison_shopping_engine.Selenium
                                                 catch (NoSuchElementException e)
                                                 {
                                                     tries++;
-                                                    if (tries == 5)
-                                                    {
-                                                        Trace.WriteLine(e.ToString());
-                                                    }
+                                                    if (tries == 5) Trace.WriteLine(e.ToString());
                                                 }
-                                            }
 
                                             // try
                                             // {
@@ -168,7 +156,6 @@ namespace Comparison_shopping_engine.Selenium
                                             // {
                                             //     Trace.WriteLine(e.ToString());
                                             // }
-
                                         });
                                     }
                                     else
@@ -179,11 +166,7 @@ namespace Comparison_shopping_engine.Selenium
 
                                 urlBefore = driver.Url;
                                 NavigateToNextPage(driver);
-
-
-
                             } while (!ShouldStopScraping(driver, urlBefore));
-
                         }
 
                         driver.Close();
@@ -219,13 +202,14 @@ namespace Comparison_shopping_engine.Selenium
         }
 
 
-
         protected abstract void NavigateToNextPage(ChromeDriver driver);
         protected abstract bool AnyElements(ChromeDriver driver);
         protected abstract (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string productUrl);
         protected abstract bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor);
         protected abstract ReadOnlyCollection<IWebElement> GetProductList(ChromeDriver driver);
         protected abstract bool ShouldScrapeIf(IWebElement product);
-        protected abstract (string, string, string, string) GetInfo(IWebElement product); //price, name, product url, photo url
+
+        protected abstract (string, string, string, string)
+            GetInfo(IWebElement product); //price, name, product url, photo url
     }
 }

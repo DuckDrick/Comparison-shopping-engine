@@ -2,40 +2,19 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
 {
     public partial class MainForm : Form
     {
-
-        #region WindowMove
-
-        public const int WmNclbuttondown = 0xA1;
-        public const int HtCaption = 0x2;
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-        private void MoveWindow(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
-            }
-        }
-
-        #endregion
-
-        private void ExitApplicationClick(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
+        private readonly int _groupCount = Enum.GetNames(typeof(MainGroups)).Length;
 
         private readonly List<KeyValuePair<MainGroups, Image>> _photos;
         private int _groupPanelShowFirstIndex;
-        private readonly int _groupCount = Enum.GetNames(typeof(MainGroups)).Length;
+
+        private bool _placeHolderSet = true;
 
         public MainForm()
         {
@@ -46,6 +25,7 @@ namespace Comparison_shopping_engine.Forms
                 var img = Image.FromFile($"../../Resources/Icons/{group}.png");
                 _photos.Add(new KeyValuePair<MainGroups, Image>(group, img));
             }
+
             mainGroupPanelPicture1.SizeMode = PictureBoxSizeMode.StretchImage;
             mainGroupPanelPicture2.SizeMode = PictureBoxSizeMode.StretchImage;
             mainGroupPanelPicture3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -53,6 +33,11 @@ namespace Comparison_shopping_engine.Forms
             mainGroupPanelPicture1.Click += GroupChosen;
             mainGroupPanelPicture2.Click += GroupChosen;
             mainGroupPanelPicture3.Click += GroupChosen;
+        }
+
+        private void ExitApplicationClick(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
 
@@ -66,6 +51,7 @@ namespace Comparison_shopping_engine.Forms
             _groupPanelShowFirstIndex = (_groupPanelShowFirstIndex + 1) % _groupCount;
             ChangePictures(_groupPanelShowFirstIndex);
         }
+
         private void MoveListToLeft(object sender, EventArgs e)
         {
             _groupPanelShowFirstIndex = (_groupCount + _groupPanelShowFirstIndex - 1) % _groupCount;
@@ -87,17 +73,15 @@ namespace Comparison_shopping_engine.Forms
 
         private void GroupChosen(object sender, EventArgs e)
         {
-            var group = (MainGroups)((PictureBox) sender).Tag;
+            var group = (MainGroups) ((PictureBox) sender).Tag;
             var form = new GroupedForm(group)
             {
-                StartPosition = FormStartPosition.Manual, Location = this.Location, Tag = this
+                StartPosition = FormStartPosition.Manual, Location = Location, Tag = this
             };
             form.Show();
-            this.Hide();
-
+            Hide();
         }
 
-        private bool _placeHolderSet = true;
         private void SearchEnter(object sender, EventArgs e)
         {
             if (_placeHolderSet)
@@ -120,7 +104,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void Faq(object sender, EventArgs e)
         {
-            var form = new FaqForm {StartPosition = FormStartPosition.Manual, Location = this.Location};
+            var form = new FaqForm {StartPosition = FormStartPosition.Manual, Location = Location};
             form.Left += 230;
             form.Top += -50;
 
@@ -129,37 +113,55 @@ namespace Comparison_shopping_engine.Forms
 
         private void About(object sender, EventArgs e)
         {
-            var form = new AboutForm {StartPosition = FormStartPosition.Manual, Location = this.Location};
+            var form = new AboutForm {StartPosition = FormStartPosition.Manual, Location = Location};
             form.ShowDialog();
         }
 
         private void Search(object sender, EventArgs e)
         {
-            if(Initializer.DoneWithDatabase)
+            if (Initializer.DoneWithDatabase)
                 FetchSearched();
             var form = new SearchForm(_placeHolderSet ? "" : searchField.Text)
             {
-                StartPosition = FormStartPosition.Manual, Location = this.Location, Tag = this
+                StartPosition = FormStartPosition.Manual, Location = Location, Tag = this
             };
             form.Show();
-            this.Hide();
+            Hide();
         }
 
         private async void FetchSearched()
         {
             var count = Enum.GetNames(typeof(ScrapedSites)).Length;
-            for (var site = (ScrapedSites)0; site < (ScrapedSites)count; site++)
+            for (var site = (ScrapedSites) 0; site < (ScrapedSites) count; site++)
             {
-                var l = await Database.Get(searchQuery: searchField.Text.Trim().Replace(' ', '%'), table: site.ToString());
+                var l = await Database.Get(searchQuery: searchField.Text.Trim().Replace(' ', '%'),
+                    table: site.ToString());
                 foreach (var ll in l)
-                {
                     if (!Product.productList.Any(product => product.Equals(ll)))
-                    {
                         Product.productList.Add(ll);
-                    }
-                }
-                
             }
         }
+
+        #region WindowMove
+
+        public const int WmNclbuttondown = 0xA1;
+        public const int HtCaption = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void MoveWindow(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WmNclbuttondown, HtCaption, 0);
+            }
+        }
+
+        #endregion
     }
 }

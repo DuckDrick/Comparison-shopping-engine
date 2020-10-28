@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class NovastarScraper : AbstractSeleniumScraper
+    internal class NovastarScraper : AbstractSeleniumScraper
     {
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
@@ -23,18 +15,15 @@ namespace Comparison_shopping_engine.Selenium
             {
                 var pages = m[0].FindElements(By.TagName("a"));
                 var n = pages[pages.Count - 1];
-               
-                ((IJavaScriptExecutor)driver)
+
+                ((IJavaScriptExecutor) driver)
                     .ExecuteScript("window.scrollTo(0, document.body.scrollHeight)");
-                Actions action = new Actions(driver);
+                var action = new Actions(driver);
                 action.MoveToElement(n);
                 var ad = driver.FindElementsByXPath("//*[@id=\"soundest-forms-container\"]");
                 if (ad.Count > 0)
-                {
-                    ((IJavaScriptExecutor)driver)
+                    ((IJavaScriptExecutor) driver)
                         .ExecuteScript("document.getElementById(\"soundest-forms-container\").remove();");
-
-                }
 
                 action.Click().Build().Perform();
                 Thread.Sleep(3000);
@@ -43,10 +32,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool AnyElements(ChromeDriver driver)
         {
-            if (driver.FindElements(By.CssSelector("div.novanaut.novanaut--head.face-less")).Count == 1)
-            {
-                return false;
-            }
+            if (driver.FindElements(By.CssSelector("div.novanaut.novanaut--head.face-less")).Count == 1) return false;
             return true;
         }
 
@@ -61,14 +47,9 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldStopScraping(ChromeDriver chromeDriver, string urlBefore)
         {
-
             Thread.Sleep(1000);
-            if (chromeDriver.Url.Equals(urlBefore))
-            {
-                return true;
-            }
+            if (chromeDriver.Url.Equals(urlBefore)) return true;
             return false;
-
         }
 
 
@@ -86,14 +67,8 @@ namespace Comparison_shopping_engine.Selenium
             }
 
             if (list != null)
-            {
                 return list;
-            }
-            else
-            {
-                return driver.FindElements(By.ClassName("product__item-mobile"));
-            }
-            
+            return driver.FindElements(By.ClassName("product__item-mobile"));
         }
 
         protected override bool ShouldScrapeIf(IWebElement product)
@@ -105,25 +80,16 @@ namespace Comparison_shopping_engine.Selenium
         {
             string price;
             if (product.FindElements(By.CssSelector("span.price__value.price__value--discounted")).Count == 1)
-            {
                 price = product.FindElement(By.CssSelector("span.price__value.price__value--discounted")).Text;
-            }
             else if (product.FindElements(By.ClassName("price__standard")).Count == 1)
-            {
                 price = product.FindElement(By.ClassName("price__standard")).Text;
-            }
             else
-            {
                 price = product.FindElement(By.ClassName("price__value")).Text;
-            }
             var name = product.FindElement(By.ClassName("link--dark")).Text;
             var productUrl = product.FindElement(By.CssSelector("a.link--dark")).GetAttribute("href");
             var photoUrl = product.FindElement(By.TagName("img"))
                 .GetAttribute("src");
             return (price, name, productUrl, photoUrl);
         }
-
-     
-
     }
 }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 namespace Comparison_shopping_engine
 {
-    class SmallerGroups
+    internal class SmallerGroups
     {
-        public Boolean Check(string productgroup, List<string> smallergroup)
+        public bool Check(string productgroup, List<string> smallergroup)
         {
             foreach (var group in smallergroup)
-            {
-                if (productgroup.Contains(group))
-                {
+                if (productgroup.Contains(@group))
                     return true;
-                }
-            }
 
             return false;
         }
@@ -21,76 +17,49 @@ namespace Comparison_shopping_engine
         {
             string[] group =
             {
-                "Žaislai, prekės vaikams"
-                ,"Gimtadienio atributika"
-                ,"Kūdikių higienos prekės"
-                ,"Vaikams ir kūdikiams"
-                ,"DOVANOS, ŠVENTINĖ ATRIBUTIKA"
-                ,"VAIKUI IR MAMAI, ŽAISLAI"
+                "Žaislai, prekės vaikams", "Gimtadienio atributika", "Kūdikių higienos prekės", "Vaikams ir kūdikiams",
+                "DOVANOS, ŠVENTINĖ ATRIBUTIKA", "VAIKUI IR MAMAI, ŽAISLAI"
             };
-        return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> AprangaGroup()
-        {  
-            string[] group ={"Apranga, avalynė, aksesuarai"};
-        return new List<string>(@group);
-        }
-        public List<String> AutomobilisGroup()
         {
-            string[] group = {"Ratų varžtai"
-            ,"Kėbulo apsaugos, deflektoriai"
-            ,"Stabilizatoriaus traukės, stabilizatoriai"
-            ,"Diržai juostiniai"
-            ,"Pedalų gumos, pedalų laikikliai"
-            ,"Variklio dangtelio elementai"
-            ,"Glaistymo ir gruntavimo medžiagos"
-            ,"Uždegimo žvakės"
-            ,"Juostinių diržų įtempikliai, įtempimo skriemuliai"
-            ,"Variklio galvos tarpinės"
-            ,"Vairaračio užvalkalai ir priedai"
-            ,"Išorės priežiūros priemonės"
-            ,"Priemonės nuo uodų ir erkių"
-            ,"Purvasaugiai, įkrovos nuėmėjai"
-            ,"Langų,žibintų plovimo varikliukai"
-            ,"Veidrodžiai"
-            ,"Variklio įsiurbimo/išmetimo kolektorių tarpikliai"
-            ,"Variklio skriemuliai, krumpliaračiai"
-            ,"Stiklų valikliai ir poliroliai"
-            ,"Kempinės ir servetėlės"
-            ,"Variklio alyvos siurblys, siurblio priedai"
-            ,"Paskirstymo diržų montavimo komplektai"
-            ,"Pusašiai, lankstai"
-            ,"Pavarų svirties rankenos"
-            ,"Bagažinės pertvaros ir grotelės"
-            ,"Laikikliai ir fiksatoriai"
-            ,"Motociklų ir motorolerių dalys"
-            ,"Stabilizatoriaus įvorės"
-            ,"Įvairūs riebokšliai"
-            ,"Ratlankiai"
-            ,"Pakabos montavimo elementai, suvedimo varžtai"
-            ,"Ratų guoliai"
-            ,"Sankabos išminamieji guoliai"
-            ,"Pakabos-važiuoklės įvorės"
-            ,"Buksyravimo kilpos, kabliai"
-            ,"Kilimėliai"
-            ,"Autom.transmisijos filtrai"
-            ,"Pavarų svirties užvalkalai"
-            ,"Bagažinės kilimėliai"
-            ,"Diržai trapeciniai"
-            ,"Automobiliu_prekes"
-            ,"Kiti automobilių aksesuarai, priedai"
-            ,"Autoprekės"
-            ,"AUTOMOBILIŲ PREKĖS"};
-            return new List<string>(@group);
+            string[] group = {"Apranga, avalynė, aksesuarai"};
+            return new List<string>(group);
         }
+
+        public List<string> AutomobilisGroup()
+        {
+            string[] group =
+            {
+                "Ratų varžtai", "Kėbulo apsaugos, deflektoriai", "Stabilizatoriaus traukės, stabilizatoriai",
+                "Diržai juostiniai", "Pedalų gumos, pedalų laikikliai", "Variklio dangtelio elementai",
+                "Glaistymo ir gruntavimo medžiagos", "Uždegimo žvakės",
+                "Juostinių diržų įtempikliai, įtempimo skriemuliai", "Variklio galvos tarpinės",
+                "Vairaračio užvalkalai ir priedai", "Išorės priežiūros priemonės", "Priemonės nuo uodų ir erkių",
+                "Purvasaugiai, įkrovos nuėmėjai", "Langų,žibintų plovimo varikliukai", "Veidrodžiai",
+                "Variklio įsiurbimo/išmetimo kolektorių tarpikliai", "Variklio skriemuliai, krumpliaračiai",
+                "Stiklų valikliai ir poliroliai", "Kempinės ir servetėlės",
+                "Variklio alyvos siurblys, siurblio priedai", "Paskirstymo diržų montavimo komplektai",
+                "Pusašiai, lankstai", "Pavarų svirties rankenos", "Bagažinės pertvaros ir grotelės",
+                "Laikikliai ir fiksatoriai", "Motociklų ir motorolerių dalys", "Stabilizatoriaus įvorės",
+                "Įvairūs riebokšliai", "Ratlankiai", "Pakabos montavimo elementai, suvedimo varžtai", "Ratų guoliai",
+                "Sankabos išminamieji guoliai", "Pakabos-važiuoklės įvorės", "Buksyravimo kilpos, kabliai",
+                "Kilimėliai", "Autom.transmisijos filtrai", "Pavarų svirties užvalkalai", "Bagažinės kilimėliai",
+                "Diržai trapeciniai", "Automobiliu_prekes", "Kiti automobilių aksesuarai, priedai", "Autoprekės",
+                "AUTOMOBILIŲ PREKĖS"
+            };
+            return new List<string>(group);
+        }
+
         public List<string> BaldaiGroup()
         {
-            List<String> group = new List<string>();
+            var group = new List<string>();
             return group;
         }
 
-        
+
         public List<string> BuitinėGroup()
         {
             string[] group =
@@ -109,7 +78,7 @@ namespace Comparison_shopping_engine
                 "Buitinė technika. Kavos aparatai", "SANTECHNIKA, ŠILDYMAS", "BUITINĖ TECHNIKA IR ELEKTRONIKA",
                 "LEMPOS IR APŠVIETIMAS", "BALDAI IR NAMŲ INTERJERAS", "BUITIES, VIRTUVĖS, APYVOKOS PREKĖS"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> GarsasGroup()
@@ -118,13 +87,14 @@ namespace Comparison_shopping_engine
             {
                 "Vaizdo ir garso technika", "Garso ir vaizdo technika"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
+
         public List<string> GyvūnaiGroup()
         {
             string[] group =
                 {"Gyvūnų prekės", "PREKĖS GYVŪNAMS"};
-            return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> GrožisGroup()
@@ -133,26 +103,28 @@ namespace Comparison_shopping_engine
             {
                 "Sveikata, grožis ir laisvalaikis", "Kvepalai, kosmetika", "Grožis ir sveikata", "KVEPALAI, KOSMETIKA"
             };
-        return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> KameraGroup()
         {
             string[] group = {"Vaizdo ir garso technika", "Mobilieji telefonai, Foto ir Video"};
-            return new List<string>(@group);
+            return new List<string>(group);
         }
+
         public List<string> KanceliarinėsGroup()
         {
             string[] group =
             {
                 "tapybos"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
+
         public List<string> KnygaGroup()
         {
             string[] group = {"Knygos", "KNYGOS, BIURO PREKĖS"};
-            return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> KompiuterisGroup()
@@ -164,10 +136,10 @@ namespace Comparison_shopping_engine
                 "Žaidimų kompiuteriai ir žaidimai", "Kiti kompiuterių aksesuarai",
                 "Kompiuteriai, telefonai, IT", "Kompiuterinė technika", "Televizoriai",
                 "Žaidimų kompiuteriai ir jų priedai", "Kompiuteriai, Komponentai", "Žaidimų įranga, žaidimai",
-                "Telefonai ir planšetiniai kompiuteriai", "KOMPIUTERINĖ TECHNIKA" };
-            return new List<string>(@group);
+                "Telefonai ir planšetiniai kompiuteriai", "KOMPIUTERINĖ TECHNIKA"
+            };
+            return new List<string>(group);
         }
-
 
 
         public List<string> LaisvalaikisGroup()
@@ -177,13 +149,13 @@ namespace Comparison_shopping_engine
                 "Laisvalaikio prekės", "Gimtadienio atributika", "Sportas, laisvalaikis, turizmas",
                 "Riedžiai ir paspirtukai", "SPORTAS, LAISVALAIKIS, TURIZMAS"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> MaistasGroup()
         {
             string[] group = { };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
 
         public List<string> SodasGroup()
@@ -194,8 +166,9 @@ namespace Comparison_shopping_engine
                 "Elektrinių įrankių dalys, priedai", "Elektriniai atsuktuvai", "Sodo prekės",
                 "Dovanos, šventinė atributika", "Apsaugos, dezinfekcinės priemonės", "SODO PREKĖS, ĮRANKIAI"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
+
         public List<string> TelefonasGroup()
         {
             string[] group =
@@ -204,9 +177,8 @@ namespace Comparison_shopping_engine
                 "Komunikacinė ir ryšio įranga", "Telefonai, Išmanieji pagalbininkai",
                 "Telefonai ir planšetiniai kompiuteriai", "MOBILIEJI TELEFONAI, FOTO IR VIDEO"
             };
-            return new List<string>(@group);
+            return new List<string>(group);
         }
     }
-
 }
 //,"None"

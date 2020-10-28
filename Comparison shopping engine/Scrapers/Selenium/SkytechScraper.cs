@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class SkytechScraper : AbstractSeleniumScraper
+    internal class SkytechScraper : AbstractSeleniumScraper
     {
-      
-
         private string GetProductImage(ChromeDriver driver)
         {
             return driver.FindElement(By.Id("main-product-image")).GetAttribute("src");
@@ -25,10 +17,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool AnyElements(ChromeDriver driver)
         {
-            if (driver.FindElements(By.ClassName("productListing-info")).Count == 0)
-            {
-                return true;
-            }
+            if (driver.FindElements(By.ClassName("productListing-info")).Count == 0) return true;
 
             return false;
         }
@@ -38,12 +27,8 @@ namespace Comparison_shopping_engine.Selenium
             var list = driver.FindElement(By.ClassName("navbar-breadcrumb"));
             var group = list.FindElements(By.CssSelector("a"));
             foreach (var productgroup in group)
-            {
                 if (!productgroup.Text.Equals("Pradžia"))
-                {
                     return (productgroup.Text, GetProductImage(driver));
-                }
-            }
 
             return ("None", "");
         }
