@@ -85,11 +85,7 @@ namespace Comparison_shopping_engine.Forms
         }
         private void FilterBox_TextChanged(object sender, EventArgs e)
         {
-            //string[] row = { product.Name, product.Price, product.Source };
-            productListView.Items.Clear(); // clear list items before adding 
-            // filter the items match with search key and add result to list view 
-            //productListView.Items.AddRange(Items.Where(i => string.IsNullOrEmpty(FilterBox.Text) || i.Name.StartsWith(FilterBox.Text))
-            //    .Select(c => new ListViewItem(c.Name)).ToArray());
+            productListView.Items.Clear();
             foreach (var item in items)
             {
                 if (string.IsNullOrEmpty(FilterBox.Text) || item.Name.ToLower().Contains(FilterBox.Text.ToLower())

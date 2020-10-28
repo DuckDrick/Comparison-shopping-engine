@@ -1,5 +1,6 @@
 ﻿using Comparison_shopping_engine.Scrapers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Tracing;
@@ -198,6 +199,7 @@ namespace Comparison_shopping_engine.Forms
         private void Filter_Click(object sender, EventArgs e)
         {
             productListView.Items.Clear();
+            FilterBox.Clear();
 
             var selectedGroups = groups.CheckedItems.OfType<CheckBoxItem>().Select(item => (MainGroups) item.e);
             var selectedSources = sources.CheckedItems.OfType<CheckBoxItem>().Select(item => (ScrapedSites) item.e);
@@ -330,8 +332,38 @@ namespace Comparison_shopping_engine.Forms
             form.ShowDialog();
         }
 
-        
+        private List<Product> items = new List<Product>();
+        private void FilterBox_TextChanged(object sender, EventArgs e)
+        {
+            var lv = (ListView)productListView;
+            //var row = lv.SelectedItems[0].SubItems;
+            var list = productListView.SelectedItems;
+            foreach (var product in productListView.Items)
+            {
+                var collumns = ((ListViewItem) product).SubItems;
+                items.Add(new Product(collumns[0].ToString().Split('{','}')[1],
+                                          collumns[1].ToString().Split('{', '}')[1], null, null, null, 
+                                          collumns[2].ToString().Split('{', '}')[1]));
+            }
+            productListView.Items.Clear();
+            foreach (var item in items)
+            {
+                if (string.IsNullOrEmpty(FilterBox.Text) || item.Name.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Price.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Source.ToLower().Contains(FilterBox.Text.ToLower()))
+                {
+                    string[] row = { item.Name, item.Price, item.Source };
+                    productListView.Items.Add(new ListViewItem(row));
+                }
+            }
+        }
 
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            FilterBox.Clear();
+            LoadToCheckedList<MainGroups>(groups);
+            LoadToCheckedList<ScrapedSites>(sources);
+        }
     }
 
     public class CheckBoxItem
