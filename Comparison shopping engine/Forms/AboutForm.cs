@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -8,7 +9,8 @@ namespace Comparison_shopping_engine.Forms
         public AboutForm()
         {
             InitializeComponent();
-            richTextBox1.LoadFile("../../Resources/Rtfs/About.rtf");
+            var rtf = File.ReadAllText("../../Resources/Rtfs/About.rtf");
+            richTextBox1.Rtf = rtf;
         }
 
         private void CloseWindow(object sender, EventArgs e)
