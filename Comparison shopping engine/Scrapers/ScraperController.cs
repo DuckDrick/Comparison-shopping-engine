@@ -46,7 +46,9 @@ namespace Comparison_shopping_engine.Scrapers
                     url = urlSplit[0];
                     ending = urlSplit[1];
                 }
-                scraper.Value.Start(new object[] {url + query.Replace(" ", "+") + ending});
+
+                var scrapeSite = url + query.Replace(" ", "+") + ending;
+                scraper.Value.Start(scrapeSite);
             }
         }
 

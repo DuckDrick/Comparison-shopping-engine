@@ -9,16 +9,21 @@ Requirements:
      
 :green_square: Extension method usage.
      
-:red_square: Reading from file.
+:green_square: Reading from file.
+
    
 :red_square: Generic type usage.
    
 :green_square: Regex.
 
-:orange_square: Widening and narrowing type conversions.
+
+:green_square: :question: Widening and narrowing type conversions.
+
    
 :green_square: Putting data to collection, iterating through it the right way.
        
 :orange_square: LINQ to Objects usage (methods and queries), including groupJoin.
    
-:red_square: Implementing some of the standard .NET interfaces (IEnumerable, IComparable, IComparer, IEquatable, IEnumerator, etc.)
+
+:green_square: Implementing some of the standard .NET interfaces (IEnumerable, IComparable, IComparer, IEquatable, IEnumerator, etc.)
+
