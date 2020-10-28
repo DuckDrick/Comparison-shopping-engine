@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -117,7 +118,7 @@ namespace Comparison_shopping_engine.Forms
             }
         }
 
-        private void Faq(object sender, EventArgs e) //340 550    800 450      460 -100      230 -50
+        private void Faq(object sender, EventArgs e)
         {
             var form = new FaqForm {StartPosition = FormStartPosition.Manual, Location = this.Location};
             form.Left += 230;
@@ -134,12 +135,31 @@ namespace Comparison_shopping_engine.Forms
 
         private void Search(object sender, EventArgs e)
         {
+            if(Initializer.DoneWithDatabase)
+                FetchSearched();
             var form = new SearchForm(_placeHolderSet ? "" : searchField.Text)
             {
                 StartPosition = FormStartPosition.Manual, Location = this.Location, Tag = this
             };
             form.Show();
             this.Hide();
+        }
+
+        private async void FetchSearched()
+        {
+            var count = Enum.GetNames(typeof(ScrapedSites)).Length;
+            for (var site = (ScrapedSites)0; site < (ScrapedSites)count; site++)
+            {
+                var l = await Database.Get(site.ToString(), searchField.Text.Trim().Replace(' ', '%'));
+                foreach (var ll in l)
+                {
+                    if (!Product.productList.Any(product => product.Equals(ll)))
+                    {
+                        Product.productList.Add(ll);
+                    }
+                }
+                
+            }
         }
     }
 }

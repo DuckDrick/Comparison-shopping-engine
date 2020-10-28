@@ -33,9 +33,9 @@
             this.buttonBack = new System.Windows.Forms.Button();
             this.appName = new System.Windows.Forms.Label();
             this.productListView = new System.Windows.Forms.ListView();
-            this.productName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.productPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.productSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.productName = new System.Windows.Forms.ColumnHeader();
+            this.productPrice = new System.Windows.Forms.ColumnHeader();
+            this.productSource = new System.Windows.Forms.ColumnHeader();
             this.filterPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.scrapingInfo = new System.Windows.Forms.Button();
@@ -47,11 +47,11 @@
             this.source = new System.Windows.Forms.Button();
             this.groupPanel = new System.Windows.Forms.Panel();
             this.groups = new System.Windows.Forms.CheckedListBox();
-            this.group = new System.Windows.Forms.Button();
+            this.@group = new System.Windows.Forms.Button();
             this.pricePanel = new System.Windows.Forms.Panel();
             this.toLabel = new System.Windows.Forms.Label();
             this.to = new System.Windows.Forms.TextBox();
-            this.from = new System.Windows.Forms.TextBox();
+            this.@from = new System.Windows.Forms.TextBox();
             this.fromLabel = new System.Windows.Forms.Label();
             this.price = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -63,16 +63,16 @@
             this.sourcePanel.SuspendLayout();
             this.groupPanel.SuspendLayout();
             this.pricePanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scrapingPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.scrapingPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // titleBar
             // 
-            this.titleBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(117)))), ((int)(((byte)(79)))), ((int)(((byte)(91)))));
+            this.titleBar.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (117)))), ((int) (((byte) (79)))), ((int) (((byte) (91)))));
             this.titleBar.Controls.Add(this.buttonBack);
             this.titleBar.Controls.Add(this.appName);
             this.titleBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.titleBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(14)))), ((int)(((byte)(59)))));
+            this.titleBar.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (50)))), ((int) (((byte) (14)))), ((int) (((byte) (59)))));
             this.titleBar.Location = new System.Drawing.Point(0, 0);
             this.titleBar.Name = "titleBar";
             this.titleBar.Size = new System.Drawing.Size(800, 52);
@@ -81,7 +81,7 @@
             // 
             // buttonBack
             // 
-            this.buttonBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonBack.BackgroundImage")));
+            this.buttonBack.BackgroundImage = ((System.Drawing.Image) (resources.GetObject("buttonBack.BackgroundImage")));
             this.buttonBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonBack.FlatAppearance.BorderSize = 0;
             this.buttonBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -95,7 +95,7 @@
             // appName
             // 
             this.appName.Dock = System.Windows.Forms.DockStyle.Right;
-            this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.appName.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.appName.Location = new System.Drawing.Point(501, 0);
             this.appName.Name = "appName";
             this.appName.Size = new System.Drawing.Size(299, 52);
@@ -106,13 +106,9 @@
             // 
             // productListView
             // 
-            this.productListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.productListView.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Right)));
             this.productListView.BackColor = System.Drawing.SystemColors.Window;
-            this.productListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.productName,
-            this.productPrice,
-            this.productSource});
+            this.productListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {this.productName, this.productPrice, this.productSource});
             this.productListView.HideSelection = false;
             this.productListView.Location = new System.Drawing.Point(223, 58);
             this.productListView.MultiSelect = false;
@@ -145,7 +141,7 @@
             this.filterPanel.Controls.Add(this.sourcePanel);
             this.filterPanel.Controls.Add(this.source);
             this.filterPanel.Controls.Add(this.groupPanel);
-            this.filterPanel.Controls.Add(this.group);
+            this.filterPanel.Controls.Add(this.@group);
             this.filterPanel.Controls.Add(this.pricePanel);
             this.filterPanel.Controls.Add(this.price);
             this.filterPanel.Location = new System.Drawing.Point(5, 58);
@@ -167,7 +163,7 @@
             // scrapingInfo
             // 
             this.scrapingInfo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.scrapingInfo.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrapingInfo.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.scrapingInfo.Location = new System.Drawing.Point(191, 0);
             this.scrapingInfo.Name = "scrapingInfo";
             this.scrapingInfo.Size = new System.Drawing.Size(25, 32);
@@ -179,7 +175,7 @@
             // scrapingSettings
             // 
             this.scrapingSettings.Dock = System.Windows.Forms.DockStyle.Left;
-            this.scrapingSettings.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scrapingSettings.Font = new System.Drawing.Font("Courier New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.scrapingSettings.Location = new System.Drawing.Point(0, 0);
             this.scrapingSettings.Name = "scrapingSettings";
             this.scrapingSettings.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -263,20 +259,20 @@
             // 
             // group
             // 
-            this.group.Dock = System.Windows.Forms.DockStyle.Top;
-            this.group.Location = new System.Drawing.Point(0, 25);
-            this.group.Name = "group";
-            this.group.Size = new System.Drawing.Size(216, 25);
-            this.group.TabIndex = 2;
-            this.group.Text = "Grupė";
-            this.group.UseVisualStyleBackColor = true;
-            this.group.Click += new System.EventHandler(this.ToggleGroupPanel);
+            this.@group.Dock = System.Windows.Forms.DockStyle.Top;
+            this.@group.Location = new System.Drawing.Point(0, 25);
+            this.@group.Name = "group";
+            this.@group.Size = new System.Drawing.Size(216, 25);
+            this.@group.TabIndex = 2;
+            this.@group.Text = "Grupė";
+            this.@group.UseVisualStyleBackColor = true;
+            this.@group.Click += new System.EventHandler(this.ToggleGroupPanel);
             // 
             // pricePanel
             // 
             this.pricePanel.Controls.Add(this.toLabel);
             this.pricePanel.Controls.Add(this.to);
-            this.pricePanel.Controls.Add(this.from);
+            this.pricePanel.Controls.Add(this.@from);
             this.pricePanel.Controls.Add(this.fromLabel);
             this.pricePanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pricePanel.Enabled = false;
@@ -306,13 +302,13 @@
             // 
             // from
             // 
-            this.from.Location = new System.Drawing.Point(3, 20);
-            this.from.MaxLength = 13;
-            this.from.Name = "from";
-            this.from.ShortcutsEnabled = false;
-            this.from.Size = new System.Drawing.Size(98, 20);
-            this.from.TabIndex = 1;
-            this.from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
+            this.@from.Location = new System.Drawing.Point(3, 20);
+            this.@from.MaxLength = 13;
+            this.@from.Name = "from";
+            this.@from.ShortcutsEnabled = false;
+            this.@from.Size = new System.Drawing.Size(98, 20);
+            this.@from.TabIndex = 1;
+            this.@from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.From_KeyPress);
             // 
             // fromLabel
             // 
@@ -364,7 +360,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (201)))), ((int) (((byte) (173)))), ((int) (((byte) (161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.scrapingPictureBox);
             this.Controls.Add(this.searchKeywords);
@@ -373,7 +369,7 @@
             this.Controls.Add(this.productListView);
             this.Controls.Add(this.titleBar);
             this.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold);
-            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(106)))), ((int)(((byte)(109)))));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int) (((byte) (77)))), ((int) (((byte) (106)))), ((int) (((byte) (109)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SearchForm";
             this.Text = "SearchForm";
@@ -385,10 +381,9 @@
             this.groupPanel.ResumeLayout(false);
             this.pricePanel.ResumeLayout(false);
             this.pricePanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scrapingPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.scrapingPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

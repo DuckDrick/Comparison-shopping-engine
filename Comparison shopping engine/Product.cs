@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Comparison_shopping_engine;
 
 namespace Comparison_shopping_engine
 {
-    public class Product
+    public class Product : IEquatable<Product>, IComparable<Product>
     {
         public static BindingList<Product> productList;
         public string Name { get; set; }
@@ -25,6 +26,11 @@ namespace Comparison_shopping_engine
             this.Source = source;
         }
 
+        public bool Equals(Product product)
+        {
+            return product.Group == this.Group && product.Name == this.Name;
+        }
+
         public bool this[Enum[] e]
         {
             get
@@ -37,6 +43,44 @@ namespace Comparison_shopping_engine
                 return e.Any(source => Source.Equals(source.ToString()));
             }
 
+        }
+
+        public int CompareTo(Product other)
+        {
+            return float.Parse(this.Price).CompareTo(float.Parse(other.Price));
+        }
+        
+        public static bool operator > (Product p1, Product p2)
+        {
+            return p1.CompareTo(p2) == 1;
+        }
+
+        public static bool operator < (Product p1, Product p2)
+        {
+            return p1.CompareTo(p2) == -1;
+        }
+
+        public static bool operator >= (Product p1, Product p2)
+        {
+            return p1.CompareTo(p2) >= 0;
+        }
+
+        public static bool operator <= (Product p1, Product p2)
+        {
+            return p1.CompareTo(p2) <= 0;
+        }
+        
+    }
+}
+
+
+namespace ExtensionMethods
+{
+    public static class MyExtensions
+    {
+        public static string[] getListViewItemRow(this Product product)
+        {
+            return new[] {product.Name, product.Price, product.Source};
         }
     }
 }
