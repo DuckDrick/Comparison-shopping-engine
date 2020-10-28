@@ -1,24 +1,24 @@
 # Comparison shopping engine
 Requirements:
 
-- [x] Creating and using your own class, struct and enum (with flag(s), preferably). (product class, abstract selenium scraper class)
+:orange_square: Creating and using your own class, struct and enum (with flag(s), preferably). (product class, abstract selenium scraper class)
      
-- [X] Property (standard, indexed, auto-implemented) usage in struct and class.
+:green_square: Property (standard, indexed, auto-implemented) usage in struct and class.
      
-- [ ] Named and optional argument usage.
+:green_square: Named and optional argument usage.
      
-- [x] Extension method usage.
+:green_square: Extension method usage.
      
-- [ ] Reading from file.
-     
-- [x] Generic type usage.
-     
-- [x] Regex.
+:green_square: Reading from file.
+   
+:red_square: Generic type usage.
+   
+:green_square: Regex.
 
-- [ ] Widening and narrowing type conversions.
-     
-- [ ] Putting data to collection, iterating through it the right way.
-         
-- [ ] LINQ to Objects usage (methods and queries), including groupJoin.
-     
-- [x] Implementing some of the standard .NET interfaces (IEnumerable, IComparable, IComparer, IEquatable, IEnumerator, etc.)
+:green_square: :question: Widening and narrowing type conversions.
+   
+:green_square: Putting data to collection, iterating through it the right way.
+       
+:orange_square: LINQ to Objects usage (methods and queries), including groupJoin.
+   
+:green_square: Implementing some of the standard .NET interfaces (IEnumerable, IComparable, IComparer, IEquatable, IEnumerator, etc.)
