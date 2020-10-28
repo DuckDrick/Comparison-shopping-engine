@@ -51,7 +51,6 @@ namespace Comparison_shopping_engine.Forms
 
         private void GroupedForm_Load(object sender, EventArgs e)
         {
-            var i = 0;
             SmallerGroups smallerGroups = new SmallerGroups();
             var groupsearch = _group + "Group";
             MethodInfo method = typeof(SmallerGroups).GetMethod(groupsearch);

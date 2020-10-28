@@ -353,8 +353,13 @@ namespace Comparison_shopping_engine.Forms
         private void clearButton_Click(object sender, EventArgs e)
         {
             FilterBox.Clear();
-            LoadToCheckedList<MainGroups>(groups);
-            LoadToCheckedList<ScrapedSites>(sources);
+            productListView.Items.Clear();
+            foreach (var item in items)
+            {
+                string[] row = {item.Name, item.Price, item.Source};
+                productListView.Items.Add(new ListViewItem(row));
+
+            }
         }
 
         private void SaveListViewItems()
