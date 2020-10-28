@@ -36,6 +36,7 @@
             this.titleBar = new System.Windows.Forms.Panel();
             this.buttonBack = new System.Windows.Forms.Button();
             this.appName = new System.Windows.Forms.Label();
+            this.FilterBox = new System.Windows.Forms.TextBox();
             this.titleBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,10 +47,10 @@
             this.productPrice,
             this.productSource});
             this.productListView.HideSelection = false;
-            this.productListView.Location = new System.Drawing.Point(12, 54);
+            this.productListView.Location = new System.Drawing.Point(12, 79);
             this.productListView.MultiSelect = false;
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(776, 384);
+            this.productListView.Size = new System.Drawing.Size(776, 359);
             this.productListView.TabIndex = 3;
             this.productListView.UseCompatibleStateImageBehavior = false;
             this.productListView.View = System.Windows.Forms.View.Details;
@@ -108,12 +109,21 @@
             this.appName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.appName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MoveWindow);
             // 
+            // FilterBox
+            // 
+            this.FilterBox.Location = new System.Drawing.Point(12, 53);
+            this.FilterBox.Name = "FilterBox";
+            this.FilterBox.Size = new System.Drawing.Size(776, 22);
+            this.FilterBox.TabIndex = 5;
+            this.FilterBox.TextChanged += new System.EventHandler(this.FilterBox_TextChanged);
+            // 
             // GroupedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(201)))), ((int)(((byte)(173)))), ((int)(((byte)(161)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.FilterBox);
             this.Controls.Add(this.titleBar);
             this.Controls.Add(this.productListView);
             this.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -126,6 +136,7 @@
             this.Load += new System.EventHandler(this.GroupedForm_Load);
             this.titleBar.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -137,5 +148,6 @@
         private System.Windows.Forms.Panel titleBar;
         private System.Windows.Forms.Button buttonBack;
         private System.Windows.Forms.Label appName;
+        private System.Windows.Forms.TextBox FilterBox;
     }
 }

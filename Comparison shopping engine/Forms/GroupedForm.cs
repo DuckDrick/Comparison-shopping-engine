@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace Comparison_shopping_engine.Forms
@@ -28,8 +29,10 @@ namespace Comparison_shopping_engine.Forms
 
         #endregion
 
+
         private readonly MainGroups _group;
-    
+        private List<Product> items = new List<Product>(); 
+
         public GroupedForm(MainGroups group)
         {
             InitializeComponent();
@@ -48,6 +51,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void GroupedForm_Load(object sender, EventArgs e)
         {
+            var i = 0;
             SmallerGroups smallerGroups = new SmallerGroups();
             var groupsearch = _group + "Group";
             MethodInfo method = typeof(SmallerGroups).GetMethod(groupsearch);
@@ -58,6 +62,7 @@ namespace Comparison_shopping_engine.Forms
                 {
                     string[] row = {product.Name, product.Price, product.Source};
                     productListView.Items.Add(new ListViewItem(row));
+                    items.Add(new Product(product.Name, product.Price, null, null, null, product.Source));
                 }
             }
             
@@ -77,6 +82,24 @@ namespace Comparison_shopping_engine.Forms
             var chosenProduct =
                 Product.productList.Where(product => product.Name.Equals(row[0].Text) && product.Source.Equals(row[2].Text)).ToList();
             _pif.SetInformation(chosenProduct[0]);
+        }
+        private void FilterBox_TextChanged(object sender, EventArgs e)
+        {
+            //string[] row = { product.Name, product.Price, product.Source };
+            productListView.Items.Clear(); // clear list items before adding 
+            // filter the items match with search key and add result to list view 
+            //productListView.Items.AddRange(Items.Where(i => string.IsNullOrEmpty(FilterBox.Text) || i.Name.StartsWith(FilterBox.Text))
+            //    .Select(c => new ListViewItem(c.Name)).ToArray());
+            foreach (var item in items)
+            {
+                if (string.IsNullOrEmpty(FilterBox.Text) || item.Name.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Price.ToLower().Contains(FilterBox.Text.ToLower())
+                                                         || item.Source.ToLower().Contains(FilterBox.Text.ToLower()))
+                {
+                    string[] row = { item.Name, item.Price, item.Source };
+                    productListView.Items.Add(new ListViewItem(row));
+                }
+            }
         }
     }
 }
