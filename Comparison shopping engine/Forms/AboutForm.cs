@@ -15,7 +15,7 @@ namespace Comparison_shopping_engine.Forms
 
         private void CloseWindow(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
     }
 }

@@ -1,44 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Comparison_shopping_engine.Selenium;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class RdeScraper : AbstractSeleniumScraper
+    internal class RdeScraper : AbstractSeleniumScraper
     {
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
-            string beforeUrl = driver.Url;
-            string[] currentUrl = driver.Url.Split('/');
+            var beforeUrl = driver.Url;
+            var currentUrl = driver.Url.Split('/');
             var url = "https://rde.lt/search/lt/word/" + currentUrl[6] + "/page/" +
                       (Convert.ToInt32(currentUrl.Last()) + 1);
             driver.Navigate().GoToUrl(url);
-                if (driver.FindElements(By.CssSelector("div.search_page_header")).Count == 1)
-                {
-                    if (driver.FindElement(By.CssSelector("div.search_page_header")).Text
-                        .Equals("Deja, nieko nepavyko rasti."))
-                    {
-                        driver.Navigate().GoToUrl(beforeUrl);
-                    }
-                }
+            if (driver.FindElements(By.CssSelector("div.search_page_header")).Count == 1)
+                if (driver.FindElement(By.CssSelector("div.search_page_header")).Text
+                    .Equals("Deja, nieko nepavyko rasti."))
+                    driver.Navigate().GoToUrl(beforeUrl);
         }
 
         protected override bool AnyElements(ChromeDriver driver)
         {
             if (driver.FindElements(By.CssSelector("div.search_page_header")).Count == 1)
-            {
                 if (driver.FindElement(By.CssSelector("div.search_page_header")).Text
                     .Equals("Deja, nieko nepavyko rasti."))
-                {
                     return false;
-                }
-            }
 
             return true;
         }
@@ -46,10 +34,7 @@ namespace Comparison_shopping_engine.Selenium
         protected override (string, string) GetProductGroupAndMaybePhotoLink(ChromeDriver driver, string photoUrl)
         {
             var list = driver.FindElement(By.CssSelector("div.big_box_header")).FindElements(By.CssSelector("span"));
-            if (list.Count > 1)
-            {
-                return (list[1].Text, photoUrl);
-            }
+            if (list.Count > 1) return (list[1].Text, photoUrl);
 
             return ("None", photoUrl);
         }
@@ -72,10 +57,13 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override (string, string, string, string) GetInfo(IWebElement product)
         {
-            var price = product.FindElement(By.CssSelector("div.product_price_wo_discount_listing")).Text.Split(':').Last();
+            var price = product.FindElement(By.CssSelector("div.product_price_wo_discount_listing")).Text.Split(':')
+                .Last();
             var name = product.FindElement(By.ClassName("product_name")).Text;
-            var productUrl = product.FindElement(By.ClassName("product_name")).FindElement(By.CssSelector("a")).GetAttribute("href");
-            var photoUrl = product.FindElement(By.CssSelector("img.product_photo_grid")).GetAttribute("src"); ;
+            var productUrl = product.FindElement(By.ClassName("product_name")).FindElement(By.CssSelector("a"))
+                .GetAttribute("href");
+            var photoUrl = product.FindElement(By.CssSelector("img.product_photo_grid")).GetAttribute("src");
+            ;
 
             return (price, name, productUrl, photoUrl);
         }

@@ -1,37 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class TopocentrasScraper : AbstractSeleniumScraper
+    internal class TopocentrasScraper : AbstractSeleniumScraper
     {
-      
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
-
             if (driver.FindElements(By.CssSelector("a.Pager-nextButton-3UR")).Count == 1)
             {
-                 var nuoroda = driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
+                var nuoroda = driver.FindElement(By.CssSelector("a.Pager-nextButton-3UR")).GetAttribute("href");
 
-                 driver.Navigate().GoToUrl(nuoroda);
+                driver.Navigate().GoToUrl(nuoroda);
             }
-
         }
 
         protected override bool AnyElements(ChromeDriver driver)
         {
-            if (driver.FindElements(By.ClassName("ProductNotFoundPage-errorHeader-2Xo")).Count == 0)
-            {
-                return true;
-            }
+            if (driver.FindElements(By.ClassName("ProductNotFoundPage-errorHeader-2Xo")).Count == 0) return true;
 
             return false;
         }
@@ -40,13 +27,11 @@ namespace Comparison_shopping_engine.Selenium
         {
             var group = driver.FindElements(By.ClassName("breadcrumbs-breadcrumbLink-2NB"));
             foreach (var productgroup in group)
-            {
                 if (!productgroup.Text.Equals("Topocentras"))
                 {
                     var img = driver.FindElement(By.ClassName("carousel-mainImage-2gm")).GetAttribute("src");
                     return (productgroup.Text, img);
                 }
-            }
 
             return ("None", "");
         }
@@ -72,10 +57,9 @@ namespace Comparison_shopping_engine.Selenium
             var price = product.FindElement(By.ClassName("Price-price-27p")).Text;
             var name = product.FindElement(By.ClassName("ProductGrid-productName-1JN")).Text;
             var productUrl = product.FindElement(By.ClassName("ProductGrid-link-3Q6")).GetAttribute("href");
-            var photoUrl ="";
+            var photoUrl = "";
 
             return (price, name, productUrl, photoUrl);
-
         }
     }
 }

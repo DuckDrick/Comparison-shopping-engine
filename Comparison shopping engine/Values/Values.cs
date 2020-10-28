@@ -4,7 +4,8 @@ namespace Comparison_shopping_engine
 {
     public class Values
     {
-        public static List<string> Urls = new List<string>{
+        public static List<string> Urls = new List<string>
+        {
             /*rde,          */ "https://rde.lt/search_result/lt/word/☼/page/1",
             /*bigbox,       */ "https://bigbox.lt/paieska?search_query=",
             /*pigu,         */ "https://pigu.lt/lt/search?q=",

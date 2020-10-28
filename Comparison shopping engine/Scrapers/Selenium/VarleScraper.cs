@@ -1,32 +1,24 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Forms.VisualStyles;
+﻿using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace Comparison_shopping_engine.Selenium
 {
-    class VarleScraper :AbstractSeleniumScraper
+    internal class VarleScraper : AbstractSeleniumScraper
     {
-
         protected override void NavigateToNextPage(ChromeDriver driver)
         {
-            if (driver.FindElements(By.CssSelector("a.next")).Count>0)
+            if (driver.FindElements(By.CssSelector("a.next")).Count > 0)
             {
                 var link = driver.FindElement(By.CssSelector("a.next")).GetAttribute("href");
                 driver.Navigate().GoToUrl(link);
             }
-            
         }
 
         protected override bool AnyElements(ChromeDriver driver)
         {
-            if (driver.FindElements(By.CssSelector("form#not-found_form.center-errors.errors-margin-bottom")).Count == 0)
-            {
-                return true;
-            }
+            if (driver.FindElements(By.CssSelector("form#not-found_form.center-errors.errors-margin-bottom")).Count ==
+                0) return true;
 
             return false;
         }
@@ -45,10 +37,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldStopScraping(ChromeDriver nextPage, string urlBefor)
         {
-            if (urlBefor.Equals(nextPage.Url))
-            {
-                return true;
-            }
+            if (urlBefor.Equals(nextPage.Url)) return true;
 
             return false;
         }
@@ -61,10 +50,7 @@ namespace Comparison_shopping_engine.Selenium
 
         protected override bool ShouldScrapeIf(IWebElement product)
         {
-            if (product.FindElements(By.CssSelector("span.price")).Count > 0)
-            {
-                return true;
-            }
+            if (product.FindElements(By.CssSelector("span.price")).Count > 0) return true;
             return false;
         }
 
