@@ -110,6 +110,7 @@ namespace Comparison_shopping_engine.Forms
             LoadToCheckedList<MainGroups>(groups);
             //LoadToCheckedGroups(groups);
             LoadToCheckedList<ScrapedSites>(sources);
+            SaveListViewItems();
         }
 
         private void WaitForProducts()
@@ -213,6 +214,7 @@ namespace Comparison_shopping_engine.Forms
 
             var rows = GetRows(filteredList);
             productListView.Items.AddRange(rows);
+            SaveListViewItems();
         }
 
         private ListViewItem[] GetRows(IEnumerable<Product> products)
@@ -335,16 +337,6 @@ namespace Comparison_shopping_engine.Forms
         private List<Product> items = new List<Product>();
         private void FilterBox_TextChanged(object sender, EventArgs e)
         {
-            var lv = (ListView)productListView;
-            //var row = lv.SelectedItems[0].SubItems;
-            var list = productListView.SelectedItems;
-            foreach (var product in productListView.Items)
-            {
-                var collumns = ((ListViewItem) product).SubItems;
-                items.Add(new Product(collumns[0].ToString().Split('{','}')[1],
-                                          collumns[1].ToString().Split('{', '}')[1], null, null, null, 
-                                          collumns[2].ToString().Split('{', '}')[1]));
-            }
             productListView.Items.Clear();
             foreach (var item in items)
             {
@@ -363,6 +355,18 @@ namespace Comparison_shopping_engine.Forms
             FilterBox.Clear();
             LoadToCheckedList<MainGroups>(groups);
             LoadToCheckedList<ScrapedSites>(sources);
+        }
+
+        private void SaveListViewItems()
+        {
+            items.Clear();
+            foreach (var product in productListView.Items)
+            {
+                var collumns = ((ListViewItem)product).SubItems;
+                items.Add(new Product(collumns[0].ToString().Split('{', '}')[1],
+                    collumns[1].ToString().Split('{', '}')[1], null, null, null,
+                    collumns[2].ToString().Split('{', '}')[1]));
+            }
         }
     }
 
