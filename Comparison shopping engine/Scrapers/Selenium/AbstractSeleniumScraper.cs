@@ -90,11 +90,15 @@ namespace Comparison_shopping_engine.Selenium
                                 for (var take = 0;; take++)
                                 {
                                     var start = take * amount;
-                                    if (products.Count - 1 > start)
+                                    if (products.Count - 1 >= start)
                                     {
                                         var count = products.Count - 1 - start > amount
                                             ? amount
                                             : products.Count - 1 - start;
+                                        if (products.Count - 1 == start)
+                                        {
+                                            count = 1;
+                                        }
                                         Parallel.ForEach(products.GetRange(start, count), (product, state, index) =>
                                         {
                                             var productDriver = drivers[(int) index];
