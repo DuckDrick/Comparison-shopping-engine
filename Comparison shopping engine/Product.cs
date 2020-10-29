@@ -67,15 +67,3 @@ namespace Comparison_shopping_engine
         }
     }
 }
-
-
-namespace ExtensionMethods
-{
-    public static class MyExtensions
-    {
-        public static string[] getListViewItemRow(this Product product)
-        {
-            return new[] {product.Name, product.Price, product.Source};
-        }
-    }
-}

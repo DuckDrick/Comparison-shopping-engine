@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Comparison_shopping_engine.Scrapers;
-using ExtensionMethods;
 
 namespace Comparison_shopping_engine.Forms
 {
