@@ -12,7 +12,7 @@ Requirements:
      
 :green_square: Extension method usage. (Search formoj 188)
      
-:green_square: Reading from file. (about forma)
+:green_square: :question:Reading from file. (about forma)
 
 :red_square: Generic type usage.
    
